@@ -24,11 +24,22 @@ public class GameUI extends Application {
 
     private Scene startScene() {
         Pane pane = new StackPane();
-        Button bt = new Button("Start Game");
+        pane.setBackground(
+                new Background(new BackgroundFill(Color.rgb(250, 241, 218), CornerRadii.EMPTY, Insets.EMPTY)));
 
+        Button bt = new Button("Start Game");
+        bt.setStyle("-fx-border-radius: 7px;" +
+                "-fx-background-radius: 7px;" +
+                "-fx-border-width: 2px;" +
+                "-fx-border-color: #eed399;" +
+                "-fx-pref-width: 200px;" +
+                "-fx-pref-height: 100px ;" +
+                "-fx-background-color: #f2d79d;" +
+                "-fx-text-fill: #582b0d;" +
+                "-fx-font-weight: bold;" +
+                " -fx-font-size: 16px;");
         pane.getChildren().add(bt);
         Scene startScene = new Scene(pane, 200, 200);
-        startScene.setFill(Color.web("#FAF1DA"));
         return startScene;
     }
 
