@@ -1,5 +1,6 @@
 package main.java.com.towerdefense.ui;
 
+import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -8,15 +9,36 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
-public class GameUI {
+public class GameUI extends Application {
+
+    @Override
+    public void start(Stage primaryStage) {
+        primaryStage.setTitle("Tower Defense");
+
+        // Example to show startScene, you can later switch to endScreen when game ends
+        Scene scene = startScene();
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    private Scene startScene() {
+        Pane pane = new StackPane();
+        Button bt = new Button("Start Game");
+
+        pane.getChildren().add(bt);
+        Scene startScene = new Scene(pane, 200, 200);
+        startScene.setFill(Color.web("#FAF1DA"));
+        return startScene;
+    }
 
     private Scene endScreen() {
-
         StackPane pane = new StackPane();
 
         Color backColor = Color.rgb(250, 241, 218);
@@ -40,7 +62,5 @@ public class GameUI {
         label.setContentDisplay(ContentDisplay.BOTTOM);
         Scene endScene = new Scene(pane, 300, 200);
         return endScene;
-
     }
-
 }
