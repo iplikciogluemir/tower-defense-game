@@ -20,12 +20,6 @@ public class GameUI extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Tower Defense");
-
-        // Example to show startScene, you can later switch to endScreen when game ends
-        Scene scene = startScene();
-        primaryStage.setScene(scene);
-        primaryStage.show();
     }
 
     private Scene startScene() {
