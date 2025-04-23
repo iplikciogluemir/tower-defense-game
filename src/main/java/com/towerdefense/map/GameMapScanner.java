@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class GameMapScanner {
 
-    ArrayList<String> levelPath ;
+    ArrayList<String> levelPath;
     int width, height;
     Scanner input;
     File file;
@@ -16,16 +16,23 @@ public class GameMapScanner {
     public GameMapScanner(File file) throws Exception {
         this.file = file;
         levelPath = new ArrayList<>();
-        width = 0 ;
+        width = 0;
         height = 0;
         input = new Scanner(file);
     }
 
-    public int getWidth() {
-        
-        while(input.hasNext()) {
+    private void resetScanner() throws Exception {
+        if (input != null)
+            input.close();
+
+        input = new Scanner(file);
+    }
+
+    public int getWidth() throws Exception {
+        resetScanner();
+        while (input.hasNext()) {
             String line = input.nextLine();
-            if(line.contains("WIDTH:")) {
+            if (line.contains("WIDTH:")) {
                 width = Integer.parseInt(line.split(":")[1].trim());
                 return width;
             }
@@ -33,11 +40,11 @@ public class GameMapScanner {
         return 0;
     }
 
-    public int getHeight() {
-        
-        while(input.hasNext()) {
+    public int getHeight() throws Exception {
+        resetScanner();
+        while (input.hasNext()) {
             String line = input.nextLine();
-            if(line.contains("HEIGHT:")) {
+            if (line.contains("HEIGHT:")) {
                 height = Integer.parseInt(line.split(":")[1].trim());
                 return height;
             }
@@ -45,20 +52,19 @@ public class GameMapScanner {
         return 0;
     }
 
-    public ArrayList<String> getPath() {
-
-        while(input.hasNext()) {
+    public ArrayList<String> getPath() throws Exception {
+        resetScanner();
+        while (input.hasNext()) {
             String line = input.nextLine();
 
-            for(int rowChecker = 0 ; rowChecker < line.length() ; rowChecker++) {
-                if(!line.contains("WIDTH") && !line.contains("HEIGHT") && Character.isDigit(line.charAt(rowChecker)))
+            for (int rowChecker = 0; rowChecker < line.length(); rowChecker++) {
+                if (!line.contains("WIDTH") && !line.contains("HEIGHT") && Character.isDigit(line.charAt(rowChecker)))
                     levelPath.add(line.charAt(rowChecker) + "");
-            } 
-            
-            if(line.equals("WAVE_DATA:"))
+            }
+
+            if (line.equals("WAVE_DATA:"))
                 break;
         }
         return levelPath;
-    }  
+    }
 }
-
