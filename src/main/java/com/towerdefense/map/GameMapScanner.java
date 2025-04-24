@@ -4,16 +4,23 @@ package com.towerdefense.map;
 
 import java.util.Scanner;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameMapScanner {
 
-    ArrayList<String> levelPath;
-    int width, height;
-    Scanner input;
-    File file;
+    private ArrayList<String> levelPath;
+    private int width, height;
+    private Scanner input;
+    private File file;
 
-    public GameMapScanner(File file) throws Exception {
+    public GameMapScanner(File file) throws IOException {
+        if (file == null) {
+            throw new IllegalArgumentException("File cannot be null");
+        }
+        if (!file.exists() || !file.isFile()) {
+            throw new IOException("Invalid file");
+        }
         this.file = file;
         levelPath = new ArrayList<>();
         width = 0;
@@ -21,14 +28,14 @@ public class GameMapScanner {
         input = new Scanner(file);
     }
 
-    private void resetScanner() throws Exception {
+    private void resetScanner() throws IOException {
         if (input != null)
             input.close();
 
         input = new Scanner(file);
     }
 
-    public int getWidth() throws Exception {
+    public int getWidth() throws IOException {
         resetScanner();
         while (input.hasNext()) {
             String line = input.nextLine();
@@ -40,7 +47,7 @@ public class GameMapScanner {
         return 0;
     }
 
-    public int getHeight() throws Exception {
+    public int getHeight() throws IOException {
         resetScanner();
         while (input.hasNext()) {
             String line = input.nextLine();
@@ -52,8 +59,10 @@ public class GameMapScanner {
         return 0;
     }
 
-    public ArrayList<String> getPath() throws Exception {
+    public ArrayList<String> getPath() throws IOException {
         resetScanner();
+        levelPath.clear();
+
         while (input.hasNext()) {
             String line = input.nextLine();
 
