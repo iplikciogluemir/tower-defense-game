@@ -27,10 +27,10 @@ public class SingleShotTower {
         Rectangle r7 = new Rectangle(28, 0, 4, 10);
         r7.setStyle("-fx-fill: #f2d79d");
 
-        Rectangle r8 = new Rectangle(44, 0, 4, 8);
+        Rectangle r8 = new Rectangle(44, 0, 4, 10);
         r8.setStyle("-fx-fill: #f2d79d");
 
-        Rectangle r9 = new Rectangle(48, 0, 10, 8);
+        Rectangle r9 = new Rectangle(48, 0, 10, 10);
         r9.setStyle("-fx-fill: #cbb296");
 
         Group tower = new Group();
