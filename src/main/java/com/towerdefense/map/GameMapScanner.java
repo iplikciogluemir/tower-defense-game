@@ -1,4 +1,4 @@
-package main.java.com.towerdefense.map;
+package com.towerdefense.map;
 
 // After WAVE_DATA is not used yet.
 

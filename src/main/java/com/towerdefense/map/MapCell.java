@@ -1,4 +1,4 @@
-package main.java.com.towerdefense.map;
+package com.towerdefense.map;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
