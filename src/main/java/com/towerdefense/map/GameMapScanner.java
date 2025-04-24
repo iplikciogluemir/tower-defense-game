@@ -66,13 +66,15 @@ public class GameMapScanner {
         while (input.hasNext()) {
             String line = input.nextLine();
 
-            for (int rowChecker = 0; rowChecker < line.length(); rowChecker++) {
-                if (!line.contains("WIDTH") && !line.contains("HEIGHT") && Character.isDigit(line.charAt(rowChecker)))
-                    levelPath.add(line.charAt(rowChecker) + "");
-            }
-
             if (line.equals("WAVE_DATA:"))
                 break;
+
+            if (!line.contains("WIDTH") && !line.contains("HEIGHT")) {
+                String[] coordinate = line.split(",");
+
+                for (String singleCoordinate : coordinate)
+                    levelPath.add(singleCoordinate);
+            }
         }
         return levelPath;
     }
