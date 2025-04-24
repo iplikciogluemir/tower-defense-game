@@ -19,15 +19,15 @@ public class MapCell extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         GameMapScanner map1 = new GameMapScanner(new File(
-                "C:\\Users\\2.0\\Desktop\\tower-defense-game\\src\\main\\resources\\maps\\levels\\level1.txt"));
+                "src/main/resources/maps/level1.txt"));
         GameMapScanner map2 = new GameMapScanner(new File(
-                "C:\\Users\\2.0\\Desktop\\tower-defense-game\\src\\main\\resources\\maps\\levels\\level2.txt"));
+                "src/main/resources/maps/level2.txt"));
         GameMapScanner map3 = new GameMapScanner(new File(
-                "C:\\Users\\2.0\\Desktop\\tower-defense-game\\src\\main\\resources\\maps\\levels\\level3.txt"));
+                "src/main/resources/maps/level3.txt"));
         GameMapScanner map4 = new GameMapScanner(new File(
-                "C:\\Users\\2.0\\Desktop\\tower-defense-game\\src\\main\\resources\\maps\\levels\\level4.txt"));
+                "src/main/resources/maps/level4.txt"));
         GameMapScanner map5 = new GameMapScanner(new File(
-                "C:\\Users\\2.0\\Desktop\\tower-defense-game\\src\\main\\resources\\maps\\levels\\level5.txt"));
+                "src/main/resources/maps/level5.txt"));
 
         BorderPane mainPane = new BorderPane();
         mainPane.setCenter(showMap(map1));
