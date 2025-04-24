@@ -32,16 +32,31 @@ public class TowerPanel extends Application {
         // Group tower = new Group(new Rectangle(50, 50, Color.BLACK));
 
         vbx.setStyle("-fx-background-color: #faf1da");
-        Label singleShotTower = new Label("Single Shot Tower - 50$", LaserTower.getLaserTower());
+        Label singleShotTower = new Label("Single Shot Tower - 50$", SingleShotTower.getSingleShotTower());
         singleShotTower.setContentDisplay(ContentDisplay.TOP);
         singleShotTower.setStyle("-fx-background-color: #f2d79d;" +
                 "-fx-border-color: #eed399;" +
                 "-fx-border-width: 2;" +
                 "-fx-padding:5;" +
                 "-fx-text-fill: #582b0d;" + "-fx-border-radius: 7px;" +
-                "-fx-background-radius: 7px;");
+                "-fx-background-radius: 7px;" +
+                "-fx-pref-width:150;" +
+                "-fx-pref-height:40;" +
+                "-fx-alignment:center");
 
-        vbx.getChildren().addAll(singleShotTower);
+        Label laserTower = new Label("Single Shot Tower - 120$", LaserTower.getLaserTower());
+        laserTower.setContentDisplay(ContentDisplay.TOP);
+        laserTower.setStyle("-fx-background-color: #f2d79d;" +
+                "-fx-border-color: #eed399;" +
+                "-fx-border-width: 2;" +
+                "-fx-padding:5;" +
+                "-fx-text-fill: #582b0d;" + "-fx-border-radius: 7px;" +
+                "-fx-background-radius: 7px;" +
+                "-fx-pref-width:150;" +
+                "-fx-pref-height:50;" +
+                "-fx-alignment:center");
+
+        vbx.getChildren().addAll(singleShotTower, laserTower);
         vbx.setAlignment(Pos.CENTER);
         return vbx;
     }
