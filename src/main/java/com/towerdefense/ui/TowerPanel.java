@@ -3,6 +3,7 @@ package com.towerdefense.ui;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 
+import com.towerdefense.towers.LaserTower;
 import com.towerdefense.towers.SingleShotTower;
 
 import javafx.application.Application;
@@ -31,7 +32,7 @@ public class TowerPanel extends Application {
         // Group tower = new Group(new Rectangle(50, 50, Color.BLACK));
 
         vbx.setStyle("-fx-background-color: #faf1da");
-        Label singleShotTower = new Label("Single Shot Tower - 50$", SingleShotTower.getSingleShotTower());
+        Label singleShotTower = new Label("Single Shot Tower - 50$", LaserTower.getLaserTower());
         singleShotTower.setContentDisplay(ContentDisplay.TOP);
         singleShotTower.setStyle("-fx-background-color: #f2d79d;" +
                 "-fx-border-color: #eed399;" +
