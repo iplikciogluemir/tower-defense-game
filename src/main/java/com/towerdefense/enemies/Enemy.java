@@ -8,6 +8,7 @@ public class Enemy {
     private int health;
     private int speed;
 
+    // constructor
     public Enemy(int health, int speed) {
         this.health = health;
         this.speed = speed;

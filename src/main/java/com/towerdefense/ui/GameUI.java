@@ -24,8 +24,7 @@ public class GameUI extends Application {
 
     private Scene startScene() {
         Pane pane = new StackPane();
-        pane.setBackground(
-                new Background(new BackgroundFill(Color.rgb(250, 241, 218), CornerRadii.EMPTY, Insets.EMPTY)));
+        pane.setStyle("-fx-background-color:#faf1da");
 
         Button bt = new Button("Start Game");
         bt.setStyle("-fx-border-radius: 7px;" +
@@ -46,8 +45,7 @@ public class GameUI extends Application {
     private Scene endScreen() {
         StackPane pane = new StackPane();
 
-        Color backColor = Color.rgb(250, 241, 218);
-        pane.setBackground(new Background(new BackgroundFill(backColor, CornerRadii.EMPTY, Insets.EMPTY)));
+        pane.setStyle("-fx-background-color:#faf1da");
 
         Button btBack = new Button("Back to Main Menu");
         btBack.setStyle("-fx-border-radius: 7px;" +
@@ -64,6 +62,7 @@ public class GameUI extends Application {
         Label label = new Label("Game Over!", btBack);
         label.setStyle("-fx-text-fill: #582b0d; -fx-font-size: 26px;");
         pane.getChildren().addAll(label);
+
         label.setContentDisplay(ContentDisplay.BOTTOM);
         Scene endScene = new Scene(pane, 300, 200);
         return endScene;
