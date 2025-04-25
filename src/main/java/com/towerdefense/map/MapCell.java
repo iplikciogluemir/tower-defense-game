@@ -32,6 +32,7 @@ public class MapCell extends Application {
                 "src/main/resources/maps/level5.txt"));
 
         BorderPane mainPane = new BorderPane();
+        mainPane.setStyle("-fx-background-color: #faf1da;");
         mainPane.setCenter(showMap(map5));
 
         Scene scene = new Scene(mainPane, 500, 500);
