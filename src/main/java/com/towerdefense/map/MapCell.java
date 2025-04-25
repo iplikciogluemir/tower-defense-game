@@ -32,7 +32,7 @@ public class MapCell extends Application {
                 "src/main/resources/maps/level5.txt"));
 
         BorderPane mainPane = new BorderPane();
-        mainPane.setCenter(showMap(map1));
+        mainPane.setCenter(showMap(map5));
 
         Scene scene = new Scene(mainPane, 500, 500);
         primaryStage.setScene(scene);
