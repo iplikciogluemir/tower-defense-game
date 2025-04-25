@@ -4,7 +4,9 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 
 import com.towerdefense.towers.LaserTower;
+import com.towerdefense.towers.MissileLauncherTower;
 import com.towerdefense.towers.SingleShotTower;
+import com.towerdefense.towers.TripleShotTower;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -20,14 +22,15 @@ import javafx.stage.Stage;
 public class TowerPanel extends Application {
 
     public void start(Stage primaryStage) {
+        Scene a = new Scene(getTowerPanel(), 200, 200);
+        primaryStage.setTitle("test");
+        primaryStage.setScene(a);
+        primaryStage.show();
     }
 
     public VBox getTowerPanel() {
         VBox vbx = new VBox(10);
         final double prefWidth = 200;
-
-        Group tower = new Group(new Rectangle(50, 50, Color.BLACK));
-        Group tower2 = new Group(new Rectangle(50, 50, Color.BLACK));
 
         vbx.setStyle("-fx-background-color: #faf1da");
         Label singleShotTower = new Label("Single Shot Tower - 50$", SingleShotTower.getSingleShotTower());
@@ -52,7 +55,7 @@ public class TowerPanel extends Application {
                 "-fx-pref-width:" + prefWidth + ";" +
                 "-fx-alignment:center");
 
-        Label tripleShotTower = new Label("Triple Shot Tower - 150$", tower2);
+        Label tripleShotTower = new Label("Triple Shot Tower - 150$", TripleShotTower.getTripleShotTower());
         tripleShotTower.setContentDisplay(ContentDisplay.TOP);
         tripleShotTower.setStyle("-fx-background-color: #f2d79d;" +
                 "-fx-border-color: #eed399;" +
@@ -63,7 +66,8 @@ public class TowerPanel extends Application {
                 "-fx-pref-width:" + prefWidth + ";" +
                 "-fx-alignment:center");
 
-        Label missileLauncherTower = new Label("Missile Launcher Tower - 200$", tower);
+        Label missileLauncherTower = new Label("Missile Launcher Tower - 200$",
+                MissileLauncherTower.getMissileLauncherTower());
         missileLauncherTower.setContentDisplay(ContentDisplay.TOP);
         missileLauncherTower.setStyle("-fx-background-color: #f2d79d;" +
                 "-fx-border-color: #eed399;" +
