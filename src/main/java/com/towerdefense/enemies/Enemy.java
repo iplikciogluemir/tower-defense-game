@@ -6,15 +6,19 @@ import javafx.scene.shape.Polygon;
 
 public class Enemy {
     private int health;
-    private int speed;
+    private int X;
+    private int Y;
+    private int dx;
+    private int dy;
 
-    // constructor
-    public Enemy(int health, int speed) {
+    public Enemy(int health, int speed, int X, int Y, int dx, int dy) {
         this.health = health;
-        this.speed = speed;
+        this.X = X;
+        this.Y = Y;
+        this.dx = dx;
+        this.dy = dy;
     }
 
-    // getters setters
     public void setHealth(int health) {
         this.health = health;
     }
@@ -23,12 +27,36 @@ public class Enemy {
         return this.health;
     }
 
-    public void setSpeed(int speed) {
-        this.speed = speed;
+    public int getX() {
+        return X;
     }
 
-    public int setSpeed() {
-        return this.speed;
+    public void setX(int X) {
+        this.X = X;
+    }
+
+    public int getY() {
+        return Y;
+    }
+
+    public void setY(int Y) {
+        this.Y = Y;
+    }
+
+    public int getDx() {
+        return dx;
+    }
+
+    public void setDx(int dx) {
+        this.dx = dx;
+    }
+
+    public int getDy() {
+        return dy;
+    }
+
+    public void setDy(int dy) {
+        this.dy = dy;
     }
 
     public static Group getEnemy() {
@@ -48,5 +76,4 @@ public class Enemy {
 
         return enemyPawn;
     }
-
 }

@@ -15,10 +15,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.towerdefense.ui.TowerPanel;
+
 public class MapCell extends Application {
 
     @Override
     public void start(Stage primaryStage) throws FileNotFoundException, IOException {
+
+        // could add current and next map variable here
 
         GameMapScanner map1 = new GameMapScanner(new File(
                 "src/main/resources/maps/level1.txt"));
@@ -32,8 +36,9 @@ public class MapCell extends Application {
                 "src/main/resources/maps/level5.txt"));
 
         BorderPane mainPane = new BorderPane();
+        mainPane.setRight(TowerPanel.getTowerPanel());
         mainPane.setStyle("-fx-background-color: #faf1da;");
-        mainPane.setCenter(showMap(map5));
+        mainPane.setCenter(showMap(map1));
 
         Scene scene = new Scene(mainPane, 500, 500);
         primaryStage.setScene(scene);
