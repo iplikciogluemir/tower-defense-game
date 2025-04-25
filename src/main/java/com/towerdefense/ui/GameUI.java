@@ -22,6 +22,32 @@ public class GameUI extends Application {
     public void start(Stage primaryStage) {
     }
 
+    private Scene winScreen() {
+        StackPane pane = new StackPane();
+
+        pane.setStyle("-fx-background-color:#faf1da");
+
+        Button btBack = new Button("Continue to Next Level");
+        btBack.setStyle("-fx-border-radius: 7px;" +
+                "-fx-background-radius: 7px;" +
+                "-fx-border-width: 2px;" +
+                "-fx-border-color: #eed399;" +
+                "-fx-pref-width: 260px;" +
+                "-fx-pref-height: 60px ;" +
+                "-fx-background-color: #f2d79d;" +
+                "-fx-text-fill: #582b0d;" +
+                ";-fx-font-weight: bold ;" +
+                " -fx-font-size: 16px;");
+
+        Label label = new Label("You Won!", btBack);
+        label.setStyle("-fx-text-fill: #582b0d; -fx-font-size: 26px;");
+        pane.getChildren().addAll(label);
+
+        label.setContentDisplay(ContentDisplay.BOTTOM);
+        Scene endScene = new Scene(pane, 300, 200);
+        return endScene;
+    }
+
     private Scene startScene() {
         Pane pane = new StackPane();
         pane.setStyle("-fx-background-color:#faf1da");
