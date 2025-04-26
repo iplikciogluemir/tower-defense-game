@@ -17,10 +17,9 @@ import java.util.Random;
 
 import com.towerdefense.ui.TowerPanel;
 
-public class MapCell extends Application {
+public class MapCell {
 
-    @Override
-    public void start(Stage primaryStage) throws FileNotFoundException, IOException {
+    public static BorderPane getMap(int level) throws FileNotFoundException, IOException {
 
         // could add current and next map variable here
 
@@ -38,15 +37,29 @@ public class MapCell extends Application {
         BorderPane mainPane = new BorderPane();
         mainPane.setRight(TowerPanel.getTowerPanel());
         mainPane.setStyle("-fx-background-color: #faf1da;");
-        mainPane.setCenter(showMap(map1));
 
-        Scene scene = new Scene(mainPane, 500, 500);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        switch (level) {
+            case 1:
+                mainPane.setCenter(showMap(map1));
+                break;
+            case 2:
+                mainPane.setCenter(showMap(map2));
+                break;
+            case 3:
+                mainPane.setCenter(showMap(map3));
+                break;
+            case 4:
+                mainPane.setCenter(showMap(map4));
+                break;
+            case 5:
+                mainPane.setCenter(showMap(map5));
+                break;
+        }
 
+        return mainPane;
     }
 
-    public GridPane showMap(GameMapScanner map) throws IOException {
+    public static GridPane showMap(GameMapScanner map) throws IOException {
 
         GridPane gridPane = new GridPane();
         gridPane.setHgap(2);
@@ -93,7 +106,7 @@ public class MapCell extends Application {
         return gridPane;
     }
 
-    public boolean isEnemyPath(GameMapScanner map, int row, int column) throws IOException {
+    public static boolean isEnemyPath(GameMapScanner map, int row, int column) throws IOException {
 
         boolean isEnemyPath = false;
         ArrayList<String> path = map.getPath();
@@ -105,9 +118,5 @@ public class MapCell extends Application {
             }
         }
         return isEnemyPath;
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }
