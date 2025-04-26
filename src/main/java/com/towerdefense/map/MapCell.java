@@ -21,8 +21,6 @@ public class MapCell {
 
     public static BorderPane getMap(int level) throws FileNotFoundException, IOException {
 
-        // could add current and next map variable here
-
         GameMapScanner map1 = new GameMapScanner(new File(
                 "src/main/resources/maps/level1.txt"));
         GameMapScanner map2 = new GameMapScanner(new File(
@@ -35,7 +33,6 @@ public class MapCell {
                 "src/main/resources/maps/level5.txt"));
 
         BorderPane mainPane = new BorderPane();
-        mainPane.setRight(TowerPanel.getTowerPanel());
         mainPane.setStyle("-fx-background-color: #faf1da;");
 
         switch (level) {
