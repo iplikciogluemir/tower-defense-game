@@ -1,21 +1,24 @@
 package com.towerdefense.towers;
 
-public class Tower {
-    private int x;
-    private int y;
-    private int damage;
-    private int range;
-    private int cost;
+public abstract class Tower {
+    protected int x;
+    protected int y;
+    protected int cost;
+    protected int range;
+    protected int damage;
+    protected int fireRate;
+    protected boolean isPlaced;
 
-    public Tower(int x, int y, int damage, int range, int cost) {
+    public Tower(int x, int y, int cost, int range, int damage, int fireRate) {
         this.x = x;
         this.y = y;
-        this.damage = damage;
-        this.range = range;
         this.cost = cost;
+        this.range = range;
+        this.damage = damage;
+        this.fireRate = fireRate;
+        this.isPlaced = false;
     }
 
-    // Getters and setters
     public int getX() {
         return x;
     }
@@ -24,21 +27,34 @@ public class Tower {
         return y;
     }
 
-    public int getDamage() {
-        return damage;
+    public int getCost() {
+        return cost;
     }
 
     public int getRange() {
         return range;
     }
 
-    public int getCost() {
-        return cost;
+    public int getDamage() {
+        return damage;
     }
 
-    public boolean isInRange(int targetX, int targetY) {
-        double distance = Math.sqrt(
-                Math.pow(targetX - x, 2) + Math.pow(targetY - y, 2));
-        return distance <= range;
+    public int getFireRate() {
+        return fireRate;
     }
+
+    public boolean isPlaced() {
+        return isPlaced;
+    }
+
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public void place() {
+        this.isPlaced = true;
+    }
+
+    public abstract void attack();
 }

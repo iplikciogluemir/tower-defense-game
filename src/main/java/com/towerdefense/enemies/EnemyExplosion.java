@@ -15,6 +15,7 @@ public class EnemyExplosion {
     private static final int NUM_PARTICLES = 20;
     private static final double MAX_DISTANCE = 50;
     private static final double CIRCLE_RADIUS = 3;
+    private static final double DURATION = 0.5;
 
     public static void createExplosion(Pane root, int enemyX, int enemyY) {
         Random random = new Random();
@@ -31,12 +32,12 @@ public class EnemyExplosion {
             double dx = Math.cos(angle) * distance;
             double dy = Math.sin(angle) * distance;
 
-            TranslateTransition move = new TranslateTransition(Duration.seconds(0.5), particle);
+            TranslateTransition move = new TranslateTransition(Duration.seconds(DURATION), particle);
             move.setByX(dx);
             move.setByY(dy);
             move.setInterpolator(Interpolator.EASE_OUT);
 
-            FadeTransition fade = new FadeTransition(Duration.seconds(0.5), particle);
+            FadeTransition fade = new FadeTransition(Duration.seconds(DURATION), particle);
             fade.setFromValue(1.0);
             fade.setToValue(0);
 
