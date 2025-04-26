@@ -15,6 +15,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -33,7 +34,18 @@ public class TowerPanel extends Application {
         primaryStage.show();
     }
 
-    public static VBox getTowerPanel() {
+    public static StackPane getTowerPanel() {
+
+        VBox backgroundVBox = new VBox(45);
+        backgroundVBox.setAlignment(Pos.CENTER);
+        backgroundVBox.setPadding(new Insets(110, 20, 0, 20));
+
+        Group singleShotTowerBG = SingleShotTower.getSingleShotTower();
+        Group laserTowerBG = LaserTower.getLaserTower();
+        Group tripleShotTowerBG = TripleShotTower.getTripleShotTower();
+        Group missileLauncherTowerBG = MissileLauncherTower.getMissileLauncherTower();
+        backgroundVBox.getChildren().addAll(singleShotTowerBG, laserTowerBG, tripleShotTowerBG, missileLauncherTowerBG);
+
         VBox vbx = new VBox(10);
         final double prefWidth = 200;
 
@@ -86,7 +98,9 @@ public class TowerPanel extends Application {
                 missileLauncherTower);
         vbx.setAlignment(Pos.CENTER);
         vbx.setPadding(new Insets(0, 20, 0, 20));
-        return vbx;
+
+        StackPane pane = new StackPane(backgroundVBox, vbx);
+        return pane;
     }
 
     public static void main(String[] args) {
