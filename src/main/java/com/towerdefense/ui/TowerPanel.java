@@ -2,12 +2,10 @@ package com.towerdefense.ui;
 
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
-
 import com.towerdefense.towers.LaserTower;
 import com.towerdefense.towers.MissileLauncherTower;
 import com.towerdefense.towers.SingleShotTower;
 import com.towerdefense.towers.TripleShotTower;
-
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -15,15 +13,15 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-
-// 
 
 public class TowerPanel extends Application {
 
@@ -35,16 +33,6 @@ public class TowerPanel extends Application {
     }
 
     public static StackPane getTowerPanel() {
-
-        VBox backgroundVBox = new VBox(45);
-        backgroundVBox.setAlignment(Pos.CENTER);
-        backgroundVBox.setPadding(new Insets(110, 20, 0, 20));
-
-        Group singleShotTowerBG = SingleShotTower.getSingleShotTower();
-        Group laserTowerBG = LaserTower.getLaserTower();
-        Group tripleShotTowerBG = TripleShotTower.getTripleShotTower();
-        Group missileLauncherTowerBG = MissileLauncherTower.getMissileLauncherTower();
-        backgroundVBox.getChildren().addAll(singleShotTowerBG, laserTowerBG, tripleShotTowerBG, missileLauncherTowerBG);
 
         VBox vbx = new VBox(10);
         final double prefWidth = 200;
@@ -99,7 +87,17 @@ public class TowerPanel extends Application {
         vbx.setAlignment(Pos.CENTER);
         vbx.setPadding(new Insets(0, 20, 0, 20));
 
-        StackPane pane = new StackPane(backgroundVBox, vbx);
+        Pane draggableLayer = new Pane();
+        draggableLayer.setMouseTransparent(true);
+
+        DragTowers dragMechanism = new DragTowers(draggableLayer);
+
+        dragMechanism.draggableTower(singleShotTower, SingleShotTower.getSingleShotTower());
+        dragMechanism.draggableTower(laserTower, LaserTower.getLaserTower());
+        dragMechanism.draggableTower(tripleShotTower, TripleShotTower.getTripleShotTower());
+        dragMechanism.draggableTower(missileLauncherTower, MissileLauncherTower.getMissileLauncherTower());
+
+        StackPane pane = new StackPane(vbx, draggableLayer);
         return pane;
     }
 
