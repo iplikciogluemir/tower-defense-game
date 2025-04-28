@@ -23,13 +23,12 @@ import javafx.stage.Stage;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class TowerPanel extends Application {
+public class TowerPanel {
 
-    public void start(Stage primaryStage) {
-        Scene a = new Scene(getTowerPanel(), 200, 200);
-        primaryStage.setTitle("test");
-        primaryStage.setScene(a);
-        primaryStage.show();
+    private static Pane mainDraggablePane;
+
+    public static void setMainDraggablePane(Pane pane) {
+        mainDraggablePane = pane;
     }
 
     public static StackPane getTowerPanel() {
@@ -87,21 +86,28 @@ public class TowerPanel extends Application {
         vbx.setAlignment(Pos.CENTER);
         vbx.setPadding(new Insets(0, 20, 0, 20));
 
-        Pane draggableLayer = new Pane();
-        draggableLayer.setMouseTransparent(true);
-
-        DragTowers dragMechanism = new DragTowers(draggableLayer);
+        mainDraggablePane.setMouseTransparent(true);
+        DragTowers dragMechanism = new DragTowers(mainDraggablePane);
 
         dragMechanism.draggableTower(singleShotTower, SingleShotTower.getSingleShotTower());
         dragMechanism.draggableTower(laserTower, LaserTower.getLaserTower());
         dragMechanism.draggableTower(tripleShotTower, TripleShotTower.getTripleShotTower());
         dragMechanism.draggableTower(missileLauncherTower, MissileLauncherTower.getMissileLauncherTower());
 
-        StackPane pane = new StackPane(vbx, draggableLayer);
-        return pane;
-    }
+        StackPane pane = new StackPane(vbx);
 
-    public static void main(String[] args) {
-        launch(args);
+        pane.setOnMousePressed(e -> {
+            e.consume();
+        });
+
+        pane.setOnMouseDragged(e -> {
+            e.consume();
+        });
+
+        pane.setOnMouseReleased(e -> {
+            e.consume();
+        });
+
+        return pane;
     }
 }
