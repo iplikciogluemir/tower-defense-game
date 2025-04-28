@@ -18,6 +18,7 @@ import java.util.Random;
 import com.towerdefense.ui.TowerPanel;
 
 public class MapCell {
+    public static final int sideLength = 60;
 
     public static BorderPane getMap(int level) throws FileNotFoundException, IOException {
 
@@ -66,7 +67,6 @@ public class MapCell {
 
         int heightCount = map.getHeight();
         int widthCount = map.getWidth();
-        double sideLength = 60;
 
         Random random = new Random();
         int randomColor;
@@ -82,16 +82,13 @@ public class MapCell {
 
                 if (isEnemyPath(map, row, column)) {
                     rectangle.setFill(Color.web("#f2e0c8"));
-                    rectangle.setStroke(Color.web("#f2e0c8"));
                 } else {
                     switch (randomColor) {
                         case 0:
                             rectangle.setFill(Color.web("#fac443"));
-                            rectangle.setStroke(Color.web("#fac443"));
                             break;
                         case 1:
                             rectangle.setFill(Color.web("#fbd058"));
-                            rectangle.setStroke(Color.web("#fbd058"));
                             break;
                     }
                 }
