@@ -32,25 +32,7 @@ public class EnemyPathAutoGenerator {
 
     public static Path getEnemyPath(int mapNumber, BorderPane uiPane) throws IOException {
          
-        GameMapScanner map = new GameMapScanner();
-
-        switch (mapNumber) {
-            case 1:
-                map = new GameMapScanner(new File("src/main/resources/maps/level1.txt"));
-                break;
-            case 2:
-                map = new GameMapScanner(new File("src/main/resources/maps/level2.txt"));
-                break;
-            case 3:
-                map = new GameMapScanner(new File("src/main/resources/maps/level3.txt"));
-                break;
-            case 4:
-                map = new GameMapScanner(new File("src/main/resources/maps/level4.txt"));
-                break;
-            case 5:
-                map = new GameMapScanner(new File("src/main/resources/maps/level5.txt"));
-                break;
-        }
+        GameMapScanner map = MapCell.currMap;
 
         GridPane griddy = (GridPane) uiPane.getCenter();
 

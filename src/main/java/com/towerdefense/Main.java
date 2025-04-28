@@ -28,7 +28,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws FileNotFoundException, IOException {
 
-        BorderPane uiPane = MapCell.getMap(1);
+        BorderPane uiPane = MapCell.getMap(2);
 
         Pane mainDraggablePane = new Pane();
         TowerPanel.setMainDraggablePane(mainDraggablePane);
@@ -52,7 +52,7 @@ public class Main extends Application {
             PathTransition pathTransition = new PathTransition();
             pathTransition.setDuration(Duration.seconds(2));
             try {
-                pathTransition.setPath(EnemyPathAutoGenerator.getEnemyPath(1, uiPane));
+                pathTransition.setPath(EnemyPathAutoGenerator.getEnemyPath(2, uiPane));
             } catch (IOException e1) {
 
                 e1.printStackTrace();
