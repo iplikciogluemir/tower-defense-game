@@ -34,7 +34,7 @@ public class TowerPanel {
         mainDraggablePane = pane;
     }
 
-    public static StackPane getTowerPanel() throws IOException {
+    public static StackPane getTowerPanel(BorderPane uiPane) throws IOException {
 
         VBox vbx = new VBox(10);
         final double prefWidth = 200;
@@ -90,7 +90,7 @@ public class TowerPanel {
         vbx.setPadding(new Insets(0, 20, 0, 20));
 
         mainDraggablePane.setMouseTransparent(true);
-        DragTowers dragMechanism = new DragTowers(mainDraggablePane);
+        DragTowers dragMechanism = new DragTowers(mainDraggablePane, uiPane);
 
         dragMechanism.draggableTower(singleShotTower, SingleShotTower.getSingleShotTower());
         dragMechanism.draggableTower(laserTower, LaserTower.getLaserTower());
