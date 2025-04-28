@@ -23,44 +23,16 @@ public class MapCell {
 
     public static BorderPane getMap(int level) throws FileNotFoundException, IOException {
 
-        GameMapScanner map1 = new GameMapScanner(new File(
-                "src/main/resources/maps/level1.txt"));
-        GameMapScanner map2 = new GameMapScanner(new File(
-                "src/main/resources/maps/level2.txt"));
-        GameMapScanner map3 = new GameMapScanner(new File(
-                "src/main/resources/maps/level3.txt"));
-        GameMapScanner map4 = new GameMapScanner(new File(
-                "src/main/resources/maps/level4.txt"));
-        GameMapScanner map5 = new GameMapScanner(new File(
-                "src/main/resources/maps/level5.txt"));
-
+        String filePath = "src/main/resources/maps/level"+level+".txt";
+        GameMapScanner map = new GameMapScanner(new File(filePath));
+        
         BorderPane mainPane = new BorderPane();
         mainPane.setStyle("-fx-background-color: #faf1da;");
-
-        switch (level) {
-            case 1:
-                currMap = map1;
-                mainPane.setCenter(showMap(map1));
-                break;
-            case 2:
-                currMap = map2;
-                mainPane.setCenter(showMap(map2));
-                break;
-            case 3:
-                currMap = map3;
-                mainPane.setCenter(showMap(map3));
-                break;
-            case 4:
-                currMap = map4;
-                mainPane.setCenter(showMap(map4));
-                break;
-            case 5:
-                currMap = map5;
-                mainPane.setCenter(showMap(map5));
-                break;
-        }
-
+        currMap = map;
+        mainPane.setCenter(showMap(map));
+        
         return mainPane;
+
     }
 
     public static GridPane showMap(GameMapScanner map) throws IOException {
