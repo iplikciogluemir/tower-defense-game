@@ -2,6 +2,9 @@ package com.towerdefense.ui;
 
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
+
+import java.io.IOException;
+
 import com.towerdefense.towers.LaserTower;
 import com.towerdefense.towers.MissileLauncherTower;
 import com.towerdefense.towers.SingleShotTower;
@@ -31,7 +34,7 @@ public class TowerPanel {
         mainDraggablePane = pane;
     }
 
-    public static StackPane getTowerPanel() {
+    public static StackPane getTowerPanel() throws IOException {
 
         VBox vbx = new VBox(10);
         final double prefWidth = 200;

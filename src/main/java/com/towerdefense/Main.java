@@ -26,7 +26,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws FileNotFoundException, IOException {
 
-        BorderPane uiPane = MapCell.getMap(2);
+        BorderPane uiPane = MapCell.getMap(1);
 
         Pane mainDraggablePane = new Pane();
         TowerPanel.setMainDraggablePane(mainDraggablePane);

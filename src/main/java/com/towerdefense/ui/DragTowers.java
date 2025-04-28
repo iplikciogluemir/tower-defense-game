@@ -1,21 +1,34 @@
 package com.towerdefense.ui;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import com.towerdefense.map.MapCell;
+
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.layout.Pane;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 
 public class DragTowers {
 
     private Pane draggablePane;
     private Node labelNode;
+    private BorderPane map;
 
-    public DragTowers(Pane draggablePane) {
+    public DragTowers(Pane draggablePane) throws IOException, FileNotFoundException {
+
         this.draggablePane = draggablePane;
         this.labelNode = draggablePane;
+        map = MapCell.getMap(1); // It will be modified in constructor, just trial.
+
     }
 
     public Group clone(Group group) {
@@ -72,6 +85,28 @@ public class DragTowers {
         towerLabel.setOnMouseReleased(e -> {
 
             towerCircle.setVisible(false);
+
+            Point2D relativePoint = draggablePane.sceneToLocal(e.getSceneX(), e.getSceneY());
+
+            for (Node rectangle : ((GridPane) map.getCenter()).getChildren()) {
+
+                Bounds bounds = rectangle.localToScene(rectangle.getBoundsInLocal());
+
+                if (bounds.contains(relativePoint)) {
+
+                    double centerX = draggablePane.sceneToLocal((bounds.getMinX() + bounds.getMaxX()) / 2, 0).getX();
+                    double centerY = draggablePane.sceneToLocal(0, ((bounds.getMinY() + bounds.getMaxY()) / 2)).getY();
+
+                    clonedDraggableGroup
+                            .setLayoutX(centerX - clonedDraggableGroup.getBoundsInLocal().getWidth() / 2);
+                    clonedDraggableGroup
+                            .setLayoutY(centerY - clonedDraggableGroup.getBoundsInLocal().getHeight() / 2);
+
+                    towerCircle.setCenterX(centerX);
+                    towerCircle.setCenterY(centerY);
+                }
+            }
+
             repositioner(clonedDraggableGroup, towerCircle);
             e.consume();
 
