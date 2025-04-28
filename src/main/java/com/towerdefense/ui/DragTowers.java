@@ -3,6 +3,7 @@ package com.towerdefense.ui;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import com.towerdefense.map.GameMapScanner;
 import com.towerdefense.map.MapCell;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
@@ -94,11 +95,10 @@ public class DragTowers {
 
                 Bounds bounds = rectangle.localToScene(rectangle.getBoundsInLocal());
 
-                Color currentColor = (Color) ((Rectangle) rectangle).getFill();
-                Color checkColor = Color.web("#f2e0c8");
-                if (currentColor.equals(checkColor))
-                    isOnEnemyPath = true;
-
+                // Color currentColor = (Color) ((Rectangle) rectangle).getFill();
+                // Color checkColor = Color.web("#f2e0c8");
+                // if (currentColor.equals(checkColor))
+                // isOnEnemyPath = true;
                 if (bounds.contains(sceneX, sceneY)) {
 
                     isEnteredPane = true;
@@ -112,6 +112,17 @@ public class DragTowers {
 
                     towerCircle.setCenterX(centerX);
                     towerCircle.setCenterY(centerY);
+                    try {
+                        isOnEnemyPath = MapCell.isEnemyPath(MapCell.currMap,
+                                GridPane.getRowIndex((Rectangle) rectangle),
+                                GridPane.getColumnIndex((Rectangle) rectangle));
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                    if (isOnEnemyPath) {
+                        break;
+                    }
+
                 }
             }
 

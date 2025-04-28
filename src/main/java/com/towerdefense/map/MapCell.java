@@ -19,6 +19,7 @@ import com.towerdefense.ui.TowerPanel;
 
 public class MapCell {
     public static final int sideLength = 60;
+    public static GameMapScanner currMap;
 
     public static BorderPane getMap(int level) throws FileNotFoundException, IOException {
 
@@ -38,18 +39,23 @@ public class MapCell {
 
         switch (level) {
             case 1:
+                currMap = map1;
                 mainPane.setCenter(showMap(map1));
                 break;
             case 2:
+                currMap = map2;
                 mainPane.setCenter(showMap(map2));
                 break;
             case 3:
+                currMap = map3;
                 mainPane.setCenter(showMap(map3));
                 break;
             case 4:
+                currMap = map4;
                 mainPane.setCenter(showMap(map4));
                 break;
             case 5:
+                currMap = map5;
                 mainPane.setCenter(showMap(map5));
                 break;
         }
