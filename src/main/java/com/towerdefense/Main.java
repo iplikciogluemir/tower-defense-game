@@ -33,41 +33,39 @@ public class Main extends Application {
         Pane mainDraggablePane = new Pane();
         TowerPanel.setMainDraggablePane(mainDraggablePane);
 
-        StackPane towerPanel = TowerPanel.getTowerPanel();
+        StackPane towerPanel = TowerPanel.getTowerPanel(uiPane);
         uiPane.setRight(towerPanel);
 
         StackPane mainPane = new StackPane(uiPane, mainDraggablePane);
 
         Scene scene = new Scene(mainPane, 500, 500);
-        
-        //primaryStage.initStyle(StageStyle.UNDECORATED);
+
+        // primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setScene(scene);
         primaryStage.setFullScreen(true);
         primaryStage.show();
 
         Group enemyTest = Enemy.getEnemy();
         uiPane.getChildren().addAll(enemyTest);
-        
+
         uiPane.setOnMouseClicked(e -> {
             PathTransition pathTransition = new PathTransition();
             pathTransition.setDuration(Duration.seconds(2));
             try {
                 pathTransition.setPath(EnemyPathAutoGenerator.getEnemyPath(2, uiPane));
             } catch (IOException e1) {
-                
+
                 e1.printStackTrace();
             }
             pathTransition.setNode(enemyTest);
             pathTransition.setCycleCount(PathTransition.INDEFINITE);
-            
+
             pathTransition.play();
 
-
-
-            // Point2D firstTile = (((GridPane)uiPane.getCenter()).getChildren().get(0)).localToScene(0,0);
+            // Point2D firstTile =
+            // (((GridPane)uiPane.getCenter()).getChildren().get(0)).localToScene(0,0);
             // Circle circle = new Circle(firstTile.getX() , firstTile.getY(), 60);
             // mainPane.getChildren().addAll(circle);
-
 
         });
     }

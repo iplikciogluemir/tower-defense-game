@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import com.towerdefense.map.MapCell;
-
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
@@ -20,14 +19,12 @@ import javafx.scene.layout.GridPane;
 public class DragTowers {
 
     private Pane draggablePane;
-    private Node labelNode;
     private BorderPane map;
 
-    public DragTowers(Pane draggablePane) throws IOException, FileNotFoundException {
+    public DragTowers(Pane draggablePane, BorderPane uiPane) throws IOException, FileNotFoundException {
 
         this.draggablePane = draggablePane;
-        this.labelNode = draggablePane;
-        map = MapCell.getMap(1); // It will be modified in constructor, just trial.
+        this.map = uiPane;
 
     }
 
@@ -52,32 +49,35 @@ public class DragTowers {
 
         towerLabel.setOnMousePressed(e -> {
 
-            Point2D relativePoint = draggablePane.sceneToLocal(e.getSceneX(), e.getSceneY());
+            double sceneX = e.getSceneX();
+            double sceneY = e.getSceneY();
+
             towerCircle.setVisible(true);
             clonedDraggableGroup.setVisible(true);
 
             clonedDraggableGroup
-                    .setLayoutX(relativePoint.getX() - clonedDraggableGroup.getBoundsInLocal().getWidth() / 2);
+                    .setLayoutX(sceneX - clonedDraggableGroup.getBoundsInLocal().getWidth() / 2);
             clonedDraggableGroup
-                    .setLayoutY(relativePoint.getY() - clonedDraggableGroup.getBoundsInLocal().getHeight() / 2);
+                    .setLayoutY(sceneY - clonedDraggableGroup.getBoundsInLocal().getHeight() / 2);
 
-            towerCircle.setCenterX(relativePoint.getX());
-            towerCircle.setCenterY(relativePoint.getY());
+            towerCircle.setCenterX(sceneX);
+            towerCircle.setCenterY(sceneY);
 
             e.consume();
         });
 
         towerLabel.setOnMouseDragged(e -> {
 
-            Point2D relativePoint = draggablePane.sceneToLocal(e.getSceneX(), e.getSceneY());
+            double sceneX = e.getSceneX();
+            double sceneY = e.getSceneY();
 
             clonedDraggableGroup
-                    .setLayoutX(relativePoint.getX() - clonedDraggableGroup.getBoundsInLocal().getWidth() / 2);
+                    .setLayoutX(sceneX - clonedDraggableGroup.getBoundsInLocal().getWidth() / 2);
             clonedDraggableGroup
-                    .setLayoutY(relativePoint.getY() - clonedDraggableGroup.getBoundsInLocal().getHeight() / 2);
+                    .setLayoutY(sceneY - clonedDraggableGroup.getBoundsInLocal().getHeight() / 2);
 
-            towerCircle.setCenterX(relativePoint.getX());
-            towerCircle.setCenterY(relativePoint.getY());
+            towerCircle.setCenterX(sceneX);
+            towerCircle.setCenterY(sceneY);
 
             e.consume();
         });
@@ -85,15 +85,23 @@ public class DragTowers {
         towerLabel.setOnMouseReleased(e -> {
 
             towerCircle.setVisible(false);
-
-            Point2D relativePoint = draggablePane.sceneToLocal(e.getSceneX(), e.getSceneY());
+            double sceneX = e.getSceneX();
+            double sceneY = e.getSceneY();
+            boolean isEnteredPane = false;
+            boolean isOnEnemyPath = false;
 
             for (Node rectangle : ((GridPane) map.getCenter()).getChildren()) {
 
                 Bounds bounds = rectangle.localToScene(rectangle.getBoundsInLocal());
 
-                if (bounds.contains(relativePoint)) {
+                Color currentColor = (Color) ((Rectangle) rectangle).getFill();
+                Color checkColor = Color.web("#f2e0c8");
+                if (currentColor.equals(checkColor))
+                    isOnEnemyPath = true;
 
+                if (bounds.contains(sceneX, sceneY)) {
+
+                    isEnteredPane = true;
                     double centerX = draggablePane.sceneToLocal((bounds.getMinX() + bounds.getMaxX()) / 2, 0).getX();
                     double centerY = draggablePane.sceneToLocal(0, ((bounds.getMinY() + bounds.getMaxY()) / 2)).getY();
 
@@ -107,6 +115,13 @@ public class DragTowers {
                 }
             }
 
+            if (!isEnteredPane || isOnEnemyPath) {
+
+                towerCircle.setVisible(false);
+                clonedDraggableGroup.setVisible(false);
+
+            }
+
             repositioner(clonedDraggableGroup, towerCircle);
             e.consume();
 
@@ -118,10 +133,11 @@ public class DragTowers {
 
         group.setOnMousePressed(e -> {
 
-            Point2D relativePoint = draggablePane.sceneToLocal(e.getSceneX(), e.getSceneY());
+            double sceneX = e.getSceneX();
+            double sceneY = e.getSceneY();
 
-            locationDifference[0] = relativePoint.getX() - group.getLayoutX();
-            locationDifference[1] = relativePoint.getY() - group.getLayoutY();
+            locationDifference[0] = sceneX - group.getLayoutX();
+            locationDifference[1] = sceneY - group.getLayoutY();
 
             circle.setVisible(true);
             e.consume();
@@ -129,10 +145,11 @@ public class DragTowers {
 
         group.setOnMouseDragged(e -> {
 
-            Point2D relativePoint = draggablePane.sceneToLocal(e.getSceneX(), e.getSceneY());
+            double sceneX = e.getSceneX();
+            double sceneY = e.getSceneY();
 
-            group.setLayoutX(relativePoint.getX() - locationDifference[0]);
-            group.setLayoutY(relativePoint.getY() - locationDifference[1]);
+            group.setLayoutX(sceneX - locationDifference[0]);
+            group.setLayoutY(sceneY - locationDifference[1]);
 
             circle.setCenterX(group.getLayoutX() + group.getBoundsInLocal().getWidth() / 2);
             circle.setCenterY(group.getLayoutY() + group.getBoundsInLocal().getHeight() / 2);
