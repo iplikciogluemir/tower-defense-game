@@ -28,6 +28,10 @@ public class GameMapScanner {
         input = new Scanner(file);
     }
 
+    public GameMapScanner() {
+
+    }
+
     private void resetScanner() throws IOException {
         if (input != null)
             input.close();
