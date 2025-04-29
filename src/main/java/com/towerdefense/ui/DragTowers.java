@@ -55,7 +55,6 @@ public class DragTowers {
         towerLabel.setOnMousePressed(e -> {
 
             Group clonedDraggableGroup = clone(towerGroup);
-            clonedDraggableGroup.setVisible(true);
 
             Circle towerCircle = new Circle(200);
             towerCircle.setFill(Color.rgb(255, 0, 0, 0.4));
@@ -106,7 +105,7 @@ public class DragTowers {
             double sceneY = e.getSceneY();
             boolean isEnteredPane = false;
             boolean isOnEnemyPath = false;
-            int count = 0;
+            int count = -1;
 
             for (Node rectangle : ((GridPane) map.getCenter()).getChildren()) {
 
@@ -145,7 +144,7 @@ public class DragTowers {
 
             else {
                 list.add(count);
-                repositioner(map, clonedDraggableGroup, towerCircle);
+                dragManager(towerLabel, clonedDraggableGroup, towerCircle);
             }
 
             e.consume();

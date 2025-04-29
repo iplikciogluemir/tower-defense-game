@@ -34,7 +34,7 @@ public class TowerPanel {
         mainDraggablePane = pane;
     }
 
-    public static StackPane getTowerPanel(BorderPane uiPane) throws IOException {
+    public static VBox getTowerPanel(BorderPane uiPane) throws IOException {
 
         VBox vbx = new VBox(10);
         final double prefWidth = 200;
@@ -97,20 +97,6 @@ public class TowerPanel {
         dragMechanism.draggableTower(tripleShotTower, TripleShotTower.getTripleShotTower());
         dragMechanism.draggableTower(missileLauncherTower, MissileLauncherTower.getMissileLauncherTower());
 
-        StackPane pane = new StackPane(vbx);
-
-        pane.setOnMousePressed(e -> {
-            e.consume();
-        });
-
-        pane.setOnMouseDragged(e -> {
-            e.consume();
-        });
-
-        pane.setOnMouseReleased(e -> {
-            e.consume();
-        });
-
-        return pane;
+        return vbx;
     }
 }

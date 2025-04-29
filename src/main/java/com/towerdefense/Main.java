@@ -33,9 +33,7 @@ public class Main extends Application {
         Pane mainDraggablePane = new Pane();
         TowerPanel.setMainDraggablePane(mainDraggablePane);
 
-        StackPane towerPanel = TowerPanel.getTowerPanel(uiPane);
-        uiPane.setRight(towerPanel);
-
+        uiPane.setRight(TowerPanel.getTowerPanel(uiPane));
         StackPane mainPane = new StackPane(uiPane, mainDraggablePane);
 
         Scene scene = new Scene(mainPane, 500, 500);
