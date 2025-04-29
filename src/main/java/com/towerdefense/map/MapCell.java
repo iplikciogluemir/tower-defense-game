@@ -24,17 +24,15 @@ public class MapCell {
     public static final int sideLength = 60;
     public static GameMapScanner currMap;
 
-    public static BorderPane getMap(int level) throws FileNotFoundException, IOException, InterruptedException {
+    public static GridPane getMap(int level) throws FileNotFoundException, IOException, InterruptedException {
 
         String filePath = "src/main/resources/maps/level" + level + ".txt";
         GameMapScanner map = new GameMapScanner(new File(filePath));
 
-        BorderPane mainPane = new BorderPane();
-        mainPane.setStyle("-fx-background-color: #faf1da;");
+        GridPane mapPane = showMap(map);
         currMap = map;
-        mainPane.setCenter(showMap(map));
 
-        return mainPane;
+        return mapPane;
 
     }
 
