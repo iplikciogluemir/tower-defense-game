@@ -1,9 +1,12 @@
 package com.towerdefense.map;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.ScaleTransition;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -21,21 +24,21 @@ public class MapCell {
     public static final int sideLength = 60;
     public static GameMapScanner currMap;
 
-    public static BorderPane getMap(int level) throws FileNotFoundException, IOException {
+    public static BorderPane getMap(int level) throws FileNotFoundException, IOException, InterruptedException {
 
-        String filePath = "src/main/resources/maps/level"+level+".txt";
+        String filePath = "src/main/resources/maps/level" + level + ".txt";
         GameMapScanner map = new GameMapScanner(new File(filePath));
-        
+
         BorderPane mainPane = new BorderPane();
         mainPane.setStyle("-fx-background-color: #faf1da;");
         currMap = map;
         mainPane.setCenter(showMap(map));
-        
+
         return mainPane;
 
     }
 
-    public static GridPane showMap(GameMapScanner map) throws IOException {
+    public static GridPane showMap(GameMapScanner map) throws IOException, InterruptedException {
 
         GridPane gridPane = new GridPane();
         gridPane.setHgap(2);
@@ -71,8 +74,22 @@ public class MapCell {
                     }
                 }
 
+                rectangle.setOpacity(0);
+                rectangle.setScaleX(0);
+                rectangle.setScaleY(0);
                 gridPane.add(rectangle, column, row);
 
+                FadeTransition fadeAnimation = new FadeTransition(Duration.millis(750), rectangle);
+                fadeAnimation.setFromValue(0);
+                fadeAnimation.setToValue(1);
+                fadeAnimation.setDelay(Duration.millis(500 + row * 100));
+                fadeAnimation.play();
+
+                ScaleTransition scaleAnimation = new ScaleTransition(Duration.millis(750), rectangle);
+                scaleAnimation.setToX(1);
+                scaleAnimation.setToY(1);
+                scaleAnimation.setDelay(Duration.millis(500 + row * 100));
+                scaleAnimation.play();
             }
         }
         return gridPane;

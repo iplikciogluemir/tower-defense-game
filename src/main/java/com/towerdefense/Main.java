@@ -26,7 +26,7 @@ import javafx.util.Duration;
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws FileNotFoundException, IOException {
+    public void start(Stage primaryStage) throws FileNotFoundException, IOException, InterruptedException {
 
         BorderPane uiPane = MapCell.getMap(2);
 
