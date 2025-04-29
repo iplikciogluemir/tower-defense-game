@@ -21,7 +21,6 @@ public abstract class Projectile {
 
     public abstract void render();
 
-    // Getters and setters
     public double getX() {
         return x;
     }
@@ -42,9 +41,12 @@ public abstract class Projectile {
         this.active = active;
     }
 
-    // Movement calculation
     protected void move() {
         x += Math.cos(direction) * speed;
         y += Math.sin(direction) * speed;
+    }
+
+    public static double getDistance(double x1, double y1, double x2, double y2) {
+        return Math.sqrt(Math.abs(Math.pow(y2 - y1, 2) + Math.pow(x2 - x1, 2)));
     }
 }
