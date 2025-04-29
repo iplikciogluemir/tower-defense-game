@@ -2,6 +2,7 @@ package com.towerdefense.ui;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import com.towerdefense.map.GameMapScanner;
 import com.towerdefense.map.MapCell;
@@ -21,11 +22,13 @@ public class DragTowers {
 
     private Pane draggablePane;
     private BorderPane map;
+    ArrayList<Integer> list;
 
     public DragTowers(Pane draggablePane, BorderPane uiPane) throws IOException, FileNotFoundException {
 
         this.draggablePane = draggablePane;
         this.map = uiPane;
+        list = new ArrayList<>();
 
     }
 
@@ -52,7 +55,6 @@ public class DragTowers {
         towerLabel.setOnMousePressed(e -> {
 
             Group clonedDraggableGroup = clone(towerGroup);
-            clonedDraggableGroup.setVisible(true);
 
             Circle towerCircle = new Circle(200);
             towerCircle.setFill(Color.rgb(255, 0, 0, 0.4));
@@ -103,10 +105,12 @@ public class DragTowers {
             double sceneY = e.getSceneY();
             boolean isEnteredPane = false;
             boolean isOnEnemyPath = false;
+            int count = -1;
 
             for (Node rectangle : ((GridPane) map.getCenter()).getChildren()) {
 
                 Bounds bounds = rectangle.localToScene(rectangle.getBoundsInLocal());
+                count++;
 
                 if (bounds.contains(sceneX, sceneY)) {
 
@@ -129,18 +133,19 @@ public class DragTowers {
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
-                    if (isOnEnemyPath) {
-                        break;
-                    }
+
+                    break;
 
                 }
             }
 
-            if (!isEnteredPane || isOnEnemyPath)
+            if (!isEnteredPane || isOnEnemyPath || list.contains(count))
                 draggablePane.getChildren().removeAll(clonedDraggableGroup, towerCircle);
 
-            else
-                repositioner(map, clonedDraggableGroup, towerCircle);
+            else {
+                list.add(count);
+                dragManager(towerLabel, clonedDraggableGroup, towerCircle);
+            }
 
             e.consume();
         });
