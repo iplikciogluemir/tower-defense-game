@@ -8,19 +8,13 @@ import com.towerdefense.enemies.EnemyPathAutoGenerator;
 import com.towerdefense.map.MapCell;
 import com.towerdefense.ui.TowerPanel;
 
+import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
 import javafx.application.Application;
-import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 public class Main extends Application {
@@ -28,17 +22,14 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws FileNotFoundException, IOException, InterruptedException {
 
-        BorderPane uiPane = MapCell.getMap(2);
+        BorderPane uiPane = new BorderPane();
 
-        Pane mainDraggablePane = new Pane();
-        TowerPanel.setMainDraggablePane(mainDraggablePane);
-
+        uiPane.setCenter(MapCell.getMap(2));
         uiPane.setRight(TowerPanel.getTowerPanel(uiPane));
-        StackPane mainPane = new StackPane(uiPane, mainDraggablePane);
+        uiPane.setStyle("-fx-background-color: #faf1da;");
 
-        Scene scene = new Scene(mainPane, 500, 500);
+        Scene scene = new Scene(uiPane, 500, 500);
 
-        // primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setScene(scene);
         primaryStage.setFullScreen(true);
         primaryStage.show();
@@ -57,13 +48,8 @@ public class Main extends Application {
             }
             pathTransition.setNode(enemyTest);
             pathTransition.setCycleCount(PathTransition.INDEFINITE);
-
+            pathTransition.setInterpolator(Interpolator.LINEAR);
             pathTransition.play();
-
-            // Point2D firstTile =
-            // (((GridPane)uiPane.getCenter()).getChildren().get(0)).localToScene(0,0);
-            // Circle circle = new Circle(firstTile.getX() , firstTile.getY(), 60);
-            // mainPane.getChildren().addAll(circle);
 
         });
     }

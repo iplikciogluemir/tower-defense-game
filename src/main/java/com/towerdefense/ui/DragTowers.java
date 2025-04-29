@@ -4,61 +4,55 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import com.towerdefense.map.GameMapScanner;
 import com.towerdefense.map.MapCell;
 import javafx.geometry.Bounds;
-import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.layout.Pane;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
 public class DragTowers {
 
-    private Pane draggablePane;
-    private BorderPane map;
+    private BorderPane pane;
     ArrayList<Integer> list;
+    int index;
 
-    public DragTowers(Pane draggablePane, BorderPane uiPane) throws IOException, FileNotFoundException {
+    public DragTowers(BorderPane uiPane) throws IOException, FileNotFoundException {
 
-        this.draggablePane = draggablePane;
-        this.map = uiPane;
+        this.pane = uiPane;
         list = new ArrayList<>();
-
     }
 
     public Group clone(Group group) {
 
         Group clonedGroup = new Group();
-
         for (Node node : group.getChildren()) {
 
             Rectangle source = (Rectangle) node;
             Rectangle cloned = new Rectangle(source.getX(), source.getY(), source.getWidth(), source.getHeight());
             cloned.setFill(source.getFill());
             cloned.setStyle(source.getStyle());
-
             clonedGroup.getChildren().addAll(cloned);
-
         }
-
         return clonedGroup;
     }
 
     public void draggableTower(Label towerLabel, Group towerGroup) {
 
         towerLabel.setOnMousePressed(e -> {
-
             Group clonedDraggableGroup = clone(towerGroup);
 
             Circle towerCircle = new Circle(200);
             towerCircle.setFill(Color.rgb(255, 0, 0, 0.4));
-            draggablePane.getChildren().addAll(clonedDraggableGroup, towerCircle);
+            pane.getChildren().addAll(clonedDraggableGroup, towerCircle);
+
+            clonedDraggableGroup.setPickOnBounds(true);
+            towerCircle.setMouseTransparent(true);
 
             double sceneX = e.getSceneX();
             double sceneY = e.getSceneY();
@@ -74,155 +68,92 @@ public class DragTowers {
             towerCircle.setCenterX(sceneX);
             towerCircle.setCenterY(sceneY);
 
-            dragManager(towerLabel, clonedDraggableGroup, towerCircle);
+            repositioner(towerLabel, clonedDraggableGroup, towerCircle);
 
             e.consume();
         });
+
     }
 
-    void dragManager(Label towerLabel, Group clonedDraggableGroup, Circle towerCircle) {
+    void repositioner(Label towerLabel, Group clonedDraggableGroup, Circle towerCircle) {
 
         towerLabel.setOnMouseDragged(e -> {
-
-            double sceneX = e.getSceneX();
-            double sceneY = e.getSceneY();
-
-            clonedDraggableGroup
-                    .setLayoutX(sceneX - clonedDraggableGroup.getBoundsInLocal().getWidth() / 2);
-            clonedDraggableGroup
-                    .setLayoutY(sceneY - clonedDraggableGroup.getBoundsInLocal().getHeight() / 2);
-
-            towerCircle.setCenterX(sceneX);
-            towerCircle.setCenterY(sceneY);
-
-            e.consume();
+            setOnMouseDragged(clonedDraggableGroup, towerCircle, e);
         });
 
         towerLabel.setOnMouseReleased(e -> {
+            setOnMouseReleased(clonedDraggableGroup, towerCircle, e);
 
-            towerCircle.setVisible(false);
-            double sceneX = e.getSceneX();
-            double sceneY = e.getSceneY();
-            boolean isEnteredPane = false;
-            boolean isOnEnemyPath = false;
-            int count = -1;
+            clonedDraggableGroup.setOnMousePressed(e2 -> {
+                towerCircle.setVisible(true);
+            });
 
-            for (Node rectangle : ((GridPane) map.getCenter()).getChildren()) {
+            clonedDraggableGroup.setOnMouseDragged(e2 -> {
+                setOnMouseDragged(clonedDraggableGroup, towerCircle, e2);
+            });
 
-                Bounds bounds = rectangle.localToScene(rectangle.getBoundsInLocal());
-                count++;
-
-                if (bounds.contains(sceneX, sceneY)) {
-
-                    isEnteredPane = true;
-                    double centerX = draggablePane.sceneToLocal((bounds.getMinX() + bounds.getMaxX()) / 2, 0).getX();
-                    double centerY = draggablePane.sceneToLocal(0, ((bounds.getMinY() + bounds.getMaxY()) / 2)).getY();
-
-                    clonedDraggableGroup
-                            .setLayoutX(centerX - clonedDraggableGroup.getBoundsInLocal().getWidth() / 2);
-                    clonedDraggableGroup
-                            .setLayoutY(centerY - clonedDraggableGroup.getBoundsInLocal().getHeight() / 2);
-
-                    towerCircle.setCenterX(centerX);
-                    towerCircle.setCenterY(centerY);
-
-                    try {
-                        isOnEnemyPath = MapCell.isEnemyPath(MapCell.currMap,
-                                GridPane.getRowIndex((Rectangle) rectangle),
-                                GridPane.getColumnIndex((Rectangle) rectangle));
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
-
-                    break;
-
-                }
-            }
-
-            if (!isEnteredPane || isOnEnemyPath || list.contains(count))
-                draggablePane.getChildren().removeAll(clonedDraggableGroup, towerCircle);
-
-            else {
-                list.add(count);
-                dragManager(towerLabel, clonedDraggableGroup, towerCircle);
-            }
-
-            e.consume();
+            clonedDraggableGroup.setOnMouseReleased(e2 -> {
+                setOnMouseReleased(clonedDraggableGroup, towerCircle, e2);
+            });
         });
     }
 
-    public void repositioner(BorderPane map, Group group, Circle circle) {
-        final double[] locationDifference = new double[2];
+    void setOnMouseReleased(Group group, Circle circle, MouseEvent e) {
+        circle.setVisible(false);
+        double sceneX = e.getSceneX();
+        double sceneY = e.getSceneY();
+        boolean isEnteredPane = false;
+        boolean isOnEnemyPath = false;
+        // list.remove(new Integer(index));
+        index = -1;
 
-        group.setOnMousePressed(e -> {
+        for (Node rectangle : ((GridPane) pane.getCenter()).getChildren()) {
 
-            double sceneX = e.getSceneX();
-            double sceneY = e.getSceneY();
+            Bounds bounds = rectangle.localToScene(rectangle.getBoundsInLocal());
+            index++;
 
-            locationDifference[0] = sceneX - group.getLayoutX();
-            locationDifference[1] = sceneY - group.getLayoutY();
+            if (bounds.contains(sceneX, sceneY)) {
 
-            circle.setVisible(true);
-            e.consume();
-        });
+                isEnteredPane = true;
+                double centerX = pane.sceneToLocal((bounds.getMinX() + bounds.getMaxX()) / 2, 0).getX();
+                double centerY = pane.sceneToLocal(0, ((bounds.getMinY() + bounds.getMaxY()) / 2)).getY();
 
-        group.setOnMouseDragged(e -> {
+                group.setLayoutX(centerX - group.getBoundsInLocal().getWidth() / 2);
+                group.setLayoutY(centerY - group.getBoundsInLocal().getHeight() / 2);
 
-            double sceneX = e.getSceneX();
-            double sceneY = e.getSceneY();
+                circle.setCenterX(centerX);
+                circle.setCenterY(centerY);
 
-            group.setLayoutX(sceneX - locationDifference[0]);
-            group.setLayoutY(sceneY - locationDifference[1]);
-
-            circle.setCenterX(sceneX);
-            circle.setCenterY(sceneY);
-
-            e.consume();
-        });
-
-        group.setOnMouseReleased(e -> {
-            circle.setVisible(false);
-
-            boolean isEnteredPane = false;
-            boolean isOnEnemyPath = false;
-
-            for (Node rectangle : ((GridPane) map.getCenter()).getChildren()) {
-
-                Bounds bounds = rectangle.localToScene(rectangle.getBoundsInLocal());
-
-                if (bounds.contains(e.getSceneX(), e.getSceneY())) {
-
-                    isEnteredPane = true;
-                    double centerX = draggablePane.sceneToLocal((bounds.getMinX() + bounds.getMaxX()) / 2, 0).getX();
-                    double centerY = draggablePane.sceneToLocal(0, ((bounds.getMinY() + bounds.getMaxY()) / 2)).getY();
-
-                    group.setLayoutX(centerX - group.getBoundsInLocal().getWidth() / 2);
-                    group.setLayoutY(centerY - group.getBoundsInLocal().getHeight() / 2);
-
-                    circle.setCenterX(centerX);
-                    circle.setCenterY(centerY);
-
-                    try {
-                        isOnEnemyPath = MapCell.isEnemyPath(MapCell.currMap,
-                                GridPane.getRowIndex((Rectangle) rectangle),
-                                GridPane.getColumnIndex((Rectangle) rectangle));
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
-                    if (isOnEnemyPath) {
-                        break;
-                    }
-
+                try {
+                    isOnEnemyPath = MapCell.isEnemyPath(MapCell.currMap,
+                            GridPane.getRowIndex((Rectangle) rectangle),
+                            GridPane.getColumnIndex((Rectangle) rectangle));
+                } catch (IOException e1) {
+                    e1.printStackTrace();
                 }
+                break;
             }
+        }
+        if (!isEnteredPane || isOnEnemyPath || list.contains(index))
+            pane.getChildren().removeAll(group, circle);
 
-            if (!isEnteredPane || isOnEnemyPath) {
+        else {
+            list.add(index);
+        }
+        e.consume();
+    }
 
-                draggablePane.getChildren().removeAll(group, circle);
+    void setOnMouseDragged(Group group, Circle circle, MouseEvent e) {
 
-            }
+        double sceneX = e.getSceneX();
+        double sceneY = e.getSceneY();
 
-            e.consume();
-        });
+        group.setLayoutX(sceneX - group.getBoundsInLocal().getWidth() / 2);
+        group.setLayoutY(sceneY - group.getBoundsInLocal().getHeight() / 2);
+
+        circle.setCenterX(sceneX);
+        circle.setCenterY(sceneY);
+
+        e.consume();
     }
 }
