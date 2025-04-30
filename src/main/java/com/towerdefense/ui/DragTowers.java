@@ -3,6 +3,8 @@ package com.towerdefense.ui;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.towerdefense.map.MapCell;
 import javafx.geometry.Bounds;
@@ -19,13 +21,10 @@ import javafx.scene.layout.GridPane;
 public class DragTowers {
 
     private BorderPane pane;
-    ArrayList<Integer> list;
-    int index;
+    private HashMap<Group, Integer> mp = new HashMap<>();
 
     public DragTowers(BorderPane uiPane) throws IOException, FileNotFoundException {
-
         this.pane = uiPane;
-        list = new ArrayList<>();
     }
 
     public Group clone(Group group) {
@@ -85,6 +84,7 @@ public class DragTowers {
             setOnMouseReleased(clonedDraggableGroup, towerCircle, e);
 
             clonedDraggableGroup.setOnMousePressed(e2 -> {
+                mp.remove(clonedDraggableGroup);
                 towerCircle.setVisible(true);
             });
 
@@ -104,13 +104,11 @@ public class DragTowers {
         double sceneY = e.getSceneY();
         boolean isEnteredPane = false;
         boolean isOnEnemyPath = false;
-        // list.remove(new Integer(index));
-        index = -1;
+        int index = -1;
 
         for (Node rectangle : ((GridPane) pane.getCenter()).getChildren()) {
-
+            ++index;
             Bounds bounds = rectangle.localToScene(rectangle.getBoundsInLocal());
-            index++;
 
             if (bounds.contains(sceneX, sceneY)) {
 
@@ -131,14 +129,14 @@ public class DragTowers {
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
+
                 break;
             }
         }
-        if (!isEnteredPane || isOnEnemyPath || list.contains(index))
+        if (!isEnteredPane || isOnEnemyPath || mp.containsValue(index))
             pane.getChildren().removeAll(group, circle);
-
         else {
-            list.add(index);
+            mp.put(group, index);
         }
         e.consume();
     }
