@@ -73,9 +73,8 @@ public class DragTowers {
                 towerCircle.setCenterY(sceneY);
 
                 repositioner(towerLabel, clonedDraggableGroup, towerCircle);
-
-                e.consume();
             }
+            e.consume();
         });
 
     }
@@ -92,6 +91,7 @@ public class DragTowers {
             clonedDraggableGroup.setOnMousePressed(e2 -> {
                 mp.remove(clonedDraggableGroup);
                 towerCircle.setVisible(true);
+                e2.consume();
             });
 
             clonedDraggableGroup.setOnMouseDragged(e2 -> {
@@ -101,6 +101,9 @@ public class DragTowers {
             clonedDraggableGroup.setOnMouseReleased(e2 -> {
                 setOnMouseReleased(clonedDraggableGroup, towerCircle, e2);
             });
+
+            towerLabel.setOnMouseDragged(null);
+            towerLabel.setOnMouseReleased(null);
         });
     }
 
