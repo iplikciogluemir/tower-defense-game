@@ -1,62 +1,33 @@
 package com.towerdefense.enemies;
 
+import javafx.beans.property.DoubleProperty;
 import javafx.scene.Group;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 
 public class Enemy {
     private int health;
-    private int X;
-    private int Y;
-    private int dx;
-    private int dy;
+    private int speed;
 
-    public Enemy(int health, int speed, int X, int Y, int dx, int dy) {
+    public Enemy(int health, int speed) {
         this.health = health;
-        this.X = X;
-        this.Y = Y;
-        this.dx = dx;
-        this.dy = dy;
+        this.speed = speed;
+    }
+
+    public int getHealth() {
+        return health;
     }
 
     public void setHealth(int health) {
         this.health = health;
     }
 
-    public int getHealth() {
-        return this.health;
+    public int getSpeed() {
+        return speed;
     }
 
-    public int getX() {
-        return X;
-    }
-
-    public void setX(int X) {
-        this.X = X;
-    }
-
-    public int getY() {
-        return Y;
-    }
-
-    public void setY(int Y) {
-        this.Y = Y;
-    }
-
-    public int getDx() {
-        return dx;
-    }
-
-    public void setDx(int dx) {
-        this.dx = dx;
-    }
-
-    public int getDy() {
-        return dy;
-    }
-
-    public void setDy(int dy) {
-        this.dy = dy;
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 
     public static Group getEnemy() {
