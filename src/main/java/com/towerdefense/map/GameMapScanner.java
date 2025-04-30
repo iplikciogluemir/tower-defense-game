@@ -105,4 +105,18 @@ public class GameMapScanner {
         }
         return levelPath;
     }
+  
+
+
+    
+    public double getEnemyCount(int waveIndex){
+        return waveData.get(waveIndex-1).getX();
+    }
+    public double getEnemyInterval(int waveIndex){
+        return waveData.get(waveIndex-1).getY();
+    }
+    public double getWaveDelay(int waveIndex){
+        return waveData.get(waveIndex-1).getZ();
+    }
+
 }
