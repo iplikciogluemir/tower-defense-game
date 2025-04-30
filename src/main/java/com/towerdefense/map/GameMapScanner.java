@@ -108,7 +108,7 @@ public class GameMapScanner {
   
 
 
-    
+
     public double getEnemyCount(int waveIndex){
         return waveData.get(waveIndex-1).getX();
     }
@@ -117,6 +117,9 @@ public class GameMapScanner {
     }
     public double getWaveDelay(int waveIndex){
         return waveData.get(waveIndex-1).getZ();
+    }
+    public int getWaveCount (){
+        return waveData.size();
     }
 
 }
