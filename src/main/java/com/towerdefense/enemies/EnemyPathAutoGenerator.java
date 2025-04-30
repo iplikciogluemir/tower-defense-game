@@ -30,7 +30,7 @@ public class EnemyPathAutoGenerator {
 
     }
 
-    public static Path getEnemyPath(int mapNumber, BorderPane uiPane) throws IOException {
+    public static Path getEnemyPath(BorderPane uiPane) throws IOException {
          
         GameMapScanner map = MapCell.currMap;
 
