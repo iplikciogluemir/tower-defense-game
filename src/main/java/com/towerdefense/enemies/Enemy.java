@@ -30,7 +30,7 @@ public class Enemy {
         this.speed = speed;
     }
 
-    public Group getEnemy() {
+    public static Group getEnemy() {
         Polygon body = new Polygon();
         body.getPoints().addAll(
                 7.0, 7.0,

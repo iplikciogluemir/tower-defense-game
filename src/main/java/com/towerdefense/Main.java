@@ -41,7 +41,7 @@ public class Main extends Application {
             PathTransition pathTransition = new PathTransition();
             pathTransition.setDuration(Duration.seconds(2));
             try {
-                pathTransition.setPath(EnemyPathAutoGenerator.getEnemyPath(2, uiPane));
+                pathTransition.setPath(EnemyPathAutoGenerator.getEnemyPath(uiPane));
             } catch (IOException e1) {
 
                 e1.printStackTrace();
