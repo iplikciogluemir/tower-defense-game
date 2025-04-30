@@ -3,6 +3,9 @@ package com.towerdefense.map;
 // After WAVE_DATA is not used yet.
 
 import java.util.Scanner;
+
+import javafx.geometry.Point3D;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,6 +16,7 @@ public class GameMapScanner {
     private int width, height;
     private Scanner input;
     private File file;
+    private ArrayList<Point3D> waveData = new ArrayList<>();
 
     public GameMapScanner(File file) throws IOException {
         if (file == null) {
@@ -63,6 +67,17 @@ public class GameMapScanner {
         return 0;
     }
 
+    public ArrayList<Point3D> getWaveData() {
+        return waveData;
+    }
+
+    public void setWaveData(ArrayList<Point3D> waveData) {
+        if (waveData == null) {
+            throw new IllegalArgumentException("Wave data cannot be null");
+        }
+        this.waveData = waveData;
+    }
+
     public ArrayList<String> getPath() throws IOException {
         resetScanner();
         levelPath.clear();
@@ -70,8 +85,16 @@ public class GameMapScanner {
         while (input.hasNext()) {
             String line = input.nextLine();
 
-            if (line.equals("WAVE_DATA:"))
-                break;
+            if (line.equals("WAVE_DATA:")) {
+                while (input.hasNext()) {
+                    String waveLine = input.nextLine();
+                    String[] wavePoints = waveLine.split(",");
+                    double x = Double.parseDouble(wavePoints[0].trim());
+                    double y = Double.parseDouble(wavePoints[1].trim());
+                    double z = Double.parseDouble(wavePoints[2].trim());
+                    waveData.add(new Point3D(x, y, z));
+                }
+            }
 
             if (!line.contains("WIDTH") && !line.contains("HEIGHT")) {
                 String[] coordinate = line.split(",");
