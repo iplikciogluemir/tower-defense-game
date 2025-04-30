@@ -44,32 +44,38 @@ public class DragTowers {
     public void draggableTower(Label towerLabel, Group towerGroup) {
 
         towerLabel.setOnMousePressed(e -> {
-            Group clonedDraggableGroup = clone(towerGroup);
 
-            Circle towerCircle = new Circle(200);
-            towerCircle.setFill(Color.rgb(255, 0, 0, 0.4));
-            pane.getChildren().addAll(clonedDraggableGroup, towerCircle);
+            int towerPrice = price(towerGroup);
 
-            clonedDraggableGroup.setPickOnBounds(true);
-            towerCircle.setMouseTransparent(true);
+            if (HUDVariables.getMoney() >= towerPrice) {
+                HUDVariables.setMoney(HUDVariables.getMoney() - price(towerGroup));
 
-            double sceneX = e.getSceneX();
-            double sceneY = e.getSceneY();
+                Group clonedDraggableGroup = clone(towerGroup);
+                Circle towerCircle = new Circle(200);
+                towerCircle.setFill(Color.rgb(255, 0, 0, 0.4));
+                pane.getChildren().addAll(clonedDraggableGroup, towerCircle);
 
-            towerCircle.setVisible(true);
-            clonedDraggableGroup.setVisible(true);
+                clonedDraggableGroup.setPickOnBounds(true);
+                towerCircle.setMouseTransparent(true);
 
-            clonedDraggableGroup
-                    .setLayoutX(sceneX - clonedDraggableGroup.getBoundsInLocal().getWidth() / 2);
-            clonedDraggableGroup
-                    .setLayoutY(sceneY - clonedDraggableGroup.getBoundsInLocal().getHeight() / 2);
+                double sceneX = e.getSceneX();
+                double sceneY = e.getSceneY();
 
-            towerCircle.setCenterX(sceneX);
-            towerCircle.setCenterY(sceneY);
+                towerCircle.setVisible(true);
+                clonedDraggableGroup.setVisible(true);
 
-            repositioner(towerLabel, clonedDraggableGroup, towerCircle);
+                clonedDraggableGroup
+                        .setLayoutX(sceneX - clonedDraggableGroup.getBoundsInLocal().getWidth() / 2);
+                clonedDraggableGroup
+                        .setLayoutY(sceneY - clonedDraggableGroup.getBoundsInLocal().getHeight() / 2);
 
-            e.consume();
+                towerCircle.setCenterX(sceneX);
+                towerCircle.setCenterY(sceneY);
+
+                repositioner(towerLabel, clonedDraggableGroup, towerCircle);
+
+                e.consume();
+            }
         });
 
     }
@@ -133,9 +139,10 @@ public class DragTowers {
                 break;
             }
         }
-        if (!isEnteredPane || isOnEnemyPath || mp.containsValue(index))
+        if (!isEnteredPane || isOnEnemyPath || mp.containsValue(index)) {
             pane.getChildren().removeAll(group, circle);
-        else {
+            HUDVariables.setMoney(HUDVariables.getMoney() + price(group));
+        } else {
             mp.put(group, index);
         }
         e.consume();
@@ -153,5 +160,27 @@ public class DragTowers {
         circle.setCenterY(sceneY);
 
         e.consume();
+    }
+
+    int price(Group group) {
+
+        int price = 0;
+        int getChildrenSize = group.getChildren().size();
+        switch (getChildrenSize) {
+            case 11:
+                price = 50;
+                break;
+            case 18:
+                price = 120;
+                break;
+            case 12:
+                price = 150;
+                break;
+            case 26:
+                price = 200;
+                break;
+        }
+
+        return price;
     }
 }
