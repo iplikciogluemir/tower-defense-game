@@ -33,21 +33,22 @@ public class TowerPanel {
                                 "-fx-pref-width:" + prefWidth + ";" +
                                 "-fx-alignment:center";
 
-                HUDVariables variables = new HUDVariables();
-                variables.setLives(5);
-                variables.setMoney(100);
-                variables.setTime(10);
+                HUDVariables.setLives(5);
+                HUDVariables.setMoney(100);
+                HUDVariables.setTime(10);
 
-                Text livesText = new Text("Lives: " + variables.getLives());
+                Text livesText = new Text("Lives: " + HUDVariables.getLives());
                 livesText.setFont(Font.font(24));
                 livesText.setFill(Color.web("#672b00"));
+                HUDVariables.setLivesText(livesText);
 
-                Text moneyText = new Text("Money: " + variables.getMoney() + "$");
+                Text moneyText = new Text("Money: " + HUDVariables.getMoney() + "$");
                 moneyText.setFont(Font.font(24));
                 moneyText.setFill(Color.web("#672b00"));
+                HUDVariables.setMoneyText(moneyText);
 
-                Text countText = new Text("Next Wave: " + variables.counterViewer());
-                variables.setCountText(countText);
+                Text countText = new Text("Next Wave: " + HUDVariables.counterViewer());
+                HUDVariables.setCountText(countText);
                 countText.setFont(Font.font(24));
                 countText.setFill(Color.web("#672b00"));
 

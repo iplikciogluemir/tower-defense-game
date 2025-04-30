@@ -3,41 +3,61 @@ package com.towerdefense.ui;
 import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;
 import javafx.util.Duration;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 class HUDVariables {
-    private int lives;
-    private int money;
-    private Timeline timeline;
-    private int seconds;
-    private String countViewer;
-    private Text countText;
+    private static int lives;
+    private static int money;
+    private static Timeline timeline;
+    private static int seconds;
+    private static String countViewer;
 
-    public void setLives(int lives) {
-        this.lives = lives;
+    private static Text countText;
+    private static Text moneyText;
+    private static Text livesText;
+
+    // LIVES METHODS
+    public static void setLivesText(Text livesText) {
+        HUDVariables.livesText = livesText;
     }
 
-    public int getLives() {
+    public static int getLives() {
         return lives;
     }
 
-    public void setMoney(int money) {
-        this.money = money;
+    public static void setLives(int lives) {
+        HUDVariables.lives = lives;
+        if (livesText != null)
+            livesText.setText("Lives: " + lives);
     }
 
-    public int getMoney() {
+    // MONEY METHODS
+    public static void setMoneyText(Text moneyText) {
+        HUDVariables.moneyText = moneyText;
+    }
+
+    public static int getMoney() {
         return money;
     }
 
-    public void setTime(int seconds) {
-        this.seconds = seconds;
+    public static void setMoney(int money) {
+        HUDVariables.money = money;
+        if (moneyText != null)
+            moneyText.setText("Money: " + money + "$");
     }
 
-    public void setCountText(Text countText) {
-        this.countText = countText;
+    // TIME METHODS
+    public static void setTime(int seconds) {
+        HUDVariables.seconds = seconds;
     }
 
-    public String counterViewer() {
+    public static void setCountText(Text countText) {
+        HUDVariables.countText = countText;
+    }
+
+    public static String counterViewer() {
         countViewer = seconds + "s";
 
         if (timeline != null) {
@@ -58,7 +78,7 @@ class HUDVariables {
         });
 
         timeline = new Timeline(keyFrame);
-        timeline.setCycleCount(timeline.INDEFINITE);
+        timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
 
         return countViewer;
