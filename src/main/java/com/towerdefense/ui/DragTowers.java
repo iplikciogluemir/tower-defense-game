@@ -117,13 +117,13 @@ public class DragTowers {
 
         for (Node rectangle : ((GridPane) pane.getCenter()).getChildren()) {
             ++index;
-            Bounds bounds = rectangle.localToScene(rectangle.getBoundsInLocal());
+            Bounds bounds = rectangle.getBoundsInParent();
 
             if (bounds.contains(sceneX, sceneY)) {
 
                 isEnteredPane = true;
-                double centerX = pane.sceneToLocal((bounds.getMinX() + bounds.getMaxX()) / 2, 0).getX();
-                double centerY = pane.sceneToLocal(0, ((bounds.getMinY() + bounds.getMaxY()) / 2)).getY();
+                double centerX = (bounds.getMinX() + bounds.getMaxX()) / 2;
+                double centerY = (bounds.getMinY() + bounds.getMaxY()) / 2;
 
                 group.setLayoutX(centerX - group.getBoundsInLocal().getWidth() / 2);
                 group.setLayoutY(centerY - group.getBoundsInLocal().getHeight() / 2);
