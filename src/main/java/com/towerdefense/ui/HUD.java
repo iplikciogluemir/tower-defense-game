@@ -61,7 +61,7 @@ public class HUD {
                 double distance = Projectile.getDistance(towerPositions.getCenterX(), towerPositions.getCenterY(),
                         enemyPositions.getCenterX(),
                         enemyPositions.getCenterY());
-                if (distance <= 200) {
+                if (distance <= 200 && !Enemy.isDead(enemyTest)) {
                     Bullet.shootBullet(uiPane, tower, enemyTest);
                 }
             }

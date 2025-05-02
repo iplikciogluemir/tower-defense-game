@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-class HUDVariables {
+public class HUDVariables {
     private static int lives;
     private static int money;
     private static Timeline timeline;

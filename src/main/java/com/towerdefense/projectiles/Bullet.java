@@ -1,6 +1,7 @@
 package com.towerdefense.projectiles;
 
 import com.towerdefense.enemies.Enemy;
+import com.towerdefense.ui.HUDVariables;
 
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
@@ -37,6 +38,13 @@ public class Bullet extends Application {
         final Timeline[] timelineRef = new Timeline[1];
 
         timelineRef[0] = new Timeline(new KeyFrame(Duration.millis(interval), e -> {
+
+            if (!pane.getChildren().contains(enemy)) {
+                pane.getChildren().remove(bullet);
+                timelineRef[0].stop();
+                return;
+            }
+
             double targetX = enemy.getTranslateX();
             double targetY = enemy.getTranslateY();
             double currentX = bullet.getCenterX();
@@ -50,7 +58,13 @@ public class Bullet extends Application {
             // Check collision
             if (distance < 10) {
                 pane.getChildren().remove(bullet);
-                // decrease enemy health
+                Enemy.getSingleHit(enemy);
+
+                if (Enemy.isDead(enemy)) {
+                    pane.getChildren().remove(enemy);
+                    HUDVariables.setMoney(HUDVariables.getMoney() + 100);
+                }
+
                 timelineRef[0].stop();
                 return;
             }
@@ -61,6 +75,7 @@ public class Bullet extends Application {
 
             bullet.setCenterX(currentX + moveStepX);
             bullet.setCenterY(currentY + moveStepY);
+
         }));
         timelineRef[0].setCycleCount(Timeline.INDEFINITE);
         timelineRef[0].play();
