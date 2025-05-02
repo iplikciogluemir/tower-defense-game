@@ -74,6 +74,7 @@ class HUDVariables {
                 countViewer = "0s";
                 countText.setText("Next Wave: " + countViewer);
                 timeline.stop();
+                HUD.startAnimation();
             }
         });
 

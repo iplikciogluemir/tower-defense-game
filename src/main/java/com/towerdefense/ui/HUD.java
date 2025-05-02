@@ -1,0 +1,75 @@
+package com.towerdefense.ui;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+import com.towerdefense.enemies.Enemy;
+import com.towerdefense.enemies.EnemyPathAutoGenerator;
+import com.towerdefense.map.MapCell;
+import com.towerdefense.projectiles.Bullet;
+import com.towerdefense.projectiles.Projectile;
+
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.PathTransition;
+import javafx.animation.Timeline;
+import javafx.geometry.Bounds;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+
+public class HUD {
+    static Group enemyTest;
+    static BorderPane uiPane;
+
+    public static Scene getScene() throws IOException, InterruptedException {
+        uiPane = new BorderPane();
+
+        uiPane.setCenter(MapCell.getMap(2));
+        uiPane.setRight(TowerPanel.getTowerPanel(uiPane));
+        uiPane.setStyle("-fx-background-color: #faf1da;");
+
+        Scene scene = new Scene(uiPane, 500, 500);
+
+        enemyTest = Enemy.getEnemy();
+        uiPane.getChildren().addAll(enemyTest);
+
+        return scene;
+    }
+
+    public static void startAnimation() {
+        PathTransition pathTransition = new PathTransition();
+        pathTransition.setDuration(Duration.seconds(10));
+        try {
+            pathTransition.setPath(EnemyPathAutoGenerator.getEnemyPath(uiPane));
+        } catch (IOException e1) {
+
+            e1.printStackTrace();
+        }
+        pathTransition.setNode(enemyTest);
+        pathTransition.setInterpolator(Interpolator.LINEAR);
+        pathTransition.play();
+
+        HashMap<Group, Integer> towerMap = DragTowers.getTowerMap();
+
+        for (Group tower : towerMap.keySet()) {
+            final double[] distance = new double[1];
+            final Timeline[] timeline = new Timeline[1];
+            timeline[0] = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+                Bounds towerPositions = tower.getBoundsInParent();
+                Bounds enemyPositions = enemyTest.getBoundsInParent();
+                distance[0] = Projectile.getDistance(towerPositions.getCenterX(), towerPositions.getCenterY(),
+                        enemyPositions.getCenterX(),
+                        enemyPositions.getCenterY());
+                System.out.println(distance[0]);
+                if (distance[0] <= 200) {
+                    Bullet.shootBullet(uiPane, tower, enemyTest);
+                }
+            }));
+            timeline[0].setCycleCount(Timeline.INDEFINITE);
+            timeline[0].play();
+        }
+    }
+}

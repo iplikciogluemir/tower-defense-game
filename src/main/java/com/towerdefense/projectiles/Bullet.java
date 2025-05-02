@@ -7,6 +7,7 @@ import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;
 import javafx.application.Application;
 import javafx.beans.property.DoubleProperty;
+import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -17,18 +18,19 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Bullet extends Application {
-
     @Override
     public void start(Stage primaryStage) {
     }
 
-    public void shootBullet(Pane pane, double towerX, double towerY, Group enemy) {
+    public static void shootBullet(Pane pane, Group tower, Group enemy) {
         Circle bullet = new Circle(5, Color.RED);
-        bullet.setCenterX(towerX);
-        bullet.setCenterY(towerY);
+        Bounds towerPos = tower.getBoundsInParent();
+        // Bounds enemyPos = enemy.getBoundsInParent();
+        bullet.setCenterX(towerPos.getCenterX());
+        bullet.setCenterY(towerPos.getCenterY());
         pane.getChildren().add(bullet);
 
-        final double speed = 100.0;
+        final double speed = 200.0;
         final double interval = 20;
 
         // needed to enable modification

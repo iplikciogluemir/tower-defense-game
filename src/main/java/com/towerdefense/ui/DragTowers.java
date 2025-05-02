@@ -21,10 +21,14 @@ import javafx.scene.layout.GridPane;
 public class DragTowers {
 
     private BorderPane pane;
-    private HashMap<Group, Integer> mp = new HashMap<>();
+    private static HashMap<Group, Integer> mp = new HashMap<>();
 
     public DragTowers(BorderPane uiPane) throws IOException, FileNotFoundException {
         this.pane = uiPane;
+    }
+
+    public static HashMap<Group, Integer> getTowerMap() {
+        return mp;
     }
 
     public Group clone(Group group) {
