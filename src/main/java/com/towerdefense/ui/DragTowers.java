@@ -14,6 +14,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -49,34 +50,36 @@ public class DragTowers {
 
         towerLabel.setOnMousePressed(e -> {
 
-            int towerPrice = price(towerGroup);
+            if (e.getButton() == MouseButton.PRIMARY) {
+                int towerPrice = price(towerGroup);
 
-            if (HUDVariables.getMoney() >= towerPrice) {
-                HUDVariables.setMoney(HUDVariables.getMoney() - price(towerGroup));
+                if (HUDVariables.getMoney() >= towerPrice) {
+                    HUDVariables.setMoney(HUDVariables.getMoney() - price(towerGroup));
 
-                Group clonedDraggableGroup = clone(towerGroup);
-                Circle towerCircle = new Circle(200);
-                towerCircle.setFill(Color.rgb(255, 0, 0, 0.4));
-                pane.getChildren().addAll(clonedDraggableGroup, towerCircle);
+                    Group clonedDraggableGroup = clone(towerGroup);
+                    Circle towerCircle = new Circle(200);
+                    towerCircle.setFill(Color.rgb(255, 0, 0, 0.4));
+                    pane.getChildren().addAll(clonedDraggableGroup, towerCircle);
 
-                clonedDraggableGroup.setPickOnBounds(true);
-                towerCircle.setMouseTransparent(true);
+                    clonedDraggableGroup.setPickOnBounds(true);
+                    towerCircle.setMouseTransparent(true);
 
-                double sceneX = e.getSceneX();
-                double sceneY = e.getSceneY();
+                    double sceneX = e.getSceneX();
+                    double sceneY = e.getSceneY();
 
-                towerCircle.setVisible(true);
-                clonedDraggableGroup.setVisible(true);
+                    towerCircle.setVisible(true);
+                    clonedDraggableGroup.setVisible(true);
 
-                clonedDraggableGroup
-                        .setLayoutX(sceneX - clonedDraggableGroup.getBoundsInLocal().getWidth() / 2);
-                clonedDraggableGroup
-                        .setLayoutY(sceneY - clonedDraggableGroup.getBoundsInLocal().getHeight() / 2);
+                    clonedDraggableGroup
+                            .setLayoutX(sceneX - clonedDraggableGroup.getBoundsInLocal().getWidth() / 2);
+                    clonedDraggableGroup
+                            .setLayoutY(sceneY - clonedDraggableGroup.getBoundsInLocal().getHeight() / 2);
 
-                towerCircle.setCenterX(sceneX);
-                towerCircle.setCenterY(sceneY);
+                    towerCircle.setCenterX(sceneX);
+                    towerCircle.setCenterY(sceneY);
 
-                repositioner(towerLabel, clonedDraggableGroup, towerCircle);
+                    repositioner(towerLabel, clonedDraggableGroup, towerCircle);
+                }
             }
             e.consume();
         });

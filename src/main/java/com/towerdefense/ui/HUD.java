@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.towerdefense.enemies.Enemy;
 import com.towerdefense.enemies.EnemyPathAutoGenerator;
+import com.towerdefense.game.WaveManager;
 import com.towerdefense.map.MapCell;
 import com.towerdefense.projectiles.Bullet;
 import com.towerdefense.projectiles.Projectile;
@@ -34,20 +35,17 @@ public class HUD {
         Scene scene = new Scene(uiPane, 500, 500);
         Enemy vututu = new Enemy();
         enemyTest = vututu.getEnemy();
-        uiPane.getChildren().addAll(enemyTest);
+       // uiPane.getChildren().addAll(enemyTest);
 
         return scene;
     }
 
     public static void startAnimation() {
+        WaveManager manager = new WaveManager(uiPane);
+        manager.waveSender(1);
         PathTransition pathTransition = new PathTransition();
         pathTransition.setDuration(Duration.seconds(10));
-        try {
-            pathTransition.setPath(EnemyPathAutoGenerator.getEnemyPath(uiPane));
-        } catch (IOException e1) {
-
-            e1.printStackTrace();
-        }
+        pathTransition.setPath(EnemyPathAutoGenerator.getEnemyPath(uiPane));
         pathTransition.setNode(enemyTest);
         pathTransition.setInterpolator(Interpolator.LINEAR);
         pathTransition.play();
@@ -61,7 +59,7 @@ public class HUD {
                 double distance = Projectile.getDistance(towerPositions.getCenterX(), towerPositions.getCenterY(),
                         enemyPositions.getCenterX(),
                         enemyPositions.getCenterY());
-                if (distance <= 200) {
+                if (distance <= 200 && !Enemy.isDead(enemyTest)) {
                     Bullet.shootBullet(uiPane, tower, enemyTest);
                 }
             }
