@@ -14,6 +14,12 @@ public class Enemy {
         this.speed = speed;
     }
 
+    public Enemy() {
+        this.health = 100;
+        this.speed = 1;
+    }
+
+
     public int getHealth() {
         return health;
     }

@@ -32,7 +32,8 @@ public class HUD {
         uiPane.setStyle("-fx-background-color: #faf1da;");
 
         Scene scene = new Scene(uiPane, 500, 500);
-        enemyTest = Enemy.getEnemy();
+        Enemy vututu = new Enemy();
+        enemyTest = vututu.getEnemy();
         uiPane.getChildren().addAll(enemyTest);
 
         return scene;
