@@ -50,19 +50,15 @@ public class WaveManager {
     }
 
     public void waveSender(int waveIndex) {
-        System.out.println("Total enemies in wave: " + enemyArrayList.get(waveIndex).size());
-        
+        Timeline timeline = new Timeline();
         for (int i = 0; i < enemyArrayList.get(waveIndex).size(); i++) {
             final int eventFix = i;
-            double delay = i * MapCell.currMap.getEnemyInterval(waveIndex) + 0.1; // to be fixed  
-            System.out.println("Scheduling enemy " + i + " with delay: " + delay);
-            
-            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(delay), e -> {
-                System.out.println("Sending enemy " + eventFix);
+            KeyFrame keyFrame = new KeyFrame(Duration.seconds(i * MapCell.currMap.getEnemyInterval(waveIndex)), e -> {
                 enemySender((Enemy)(enemyArrayList.get(waveIndex).get(eventFix)));
-            }));
-            timeline.play();
+            });
+            timeline.getKeyFrames().add(keyFrame);
         }     
+        timeline.play();
     }
 
     public void enemySender(Enemy enemy) {
