@@ -30,7 +30,7 @@ public class EnemyPathAutoGenerator {
 
     }
 
-    public static Path getEnemyPath(BorderPane uiPane) throws IOException {
+    public static Path getEnemyPath(BorderPane uiPane)  {
          
         GameMapScanner map = MapCell.currMap;
 
@@ -60,35 +60,10 @@ public class EnemyPathAutoGenerator {
 
     }
 
-    public static int toIndex(GameMapScanner map1, int row, int column) throws IOException {
+    public static int toIndex(GameMapScanner map1, int row, int column) {
         return column + row * map1.getWidth();
     }
 
-    // @Override
-    // public void start(Stage primaryStage) throws FileNotFoundException,
-    // IOException {
-
-    // BorderPane mainPane = MapCell.getMap(2);
-    // mainPane.setRight(TowerPanel.getTowerPanel());
-    // Scene scene = new Scene(mainPane, 500, 500);
-
-    // GridPane griddy = (GridPane) mainPane.getCenter();
-    // griddy.setStyle("-fx-background-color:rgb(0, 247, 66);");
-
-    // griddy.setOnMouseClicked(e -> {
-    // Point2D point = ((Rectangle) (griddy.getChildren().get(0))).localToScene(0,
-    // 0);
-    // double screenX = point.getX();
-    // double screenY = point.getY();
-    // System.out.println(screenX + " " + screenY);
-    // Circle top = new Circle(screenX, screenY, 10);
-    // top.setFill(Color.RED);
-    // mainPane.getChildren().addAll(top);
-    // });
-
-    // primaryStage.setScene(scene);
-    // primaryStage.show();
-
-    // }
+     
 
 }

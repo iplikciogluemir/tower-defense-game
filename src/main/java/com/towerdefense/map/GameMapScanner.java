@@ -7,6 +7,7 @@ import java.util.Scanner;
 import javafx.geometry.Point3D;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -36,14 +37,18 @@ public class GameMapScanner {
 
     }
 
-    private void resetScanner() throws IOException {
+    private void resetScanner() {
         if (input != null)
             input.close();
 
-        input = new Scanner(file);
+        try {
+            input = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
-    public int getWidth() throws IOException {
+    public int getWidth() {
         resetScanner();
         while (input.hasNext()) {
             String line = input.nextLine();
@@ -55,7 +60,7 @@ public class GameMapScanner {
         return 0;
     }
 
-    public int getHeight() throws IOException {
+    public int getHeight() {
         resetScanner();
         while (input.hasNext()) {
             String line = input.nextLine();
@@ -78,7 +83,7 @@ public class GameMapScanner {
         this.waveData = waveData;
     }
 
-    public ArrayList<String> getPath() throws IOException {
+    public ArrayList<String> getPath() {
         resetScanner();
         levelPath.clear();
 
