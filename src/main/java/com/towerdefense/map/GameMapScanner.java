@@ -110,13 +110,13 @@ public class GameMapScanner {
 
 
     public double getEnemyCount(int waveIndex){
-        return waveData.get(waveIndex-1).getX();
+        return waveData.get(waveIndex).getX();
     }
     public double getEnemyInterval(int waveIndex){
-        return waveData.get(waveIndex-1).getY();
+        return waveData.get(waveIndex).getY();
     }
     public double getWaveDelay(int waveIndex){
-        return waveData.get(waveIndex-1).getZ();
+        return waveData.get(waveIndex).getZ();
     }
     public int getWaveCount (){
         return waveData.size();
