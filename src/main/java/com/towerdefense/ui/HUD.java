@@ -32,7 +32,6 @@ public class HUD {
         uiPane.setStyle("-fx-background-color: #faf1da;");
 
         Scene scene = new Scene(uiPane, 500, 500);
-
         enemyTest = Enemy.getEnemy();
         uiPane.getChildren().addAll(enemyTest);
 
@@ -52,24 +51,21 @@ public class HUD {
         pathTransition.setInterpolator(Interpolator.LINEAR);
         pathTransition.play();
 
-        HashMap<Group, Integer> towerMap = DragTowers.getTowerMap();
-
-        for (Group tower : towerMap.keySet()) {
-            final double[] distance = new double[1];
-            final Timeline[] timeline = new Timeline[1];
-            timeline[0] = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+        final Timeline[] timeline = new Timeline[1];
+        timeline[0] = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+            HashMap<Group, Integer> towerMap = DragTowers.getTowerMap();
+            for (Group tower : towerMap.keySet()) {
                 Bounds towerPositions = tower.getBoundsInParent();
                 Bounds enemyPositions = enemyTest.getBoundsInParent();
-                distance[0] = Projectile.getDistance(towerPositions.getCenterX(), towerPositions.getCenterY(),
+                double distance = Projectile.getDistance(towerPositions.getCenterX(), towerPositions.getCenterY(),
                         enemyPositions.getCenterX(),
                         enemyPositions.getCenterY());
-                System.out.println(distance[0]);
-                if (distance[0] <= 200) {
+                if (distance <= 200) {
                     Bullet.shootBullet(uiPane, tower, enemyTest);
                 }
-            }));
-            timeline[0].setCycleCount(Timeline.INDEFINITE);
-            timeline[0].play();
-        }
+            }
+        }));
+        timeline[0].setCycleCount(Timeline.INDEFINITE);
+        timeline[0].play();
     }
 }
