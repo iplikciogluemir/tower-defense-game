@@ -1,1 +1,60 @@
 package com.towerdefense.projectiles;
+
+import com.towerdefense.enemies.Enemy;
+import com.towerdefense.ui.HUDVariables;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Application;
+import javafx.geometry.Bounds;
+import javafx.scene.Group;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+
+public class Laser extends Application {
+    @Override
+    public void start(Stage primaryStage) {
+    }
+
+    public static void shootLaser(Pane pane, Group tower, Group enemy) {
+        Line laser = new Line();
+        laser.setStroke(Color.RED);
+        laser.setStrokeWidth(3);
+
+        pane.getChildren().add(laser);
+
+        final Timeline[] timeline = new Timeline[1];
+
+        timeline[0] = new Timeline(new KeyFrame(Duration.millis(50), e -> {
+            Bounds towerBounds = tower.getBoundsInParent();
+            Bounds enemyBounds = enemy.getBoundsInParent();
+
+            double towerX = towerBounds.getCenterX();
+            double towerY = towerBounds.getCenterY();
+            double enemyX = enemyBounds.getCenterX();
+            double enemyY = enemyBounds.getCenterY();
+
+            laser.setStartX(towerX);
+            laser.setStartY(towerY);
+            laser.setEndX(enemyX);
+            laser.setEndY(enemyY);
+
+            double distance = Projectile.getDistance(enemyX, enemyY, towerX, towerY);
+
+            if (distance > 200) {
+                timeline[0].stop();
+                pane.getChildren().remove(laser);
+                return;
+            }
+
+            if (towerBounds.intersects(enemyBounds)) {
+            }
+        }));
+
+        timeline[0].setCycleCount(Timeline.INDEFINITE);
+        timeline[0].play();
+    }
+}
