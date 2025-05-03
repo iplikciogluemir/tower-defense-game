@@ -28,7 +28,14 @@ public class Laser extends Application {
 
         final Timeline[] timeline = new Timeline[1];
 
-        timeline[0] = new Timeline(new KeyFrame(Duration.millis(50), e -> {
+        timeline[0] = new Timeline(new KeyFrame(Duration.millis(15), e -> {
+
+            if (!pane.getChildren().contains(enemy)) {
+                pane.getChildren().remove(laser);
+                timeline[0].stop();
+                return;
+            }
+
             Bounds towerBounds = tower.getBoundsInParent();
             Bounds enemyBounds = enemy.getBoundsInParent();
 
@@ -44,13 +51,19 @@ public class Laser extends Application {
 
             double distance = Projectile.getDistance(enemyX, enemyY, towerX, towerY);
 
-            if (distance > 200) {
-                timeline[0].stop();
-                pane.getChildren().remove(laser);
-                return;
+            if (distance <= 200) {
+                Enemy.getLaserHit(enemy);
+
+                if (Enemy.isDead(enemy)) {
+                    timeline[0].stop();
+                    pane.getChildren().removeAll(enemy, laser);
+                    HUDVariables.setMoney(HUDVariables.getMoney() + 10);
+                }
             }
 
-            if (towerBounds.intersects(enemyBounds)) {
+            else {
+                timeline[0].stop();
+                pane.getChildren().remove(laser);
             }
         }));
 
