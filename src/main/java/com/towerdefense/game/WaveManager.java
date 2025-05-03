@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.towerdefense.enemies.Enemy;
 import com.towerdefense.enemies.EnemyPathAutoGenerator;
 import com.towerdefense.map.MapCell;
+import com.towerdefense.ui.HUDVariables;
 
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
@@ -22,36 +23,34 @@ public class WaveManager {
     int waveCount;
     int tiles;
     double standartSeconds;
-    ArrayList<ArrayList> enemyArrayList;
+    public ArrayList<ArrayList> waveList;
     BorderPane uiPane;
+    public int currWave;
 
     public WaveManager(BorderPane uiPane) {
         
         this.waveCount = MapCell.currMap.getWaveCount(); 
         this.tiles = MapCell.currMap.getPath().size() / 2 - 1;
         this.standartSeconds = tiles / 2.0;
-        this.enemyArrayList = new ArrayList<>();
+        this.waveList = new ArrayList<>();
         this.uiPane = uiPane;
 
         
         for (int i = 0; i < MapCell.currMap.getWaveCount(); i++) {
-            ArrayList<Enemy> EnemyList = new ArrayList<>();
-
+            ArrayList<Enemy> enemyList = new ArrayList<>();
             for (int j = 0; j < MapCell.currMap.getEnemyCount(i); j++) {
-                
                 Enemy enemy = new Enemy(100, 1);
-                EnemyList.add(enemy);
-                
+                enemyList.add(enemy);
             }
-             
-            enemyArrayList.add(EnemyList);
+            waveList.add(enemyList);
         }
        
     }
 
     public void waveSender(int waveIndex) {
+        this.currWave = waveIndex;
         Timeline timeline = new Timeline();
-        ArrayList<Enemy> enemyList = enemyArrayList.get(waveIndex);
+        ArrayList<Enemy> enemyList = waveList.get(waveIndex);
         for (int i = 0; i < enemyList.size(); i++) {
             final int eventFix = i;
             Enemy enemy = enemyList.get(eventFix);
@@ -68,18 +67,21 @@ public class WaveManager {
         // Calculate the How fast The how much time the enemy will spend
         double seconds = standartSeconds / enemy.getSpeed();
         
-
+        Group enemyGroup = enemy.getEnemy();
         PathTransition pathTransition = new PathTransition();
-        uiPane.getChildren().add(enemy.getEnemy());
+        uiPane.getChildren().add(enemyGroup);
         pathTransition.setDuration(Duration.seconds(seconds));
         pathTransition.setPath(EnemyPathAutoGenerator.getEnemyPath(uiPane));
-        pathTransition.setNode(enemy.getEnemy());
+        pathTransition.setNode(enemyGroup);
         //pathTransition.setCycleCount(PathTransition.INDEFINITE);
         pathTransition.setInterpolator(Interpolator.LINEAR);
         pathTransition.play();
 
         pathTransition.setOnFinished(e -> {
-            uiPane.getChildren().remove(enemy.getEnemy());
+            if (!Enemy.isDead(enemyGroup)) {
+                HUDVariables.setLives(HUDVariables.getLives() - 1);
+            }
+            uiPane.getChildren().remove(enemyGroup);
         });
         
          
