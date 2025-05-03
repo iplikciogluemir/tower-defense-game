@@ -41,7 +41,8 @@ public class Enemy {
     public void setSpeed(int speed) {
         this.speed = speed;
     }
-    public Group getEnemy(){
+
+    public Group getEnemy() {
         return enemyGroup;
     }
 
@@ -78,6 +79,16 @@ public class Enemy {
         }
     }
 
+    public static void getLaserHit(Group group) {
+        for (Node node : group.getChildren()) {
+            if (node instanceof Rectangle) {
+                Rectangle modifiedRectangle = (Rectangle) node;
+                modifiedRectangle.setWidth(modifiedRectangle.getWidth() - 0.6);
+                break;
+            }
+        }
+    }
+
     public static boolean isDead(Group group) {
         Rectangle checkingRectangle = null;
         for (Node node : group.getChildren()) {
@@ -89,7 +100,7 @@ public class Enemy {
 
         double width = checkingRectangle.getWidth();
 
-        if (width == 0)
+        if (width <= 0)
             return true;
         else
             return false;
