@@ -35,7 +35,7 @@ public class TowerPanel {
 
         HUDVariables.setLives(5);
         HUDVariables.setMoney(1000);
-        HUDVariables.setTime(10);
+        HUDVariables.setTime(3);
 
         Text livesText = new Text("Lives: " + HUDVariables.getLives());
         livesText.setFont(Font.font(24));
