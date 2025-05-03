@@ -1,5 +1,6 @@
 package com.towerdefense.ui;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -19,6 +20,8 @@ import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -62,6 +65,12 @@ public class HUD {
         final Timeline[] timeline = new Timeline[1];
         timeline[0] = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
 
+            Media media = new Media(new File("src/main/resources/sounds/BulletShoot.wav").toURI().toString());
+            MediaPlayer shootSound = new MediaPlayer(media);
+
+
+
+
             if (!uiPane.getChildren().contains(enemyTest)) {
                 timeline[0].stop();
                 return;
@@ -75,6 +84,8 @@ public class HUD {
                         enemyPositions.getCenterX(),
                         enemyPositions.getCenterY());
                 if (distance <= 200 && DragTowers.price(tower) == 50) {
+                    shootSound.setVolume(0.2);
+                    shootSound.play();
                     Bullet.shootBullet(uiPane, tower, enemyTest);
                 }
                 if (distance <= 200 && DragTowers.price(tower) == 120) {
