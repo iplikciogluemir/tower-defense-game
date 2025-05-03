@@ -19,7 +19,7 @@ import javafx.scene.text.Text;
 
 public class TowerPanel {
 
-    public static VBox getTowerPanel(BorderPane uiPane) throws IOException {
+    public static VBox getTowerPanel(BorderPane uiPane) {
 
         VBox vbx = new VBox(10);
         final double prefWidth = 200;

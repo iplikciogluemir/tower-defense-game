@@ -21,7 +21,7 @@ import javafx.util.Duration;
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws FileNotFoundException, IOException, InterruptedException {
+    public void start(Stage primaryStage) {
         Scene scene = HUD.getScene();
         primaryStage.setTitle("test");
         primaryStage.setScene(scene);

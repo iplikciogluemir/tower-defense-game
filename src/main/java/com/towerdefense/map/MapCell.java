@@ -24,10 +24,15 @@ public class MapCell {
     public static final int sideLength = 60;
     public static GameMapScanner currMap;
 
-    public static GridPane getMap(int level) throws FileNotFoundException, IOException, InterruptedException {
+    public static GridPane getMap(int level) {
 
         String filePath = "src/main/resources/maps/level" + level + ".txt";
-        GameMapScanner map = new GameMapScanner(new File(filePath));
+        GameMapScanner map = null;
+        try {
+            map = new GameMapScanner(new File(filePath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         GridPane mapPane = showMap(map);
         currMap = map;
@@ -36,7 +41,7 @@ public class MapCell {
 
     }
 
-    public static GridPane showMap(GameMapScanner map) throws IOException, InterruptedException {
+    public static GridPane showMap(GameMapScanner map) {
 
         GridPane gridPane = new GridPane();
         gridPane.setHgap(2);
@@ -93,7 +98,7 @@ public class MapCell {
         return gridPane;
     }
 
-    public static boolean isEnemyPath(GameMapScanner map, int row, int column) throws IOException {
+    public static boolean isEnemyPath(GameMapScanner map, int row, int column) {
 
         boolean isEnemyPath = false;
         ArrayList<String> path = map.getPath();

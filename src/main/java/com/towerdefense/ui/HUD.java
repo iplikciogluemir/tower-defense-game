@@ -29,7 +29,7 @@ public class HUD {
     static Group enemyTest;
     static BorderPane uiPane;
 
-    public static Scene getScene() throws IOException, InterruptedException {
+    public static Scene getScene() {
         uiPane = new BorderPane();
 
         uiPane.setCenter(MapCell.getMap(2));
@@ -67,9 +67,6 @@ public class HUD {
 
             Media media = new Media(new File("src/main/resources/sounds/BulletShoot.wav").toURI().toString());
             MediaPlayer shootSound = new MediaPlayer(media);
-
-
-
 
             if (!uiPane.getChildren().contains(enemyTest)) {
                 timeline[0].stop();

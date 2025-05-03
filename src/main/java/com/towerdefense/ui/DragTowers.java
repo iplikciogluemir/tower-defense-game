@@ -24,7 +24,7 @@ public class DragTowers {
     private BorderPane pane;
     private static HashMap<Group, Integer> mp = new HashMap<>();
 
-    public DragTowers(BorderPane uiPane) throws IOException, FileNotFoundException {
+    public DragTowers(BorderPane uiPane) {
         this.pane = uiPane;
     }
 
@@ -138,13 +138,9 @@ public class DragTowers {
                 circle.setCenterX(centerX);
                 circle.setCenterY(centerY);
 
-                try {
-                    isOnEnemyPath = MapCell.isEnemyPath(MapCell.currMap,
-                            GridPane.getRowIndex((Rectangle) rectangle),
-                            GridPane.getColumnIndex((Rectangle) rectangle));
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
+                isOnEnemyPath = MapCell.isEnemyPath(MapCell.currMap,
+                        GridPane.getRowIndex((Rectangle) rectangle),
+                        GridPane.getColumnIndex((Rectangle) rectangle));
 
                 break;
             }
