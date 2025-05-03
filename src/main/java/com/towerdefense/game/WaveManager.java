@@ -51,10 +51,12 @@ public class WaveManager {
 
     public void waveSender(int waveIndex) {
         Timeline timeline = new Timeline();
-        for (int i = 0; i < enemyArrayList.get(waveIndex).size(); i++) {
+        ArrayList<Enemy> enemyList = enemyArrayList.get(waveIndex);
+        for (int i = 0; i < enemyList.size(); i++) {
             final int eventFix = i;
-            KeyFrame keyFrame = new KeyFrame(Duration.seconds(i * MapCell.currMap.getEnemyInterval(waveIndex)), e -> {
-                enemySender((Enemy)(enemyArrayList.get(waveIndex).get(eventFix)));
+            Enemy enemy = enemyList.get(eventFix);
+            KeyFrame keyFrame = new KeyFrame(Duration.seconds(i * MapCell.currMap.getEnemyInterval(waveIndex)+0.1), e -> {
+                enemySender(enemy);
             });
             timeline.getKeyFrames().add(keyFrame);
         }     
