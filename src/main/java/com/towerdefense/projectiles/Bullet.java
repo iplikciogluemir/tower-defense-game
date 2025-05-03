@@ -62,7 +62,7 @@ public class Bullet extends Application {
 
                 if (Enemy.isDead(enemy)) {
                     pane.getChildren().remove(enemy);
-                    HUDVariables.setMoney(HUDVariables.getMoney() + 100);
+                    HUDVariables.setMoney(HUDVariables.getMoney() + 10);
                 }
 
                 timelineRef[0].stop();

@@ -33,25 +33,39 @@ public class HUD {
         uiPane.setStyle("-fx-background-color: #faf1da;");
 
         Scene scene = new Scene(uiPane, 500, 500);
-        Enemy vututu = new Enemy();
-        enemyTest = vututu.getEnemy();
-       // uiPane.getChildren().addAll(enemyTest);
+        Enemy enemyTrial = new Enemy();
+        enemyTest = enemyTrial.getEnemy();
+        uiPane.getChildren().addAll(enemyTest);
 
         return scene;
     }
 
     public static void startAnimation() {
-        WaveManager manager = new WaveManager(uiPane);
-        manager.waveSender(1);
+        // WaveManager manager = new WaveManager(uiPane);
+        // manager.waveSender(1);
         PathTransition pathTransition = new PathTransition();
         pathTransition.setDuration(Duration.seconds(10));
         pathTransition.setPath(EnemyPathAutoGenerator.getEnemyPath(uiPane));
         pathTransition.setNode(enemyTest);
         pathTransition.setInterpolator(Interpolator.LINEAR);
+
+        pathTransition.setOnFinished(e -> {
+            if (!Enemy.isDead(enemyTest)) {
+                HUDVariables.setLives(HUDVariables.getLives() - 1);
+                uiPane.getChildren().remove(enemyTest);
+            }
+        });
+
         pathTransition.play();
 
         final Timeline[] timeline = new Timeline[1];
         timeline[0] = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+
+            if (!uiPane.getChildren().contains(enemyTest)) {
+                timeline[0].stop();
+                return;
+            }
+
             HashMap<Group, Integer> towerMap = DragTowers.getTowerMap();
             for (Group tower : towerMap.keySet()) {
                 Bounds towerPositions = tower.getBoundsInParent();
@@ -62,6 +76,7 @@ public class HUD {
                 if (distance <= 200 && !Enemy.isDead(enemyTest)) {
                     Bullet.shootBullet(uiPane, tower, enemyTest);
                 }
+
             }
         }));
         timeline[0].setCycleCount(Timeline.INDEFINITE);
