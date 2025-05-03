@@ -8,6 +8,7 @@ import com.towerdefense.enemies.EnemyPathAutoGenerator;
 import com.towerdefense.game.WaveManager;
 import com.towerdefense.map.MapCell;
 import com.towerdefense.projectiles.Bullet;
+import com.towerdefense.projectiles.Laser;
 import com.towerdefense.projectiles.Projectile;
 
 import javafx.animation.Interpolator;
@@ -73,10 +74,12 @@ public class HUD {
                 double distance = Projectile.getDistance(towerPositions.getCenterX(), towerPositions.getCenterY(),
                         enemyPositions.getCenterX(),
                         enemyPositions.getCenterY());
-                if (distance <= 200 && !Enemy.isDead(enemyTest)) {
+                if (distance <= 200 && DragTowers.price(tower) == 50) {
                     Bullet.shootBullet(uiPane, tower, enemyTest);
                 }
-
+                if (distance <= 200 && DragTowers.price(tower) == 120) {
+                    Laser.shootLaser(uiPane, tower, enemyTest);
+                }
             }
         }));
         timeline[0].setCycleCount(Timeline.INDEFINITE);
