@@ -16,13 +16,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class GameUI extends Application {
+public class GameUI {
 
-    @Override
-    public void start(Stage primaryStage) {
-    }
-
-    private Scene winScreen() {
+    public static Scene winScreen() {
         StackPane pane = new StackPane();
 
         pane.setStyle("-fx-background-color:#faf1da");
@@ -48,7 +44,7 @@ public class GameUI extends Application {
         return endScene;
     }
 
-    private Scene startScene() {
+    public static Scene startScene() {
         Pane pane = new StackPane();
         pane.setStyle("-fx-background-color:#faf1da");
 
@@ -68,7 +64,7 @@ public class GameUI extends Application {
         return startScene;
     }
 
-    private Scene endScreen() {
+    public static Scene endScreen() {
         StackPane pane = new StackPane();
 
         pane.setStyle("-fx-background-color:#faf1da");
