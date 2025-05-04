@@ -1,6 +1,7 @@
 package com.towerdefense.projectiles;
 
 import com.towerdefense.enemies.Enemy;
+import com.towerdefense.game.WaveManager;
 import com.towerdefense.ui.HUDVariables;
 
 import javafx.animation.KeyFrame;
@@ -19,7 +20,8 @@ public class Laser extends Application {
     public void start(Stage primaryStage) {
     }
 
-    public static void shootLaser(Pane pane, Group tower, Group enemy) {
+    public static void shootLaser(Pane pane, Group tower, Enemy enemy1) {
+        Group enemy = enemy1.getEnemy();
         Line laser = new Line();
         laser.setStroke(Color.RED);
         laser.setStrokeWidth(3);
@@ -56,6 +58,7 @@ public class Laser extends Application {
 
                 if (Enemy.isDead(enemy)) {
                     timeline[0].stop();
+                    WaveManager.currEnemyList.remove(enemy1);
                     pane.getChildren().removeAll(enemy, laser);
                     HUDVariables.setMoney(HUDVariables.getMoney() + 10);
                 }

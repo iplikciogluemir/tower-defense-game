@@ -168,7 +168,7 @@ public class DragTowers {
         e.consume();
     }
 
-    static int price(Group group) {
+    public static int price(Group group) {
 
         int price = 0;
         int getChildrenSize = group.getChildren().size();

@@ -1,6 +1,7 @@
 package com.towerdefense.projectiles;
 
 import com.towerdefense.enemies.Enemy;
+import com.towerdefense.game.WaveManager;
 import com.towerdefense.ui.HUDVariables;
 
 import javafx.animation.PathTransition;
@@ -23,7 +24,8 @@ public class Bullet extends Application {
     public void start(Stage primaryStage) {
     }
 
-    public static void shootBullet(Pane pane, Group tower, Group enemy) {
+    public static void shootBullet(Pane pane, Group tower, Enemy enemy1) {
+        Group enemy = enemy1.getEnemy();
         Circle bullet = new Circle(5, Color.RED);
         Bounds towerPos = tower.getBoundsInParent();
         // Bounds enemyPos = enemy.getBoundsInParent();
@@ -61,6 +63,7 @@ public class Bullet extends Application {
                 Enemy.getSingleHit(enemy);
 
                 if (Enemy.isDead(enemy)) {
+                    WaveManager.currEnemyList.remove(enemy1);
                     pane.getChildren().remove(enemy);
                     HUDVariables.setMoney(HUDVariables.getMoney() + 10);
                 }

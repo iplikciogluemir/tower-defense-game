@@ -45,8 +45,8 @@ public class HUD {
     }
 
     public static void startAnimation() {
-        // WaveManager manager = new WaveManager(uiPane);
-        // manager.waveSender(1);
+        WaveManager manager = new WaveManager(uiPane);
+        manager.sendWave(1);
         PathTransition pathTransition = new PathTransition();
         pathTransition.setDuration(Duration.seconds(10));
         pathTransition.setPath(EnemyPathAutoGenerator.getEnemyPath(uiPane));

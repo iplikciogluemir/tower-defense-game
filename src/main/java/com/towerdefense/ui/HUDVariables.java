@@ -67,14 +67,14 @@ public class HUDVariables {
 
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), e -> {
             if (seconds > 0) {
-                seconds--;
                 countViewer = seconds + "s";
+                seconds--;
                 countText.setText("Next Wave: " + countViewer);
-            } else {
+            } else {               
                 countViewer = "0s";
                 countText.setText("Next Wave: " + countViewer);
                 timeline.stop();
-                HUD.startAnimation();
+                //HUD.startAnimation();
             }
         });
 
@@ -83,5 +83,13 @@ public class HUDVariables {
         timeline.play();
 
         return countViewer;
+    }
+    
+    public static Timeline getTimeline(){
+        return HUDVariables.timeline;
+    }
+    
+    public static int getTime(){
+        return HUDVariables.seconds;
     }
 }

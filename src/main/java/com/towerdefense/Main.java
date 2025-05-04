@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import com.towerdefense.enemies.Enemy;
 import com.towerdefense.enemies.EnemyPathAutoGenerator;
+import com.towerdefense.game.LevelManager;
 import com.towerdefense.map.MapCell;
 import com.towerdefense.ui.HUD;
 import com.towerdefense.ui.TowerPanel;
@@ -22,7 +23,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        Scene scene = HUD.getScene();
+        Scene scene = LevelManager.getLevelScene(2);
         primaryStage.setTitle("test");
         primaryStage.setScene(scene);
         primaryStage.show();

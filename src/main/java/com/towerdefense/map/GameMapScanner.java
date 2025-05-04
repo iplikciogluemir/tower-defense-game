@@ -86,12 +86,14 @@ public class GameMapScanner {
     public ArrayList<String> getPath() {
         resetScanner();
         levelPath.clear();
+        waveData.clear();
 
         while (input.hasNext()) {
             String line = input.nextLine();
 
             if (line.equals("WAVE_DATA:")) {
                 while (input.hasNext()) {
+
                     String waveLine = input.nextLine();
                     String[] wavePoints = waveLine.split(",");
                     double x = Double.parseDouble(wavePoints[0].trim());
