@@ -3,7 +3,6 @@ package com.towerdefense.projectiles;
 import com.towerdefense.enemies.Enemy;
 import com.towerdefense.game.WaveManager;
 import com.towerdefense.ui.HUDVariables;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;

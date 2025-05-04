@@ -1,11 +1,6 @@
 package com.towerdefense.ui;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
-
 import com.towerdefense.map.MapCell;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
