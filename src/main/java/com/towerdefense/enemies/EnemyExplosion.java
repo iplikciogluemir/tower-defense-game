@@ -23,7 +23,7 @@ public class EnemyExplosion {
         double enemyY = enemy.getEnemy().getBoundsInParent().getCenterY();
 
         for (int i = 0; i < NUM_PARTICLES; ++i) {
-            Circle particle = new Circle(CIRCLE_RADIUS, Color.RED);
+            Circle particle = new Circle(CIRCLE_RADIUS, Color.web("#b32223"));
             particle.setCenterX(enemyX);
             particle.setCenterY(enemyY);
 
