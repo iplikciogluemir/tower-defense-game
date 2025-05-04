@@ -16,8 +16,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -26,7 +24,7 @@ import javafx.util.Duration;
 public class LevelManager {
     private static boolean isLevelOver;
 
-    public static Scene getLevelScene(int levelIndex) {
+    public static BorderPane getLevelPane(int levelIndex) {
 
         BorderPane uiPane = new BorderPane();
         uiPane.setCenter(MapCell.getMap(levelIndex));
@@ -41,7 +39,6 @@ public class LevelManager {
         Timeline[] firstWave = new Timeline[1];
         firstWave[0] = new Timeline(new KeyFrame(Duration.seconds((int) MapCell.currMap.getWaveDelay(0)), e -> {
             if (HUDVariables.getTime() == 0) {
-                System.out.println("sending first wave");
                 waveManager.sendWave(0);
                 firstWave[0].stop();
             }
@@ -108,6 +105,7 @@ public class LevelManager {
                     }
 
                     if (targetEnemy != null) {
+
                         shootSound.setVolume(0.2);
                         shootSound.play();
                         Bullet.shootBullet(uiPane, tower, targetEnemy);
@@ -137,8 +135,7 @@ public class LevelManager {
         timeline[0].setCycleCount(Timeline.INDEFINITE);
         timeline[0].play();
 
-        Scene scene = new Scene(uiPane, 500, 500);
-        return scene;
+        return uiPane;
     }
 
     public static boolean isWaveOver() {

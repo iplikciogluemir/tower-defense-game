@@ -1,11 +1,7 @@
 package com.towerdefense.map;
 
-// After WAVE_DATA is not used yet.
-
 import java.util.Scanner;
-
 import javafx.geometry.Point3D;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -112,20 +108,20 @@ public class GameMapScanner {
         }
         return levelPath;
     }
-  
 
-
-
-    public double getEnemyCount(int waveIndex){
+    public double getEnemyCount(int waveIndex) {
         return waveData.get(waveIndex).getX();
     }
-    public double getEnemyInterval(int waveIndex){
+
+    public double getEnemyInterval(int waveIndex) {
         return waveData.get(waveIndex).getY();
     }
-    public double getWaveDelay(int waveIndex){
+
+    public double getWaveDelay(int waveIndex) {
         return waveData.get(waveIndex).getZ();
     }
-    public int getWaveCount (){
+
+    public int getWaveCount() {
         return waveData.size();
     }
 

@@ -3,8 +3,6 @@ package com.towerdefense.ui;
 import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;
 import javafx.util.Duration;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class HUDVariables {
@@ -70,11 +68,11 @@ public class HUDVariables {
                 countViewer = seconds + "s";
                 seconds--;
                 countText.setText("Next Wave: " + countViewer);
-            } else {               
+            } else {
                 countViewer = "0s";
                 countText.setText("Next Wave: " + countViewer);
                 timeline.stop();
-                //HUD.startAnimation();
+                // HUD.startAnimation();
             }
         });
 
@@ -84,12 +82,12 @@ public class HUDVariables {
 
         return countViewer;
     }
-    
-    public static Timeline getTimeline(){
+
+    public static Timeline getTimeline() {
         return HUDVariables.timeline;
     }
-    
-    public static int getTime(){
+
+    public static int getTime() {
         return HUDVariables.seconds;
     }
 }

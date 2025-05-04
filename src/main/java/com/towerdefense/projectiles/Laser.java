@@ -4,7 +4,6 @@ import com.towerdefense.enemies.Enemy;
 import com.towerdefense.enemies.EnemyExplosion;
 import com.towerdefense.game.WaveManager;
 import com.towerdefense.ui.HUDVariables;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;

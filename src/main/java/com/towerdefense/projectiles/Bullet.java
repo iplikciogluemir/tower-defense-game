@@ -5,18 +5,14 @@ import com.towerdefense.enemies.EnemyExplosion;
 import com.towerdefense.game.WaveManager;
 import com.towerdefense.ui.HUDVariables;
 
-import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;
 import javafx.application.Application;
-import javafx.beans.property.DoubleProperty;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 

@@ -1,6 +1,5 @@
 package com.towerdefense.enemies;
 
-import javafx.beans.property.DoubleProperty;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
