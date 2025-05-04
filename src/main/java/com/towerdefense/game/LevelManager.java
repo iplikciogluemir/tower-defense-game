@@ -83,26 +83,49 @@ public class LevelManager {
             Media media = new Media(new File("src/main/resources/sounds/BulletShoot.wav").toURI().toString());
             MediaPlayer shootSound = new MediaPlayer(media);
 
-            for (int i = 0; i < waveManager.waveList.get(waveManager.currWave).size(); i++) {
-                Enemy enemyTest = ((Enemy) waveManager.waveList.get(waveManager.currWave).get(i));
+            HashMap<Group, Integer> towerMap = DragTowers.getTowerMap();
+            for (Group tower : towerMap.keySet()) {
+                if (DragTowers.price(tower) == 50) {
+                    Enemy targetEnemy = null;
+                    double shortestDistance = 200;
 
-                HashMap<Group, Integer> towerMap = DragTowers.getTowerMap();
-                for (Group tower : towerMap.keySet()) {
-                    Bounds towerPositions = tower.getBoundsInParent();
-                    Bounds enemyPositions = enemyTest.getEnemy().getBoundsInParent();
-                    double distance = Projectile.getDistance(towerPositions.getCenterX(), towerPositions.getCenterY(),
-                            enemyPositions.getCenterX(),
-                            enemyPositions.getCenterY());
-                    if (distance <= 200 && DragTowers.price(tower) == 50) {
+                    for (int i = 0; i < waveManager.waveList.get(waveManager.currWave).size(); i++) {
+                        Enemy enemyTest = ((Enemy) waveManager.waveList.get(waveManager.currWave).get(i));
+                        Bounds towerPositions = tower.getBoundsInParent();
+                        Bounds enemyPositions = enemyTest.getEnemy().getBoundsInParent();
+                        double distance = Projectile.getDistance(towerPositions.getCenterX(),
+                                towerPositions.getCenterY(),
+                                enemyPositions.getCenterX(),
+                                enemyPositions.getCenterY());
+
+                        if (distance < shortestDistance) {
+                            shortestDistance = distance;
+                            targetEnemy = enemyTest;
+                        }
+                    }
+
+                    if (targetEnemy != null) {
+
                         shootSound.setVolume(0.2);
                         shootSound.play();
-                        Bullet.shootBullet(uiPane, tower, enemyTest);
+                        Bullet.shootBullet(uiPane, tower, targetEnemy);
                     }
-                    if (distance <= 200 && DragTowers.price(tower) == 120) {
-                        Laser.shootLaser(uiPane, tower, enemyTest);
+                } else if (DragTowers.price(tower) == 120) {
+                    for (int i = 0; i < waveManager.waveList.get(waveManager.currWave).size(); i++) {
+                        Enemy enemyTest = ((Enemy) waveManager.waveList.get(waveManager.currWave).get(i));
+                        Bounds towerPositions = tower.getBoundsInParent();
+                        Bounds enemyPositions = enemyTest.getEnemy().getBoundsInParent();
+                        double distance = Projectile.getDistance(towerPositions.getCenterX(),
+                                towerPositions.getCenterY(),
+                                enemyPositions.getCenterX(),
+                                enemyPositions.getCenterY());
+                        if (distance <= 200) {
+                            Laser.shootLaser(uiPane, tower, enemyTest);
+                        }
                     }
                 }
             }
+
             if (waveManager.currWave == MapCell.currMap.getWaveCount() - 1
                     && waveManager.waveList.get(waveManager.currWave).isEmpty()) {
                 isLevelOver = true;

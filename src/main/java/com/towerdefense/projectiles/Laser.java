@@ -1,6 +1,7 @@
 package com.towerdefense.projectiles;
 
 import com.towerdefense.enemies.Enemy;
+import com.towerdefense.enemies.EnemyExplosion;
 import com.towerdefense.game.WaveManager;
 import com.towerdefense.ui.HUDVariables;
 import javafx.animation.KeyFrame;
@@ -56,6 +57,7 @@ public class Laser extends Application {
                 Enemy.getLaserHit(enemy);
 
                 if (Enemy.isDead(enemy)) {
+                    EnemyExplosion.createExplosion(pane, enemy1);
                     timeline[0].stop();
                     WaveManager.currEnemyList.remove(enemy1);
                     pane.getChildren().removeAll(enemy, laser);

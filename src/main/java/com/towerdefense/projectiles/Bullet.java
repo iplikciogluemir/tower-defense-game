@@ -1,6 +1,7 @@
 package com.towerdefense.projectiles;
 
 import com.towerdefense.enemies.Enemy;
+import com.towerdefense.enemies.EnemyExplosion;
 import com.towerdefense.game.WaveManager;
 import com.towerdefense.ui.HUDVariables;
 
@@ -16,6 +17,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Bullet extends Application {
+
     @Override
     public void start(Stage primaryStage) {
     }
@@ -59,6 +61,7 @@ public class Bullet extends Application {
                 Enemy.getSingleHit(enemy);
 
                 if (Enemy.isDead(enemy)) {
+                    EnemyExplosion.createExplosion(pane, enemy1);
                     WaveManager.currEnemyList.remove(enemy1);
                     pane.getChildren().remove(enemy);
                     HUDVariables.setMoney(HUDVariables.getMoney() + 10);
