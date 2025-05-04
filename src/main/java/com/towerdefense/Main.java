@@ -7,7 +7,7 @@ import com.towerdefense.enemies.Enemy;
 import com.towerdefense.enemies.EnemyPathAutoGenerator;
 import com.towerdefense.game.LevelManager;
 import com.towerdefense.map.MapCell;
-import com.towerdefense.ui.HUD;
+ 
 import com.towerdefense.ui.TowerPanel;
 
 import javafx.animation.Interpolator;

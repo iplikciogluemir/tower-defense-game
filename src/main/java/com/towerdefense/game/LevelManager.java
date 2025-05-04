@@ -12,7 +12,6 @@ import com.towerdefense.projectiles.Bullet;
 import com.towerdefense.projectiles.Laser;
 import com.towerdefense.projectiles.Projectile;
 import com.towerdefense.ui.DragTowers;
-import com.towerdefense.ui.HUD;
 import com.towerdefense.ui.HUDVariables;
 import com.towerdefense.ui.TowerPanel;
 
