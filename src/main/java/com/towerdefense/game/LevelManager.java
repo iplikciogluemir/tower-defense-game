@@ -201,4 +201,8 @@ public class LevelManager {
         return isLevelOver;
     }
 
+    public static void resetLevelCondition() {
+        isLevelOver = false;
+    }
+
 }
