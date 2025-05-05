@@ -18,7 +18,7 @@ public class WaveManager {
     int tiles;
     public double seconds;
     double standartSeconds;
-    public ArrayList<ArrayList> waveList;
+    public ArrayList<ArrayList<Enemy>> waveList;
     BorderPane uiPane;
     public int currWave;
     public static ArrayList<Enemy> currEnemyList;

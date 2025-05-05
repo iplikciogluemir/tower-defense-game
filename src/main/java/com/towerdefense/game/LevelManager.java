@@ -28,7 +28,6 @@ import javafx.util.Duration;
 
 public class LevelManager {
     private static boolean isLevelOver;
-    private static int missileFireCounter = 0;
 
     public static BorderPane getLevelPane(int levelIndex) {
 
@@ -91,7 +90,9 @@ public class LevelManager {
             for (Group tower : towerMap.keySet()) {
                 if (DragTowers.price(tower) == 50) {
 
+
                     Enemy targetEnemy = targetEnemy(tower, waveManager, 200);
+
 
                     if (targetEnemy != null) {
 
@@ -102,6 +103,7 @@ public class LevelManager {
                 } else if (DragTowers.price(tower) == 120) {
                     for (int i = 0; i < waveManager.waveList.get(waveManager.currWave).size(); i++) {
                         Enemy enemyTest = ((Enemy) waveManager.waveList.get(waveManager.currWave).get(i));
+
                         double distance = calculateDistance(tower, enemyTest);
 
                         if (distance <= 200) {
@@ -112,6 +114,7 @@ public class LevelManager {
                     Map<Double, Enemy> sortedmap = new TreeMap<>();
                     for (int i = 0; i < waveManager.waveList.get(waveManager.currWave).size(); ++i) {
                         Enemy enemyTest = ((Enemy) waveManager.waveList.get(waveManager.currWave).get(i));
+
                         double distance = calculateDistance(tower, enemyTest);
                         if (distance <= 200) {
                             sortedmap.put(distance, enemyTest);
@@ -126,17 +129,29 @@ public class LevelManager {
                         ++enemycount;
                     }
                 } else {
+
                     ++missileFireCounter;
                     if (missileFireCounter >= 2) {
                         Enemy targetEnemy = targetEnemy(tower, waveManager, 200);
 
-                        if (targetEnemy != null) {
 
-                            shootSound.setVolume(0.2);
-                            shootSound.play();
-                            Missile.shootMissile(uiPane, tower, targetEnemy);
+                    if (targetEnemy != null) {
+
+                        shootSound.setVolume(0.2);
+                        shootSound.play();
+                        Missile.shootMissile(uiPane, tower, targetEnemy);
+                        for (int i = 0; i < waveManager.waveList.get(waveManager.currWave).size(); i++) {
+                            Enemy boomenemy = ((Enemy) waveManager.waveList.get(waveManager.currWave).get(i));
+                            Bounds boomenemyPos = boomenemy.getEnemy().getBoundsInParent();
+                            Bounds enemyPos = targetEnemy.getEnemy().getBoundsInParent();
+                            double distance = Projectile.getDistance(boomenemyPos.getCenterX(),
+                                    boomenemyPos.getCenterY(),
+                                    enemyPos.getCenterX(),
+                                    enemyPos.getCenterY());
+                            if (distance != 0 || distance <= 75) {
+                                Enemy.getSingleHit(boomenemy.getEnemy());
+                            }
                         }
-                        missileFireCounter = 0;
                     }
                 }
             }
