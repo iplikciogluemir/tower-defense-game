@@ -38,6 +38,8 @@ public class DragTowers {
             cloned.setStyle(source.getStyle());
             clonedGroup.getChildren().addAll(cloned);
         }
+        clonedGroup.setScaleX(0.8);
+        clonedGroup.setScaleY(0.8);
         return clonedGroup;
     }
 
