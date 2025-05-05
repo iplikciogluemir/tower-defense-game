@@ -82,7 +82,7 @@ public class Enemy {
         for (Node node : group.getChildren()) {
             if (node instanceof Rectangle) {
                 Rectangle modifiedRectangle = (Rectangle) node;
-                modifiedRectangle.setWidth(modifiedRectangle.getWidth() - 0.6);
+                modifiedRectangle.setWidth(modifiedRectangle.getWidth() - 0.02);
                 break;
             }
         }

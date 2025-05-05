@@ -1,7 +1,5 @@
 package com.towerdefense;
 
-import javax.print.attribute.HashDocAttributeSet;
-
 import com.towerdefense.game.LevelManager;
 import com.towerdefense.ui.GameUI;
 import com.towerdefense.ui.HUDVariables;
@@ -15,6 +13,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 
 public class Main extends Application {
 
@@ -42,6 +44,13 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Tower Defense Game");
         primaryStage.setFullScreen(true);
+        primaryStage.setFullScreenExitHint("Press F11 to switch full-screen mode.");
+
+        scene.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.F11)
+                primaryStage.setFullScreen(!primaryStage.isFullScreen());
+
+        });
         primaryStage.show();
     }
 
@@ -57,7 +66,7 @@ public class Main extends Application {
         startButton.setOnMouseClicked(e -> {
             levelIndex = 1;
             scene.setRoot(LevelManager.getLevelPane(levelIndex));
-            HUDVariables.setMoney(100);
+            HUDVariables.setMoney(1000);
             LevelManager.resetLevelCondition();
             timeline.play();
         });
