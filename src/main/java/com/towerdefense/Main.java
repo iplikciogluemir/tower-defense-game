@@ -1,5 +1,7 @@
 package com.towerdefense;
 
+import javax.print.attribute.HashDocAttributeSet;
+
 import com.towerdefense.game.LevelManager;
 import com.towerdefense.ui.GameUI;
 import com.towerdefense.ui.HUDVariables;
@@ -18,21 +20,24 @@ public class Main extends Application {
 
     private int levelIndex = 1;
     private Scene scene = new Scene(new Pane());
+    private Timeline timeline;
 
     @Override
     public void start(Stage primaryStage) {
 
         startGame();
 
-        Timeline[] timeline = new Timeline[1];
-        timeline[0] = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
-            if (isSuccessful())
-                win();
-            else
+        timeline = new Timeline(new KeyFrame(Duration.seconds(0.1), e -> {
+            if (HUDVariables.getLives() == 0) {
                 lose();
+                timeline.pause();
+            } else if (LevelManager.isLevelOver()) {
+                win();
+                timeline.pause();
+            }
         }));
 
-        timeline[0].setCycleCount(Timeline.INDEFINITE);
+        timeline.setCycleCount(Timeline.INDEFINITE);
 
         primaryStage.setScene(scene);
         primaryStage.setTitle("Tower Defense Game");
@@ -44,18 +49,44 @@ public class Main extends Application {
         launch(args);
     }
 
-    public boolean isSuccessful() {
-        return LevelManager.isLevelOver() && (HUDVariables.getLives() > 0);
-    }
-
     public void startGame() {
         Pane pane = GameUI.startScreen();
         scene.setRoot(pane);
         Button startButton = (Button) pane.getChildren().get(0);
 
         startButton.setOnMouseClicked(e -> {
+            levelIndex = 1;
             scene.setRoot(LevelManager.getLevelPane(levelIndex));
+            HUDVariables.setMoney(100);
+            LevelManager.resetLevelCondition();
+            timeline.play();
         });
+    }
+
+    public void win() {
+        if (levelIndex == 5) {
+            Pane pane = GameUI.endScreen();
+            scene.setRoot(pane);
+            Label mainMenuLabel = (Label) pane.getChildren().get(0);
+            Button mainMenu = (Button) mainMenuLabel.getGraphic();
+
+            mainMenu.setOnMouseClicked(e -> {
+                startGame();
+            });
+        } else {
+            Pane pane = GameUI.winScreen();
+            levelIndex++;
+            scene.setRoot(pane);
+
+            Label continueLabel = (Label) pane.getChildren().get(0);
+            Button continueButton = (Button) continueLabel.getGraphic();
+
+            continueButton.setOnMouseClicked(e -> {
+                scene.setRoot(LevelManager.getLevelPane(levelIndex));
+                LevelManager.resetLevelCondition();
+                timeline.play();
+            });
+        }
     }
 
     public void lose() {
@@ -65,30 +96,8 @@ public class Main extends Application {
         Label mainMenuLabel = (Label) pane.getChildren().get(0);
         Button mainMenu = (Button) mainMenuLabel.getGraphic();
 
-        mainMenu.setOnMouseClicked(e2 -> {
-            levelIndex = 1;
-            HUDVariables.setLives(5);
-            HUDVariables.setMoney(1000);
-            scene.setRoot(GameUI.startScreen());
+        mainMenu.setOnMouseClicked(e -> {
+            startGame();
         });
-    }
-
-    public void win() {
-        Pane pane = GameUI.winScreen();
-        if (levelIndex == 5) {
-            scene.setRoot(GameUI.endScreen());
-        } else {
-            levelIndex++;
-            HUDVariables.setLives(5);
-            HUDVariables.setMoney(1000);
-            scene.setRoot(pane);
-
-            Label continueLabel = (Label) pane.getChildren().get(0);
-            Button mainMenu = (Button) continueLabel.getGraphic();
-
-            mainMenu.setOnMouseClicked(e -> {
-                scene.setRoot(LevelManager.getLevelPane(levelIndex));
-            });
-        }
     }
 }
