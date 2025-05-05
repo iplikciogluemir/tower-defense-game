@@ -89,23 +89,10 @@ public class LevelManager {
             HashMap<Group, Integer> towerMap = DragTowers.getTowerMap();
             for (Group tower : towerMap.keySet()) {
                 if (DragTowers.price(tower) == 50) {
-                    Enemy targetEnemy = null;
-                    double shortestDistance = 200;
 
-                    for (int i = 0; i < waveManager.waveList.get(waveManager.currWave).size(); i++) {
-                        Enemy enemyTest = ((Enemy) waveManager.waveList.get(waveManager.currWave).get(i));
-                        Bounds towerPositions = tower.getBoundsInParent();
-                        Bounds enemyPos = enemyTest.getEnemy().getBoundsInParent();
-                        double distance = Projectile.getDistance(towerPositions.getCenterX(),
-                                towerPositions.getCenterY(),
-                                enemyPos.getCenterX(),
-                                enemyPos.getCenterY());
 
-                        if (distance <= shortestDistance) {
-                            shortestDistance = distance;
-                            targetEnemy = enemyTest;
-                        }
-                    }
+                    Enemy targetEnemy = targetEnemy(tower, waveManager, 200);
+
 
                     if (targetEnemy != null) {
 
@@ -116,12 +103,9 @@ public class LevelManager {
                 } else if (DragTowers.price(tower) == 120) {
                     for (int i = 0; i < waveManager.waveList.get(waveManager.currWave).size(); i++) {
                         Enemy enemyTest = ((Enemy) waveManager.waveList.get(waveManager.currWave).get(i));
-                        Bounds towerPositions = tower.getBoundsInParent();
-                        Bounds enemyPos = enemyTest.getEnemy().getBoundsInParent();
-                        double distance = Projectile.getDistance(towerPositions.getCenterX(),
-                                towerPositions.getCenterY(),
-                                enemyPos.getCenterX(),
-                                enemyPos.getCenterY());
+
+                        double distance = calculateDistance(tower, enemyTest);
+
                         if (distance <= 200) {
                             Laser.shootLaser(uiPane, tower, enemyTest);
                         }
@@ -130,12 +114,8 @@ public class LevelManager {
                     Map<Double, Enemy> sortedmap = new TreeMap<>();
                     for (int i = 0; i < waveManager.waveList.get(waveManager.currWave).size(); ++i) {
                         Enemy enemyTest = ((Enemy) waveManager.waveList.get(waveManager.currWave).get(i));
-                        Bounds towerPositions = tower.getBoundsInParent();
-                        Bounds enemyPos = enemyTest.getEnemy().getBoundsInParent();
-                        double distance = Projectile.getDistance(towerPositions.getCenterX(),
-                                towerPositions.getCenterY(),
-                                enemyPos.getCenterX(),
-                                enemyPos.getCenterY());
+
+                        double distance = calculateDistance(tower, enemyTest);
                         if (distance <= 200) {
                             sortedmap.put(distance, enemyTest);
                         }
@@ -149,23 +129,11 @@ public class LevelManager {
                         ++enemycount;
                     }
                 } else {
-                    Enemy targetEnemy = null;
-                    double shortestDistance = 200;
 
-                    for (int i = 0; i < waveManager.waveList.get(waveManager.currWave).size(); i++) {
-                        Enemy enemyTest = ((Enemy) waveManager.waveList.get(waveManager.currWave).get(i));
-                        Bounds towerPositions = tower.getBoundsInParent();
-                        Bounds enemyPos = enemyTest.getEnemy().getBoundsInParent();
-                        double distance = Projectile.getDistance(towerPositions.getCenterX(),
-                                towerPositions.getCenterY(),
-                                enemyPos.getCenterX(),
-                                enemyPos.getCenterY());
+                    ++missileFireCounter;
+                    if (missileFireCounter >= 2) {
+                        Enemy targetEnemy = targetEnemy(tower, waveManager, 200);
 
-                        if (distance <= shortestDistance) {
-                            shortestDistance = distance;
-                            targetEnemy = enemyTest;
-                        }
-                    }
 
                     if (targetEnemy != null) {
 
@@ -212,4 +180,29 @@ public class LevelManager {
         isLevelOver = false;
     }
 
+    private static double calculateDistance(Group tower, Enemy enemy) {
+        Bounds towerPositions = tower.getBoundsInParent();
+        Bounds enemyPositions = enemy.getEnemy().getBoundsInParent();
+        double distance = Projectile.getDistance(towerPositions.getCenterX(),
+                towerPositions.getCenterY(),
+                enemyPositions.getCenterX(),
+                enemyPositions.getCenterY());
+        return distance;
+    }
+
+    private static Enemy targetEnemy(Group tower, WaveManager waveManager, double range) {
+        Enemy targetEnemy = null;
+        double shortestDistance = range;
+
+        for (int i = 0; i < waveManager.waveList.get(waveManager.currWave).size(); i++) {
+            Enemy enemyTest = ((Enemy) waveManager.waveList.get(waveManager.currWave).get(i));
+            double distance = calculateDistance(tower, enemyTest);
+
+            if (distance <= shortestDistance) {
+                shortestDistance = distance;
+                targetEnemy = enemyTest;
+            }
+        }
+        return targetEnemy;
+    }
 }
