@@ -3,6 +3,7 @@ package com.towerdefense;
 import javax.print.attribute.HashDocAttributeSet;
 
 import com.towerdefense.game.LevelManager;
+import com.towerdefense.ui.DragTowers;
 import com.towerdefense.ui.GameUI;
 import com.towerdefense.ui.HUDVariables;
 import javafx.animation.KeyFrame;
@@ -57,13 +58,14 @@ public class Main extends Application {
         startButton.setOnMouseClicked(e -> {
             levelIndex = 1;
             scene.setRoot(LevelManager.getLevelPane(levelIndex));
-            HUDVariables.setMoney(100);
+            HUDVariables.setMoney(1000);
             LevelManager.resetLevelCondition();
             timeline.play();
         });
     }
 
     public void win() {
+        DragTowers.getTowerMap().clear();
         if (levelIndex == 5) {
             Pane pane = GameUI.endScreen();
             scene.setRoot(pane);
@@ -90,6 +92,7 @@ public class Main extends Application {
     }
 
     public void lose() {
+        DragTowers.getTowerMap().clear();
         Pane pane = GameUI.loseScreen();
         scene.setRoot(pane);
 

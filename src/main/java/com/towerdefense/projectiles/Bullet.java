@@ -60,7 +60,6 @@ public class Bullet {
 
             double distance = Math.hypot(moveX, moveY);
 
-            // Check collision
             if (distance < 10) {
                 pane.getChildren().remove(bullet);
                 Enemy.getSingleHit(enemy);

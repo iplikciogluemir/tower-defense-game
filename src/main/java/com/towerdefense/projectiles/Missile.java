@@ -54,7 +54,6 @@ public class Missile extends Application {
 
             double distance = Math.hypot(moveX, moveY);
 
-            // Check collision
             if (distance < 5) {
                 pane.getChildren().remove(missile);
 
