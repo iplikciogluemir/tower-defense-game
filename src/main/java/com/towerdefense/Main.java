@@ -15,9 +15,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
 
 public class Main extends Application {
 
@@ -74,6 +71,7 @@ public class Main extends Application {
     }
 
     public void win() {
+        LevelManager.clearAll();
         DragTowers.getTowerMap().clear();
         if (levelIndex == 5) {
             Pane pane = GameUI.endScreen();
@@ -101,7 +99,10 @@ public class Main extends Application {
     }
 
     public void lose() {
+        timeline.pause();
+        LevelManager.clearAll();
         DragTowers.getTowerMap().clear();
+
         Pane pane = GameUI.loseScreen();
         scene.setRoot(pane);
 

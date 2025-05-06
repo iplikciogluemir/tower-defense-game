@@ -29,18 +29,20 @@ import javafx.util.Duration;
 
 public class LevelManager {
     private static boolean isLevelOver;
+    private static Timeline[] firstWave;
+    private static Timeline[] waveTimeline;
+    private static Timeline[] timeline;
 
     public static BorderPane getLevelPane(int levelIndex) {
 
         BorderPane uiPane = new BorderPane();
         uiPane.setCenter(MapCell.getMap(levelIndex));
-
         uiPane.setRight(TowerPanel.getTowerPanel(uiPane));
+        HUDVariables.setTime((int) MapCell.currMap.getWaveDelay(0));
         uiPane.setStyle("-fx-background-color: #faf1da;");
 
         WaveManager waveManager = new WaveManager(uiPane);
-
-        Timeline[] firstWave = new Timeline[1];
+        firstWave = new Timeline[1];
         firstWave[0] = new Timeline(new KeyFrame(Duration.seconds((int) MapCell.currMap.getWaveDelay(0)), e -> {
             if (HUDVariables.getTime() == 0) {
                 waveManager.sendWave(0);
@@ -52,7 +54,7 @@ public class LevelManager {
 
         final boolean[] readyToSend = { false };
 
-        Timeline[] waveTimeline = new Timeline[1];
+        waveTimeline = new Timeline[1];
         waveTimeline[0] = new Timeline(
                 new KeyFrame(Duration.seconds(1), e -> {
 
@@ -81,7 +83,7 @@ public class LevelManager {
         waveTimeline[0].setCycleCount(Timeline.INDEFINITE);
         waveTimeline[0].play();
 
-        final Timeline[] timeline = new Timeline[1];
+        timeline = new Timeline[1];
         timeline[0] = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
 
             Media media = new Media(new File("src/main/resources/sounds/BulletShoot.wav").toURI().toString());
@@ -213,5 +215,23 @@ public class LevelManager {
             }
         }
         return targetEnemy;
+    }
+
+    public static void clearAll() {
+        isLevelOver = false;
+
+        if (WaveManager.currEnemyList != null)
+            WaveManager.currEnemyList.clear();
+        else
+            WaveManager.currEnemyList = new ArrayList<>();
+
+        if (timeline != null)
+            timeline[0].stop();
+
+        if (firstWave != null)
+            firstWave[0].stop();
+
+        if (waveTimeline != null)
+            waveTimeline[0].stop();
     }
 }
