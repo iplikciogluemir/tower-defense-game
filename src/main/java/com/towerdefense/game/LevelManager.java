@@ -30,6 +30,7 @@ import javafx.scene.shape.Line;
 import javafx.util.Duration;
 
 public class LevelManager {
+    static ArrayList<Enemy> enemiesInRange;
     private static boolean isLevelOver;
     private static Timeline[] firstWave;
     private static Timeline[] waveTimeline;
@@ -158,32 +159,23 @@ public class LevelManager {
 
                     if (targetEnemy != null) {
                         
-                        Missile.shootMissile(uiPane, tower, targetEnemy);
-
-                        ArrayList<Enemy> enemiesInRange = new ArrayList<>();
+                        
+                        enemiesInRange = new ArrayList<>();
                         for (int i = 0; i < WaveManager.currEnemyList.size(); i++) {
                             Enemy boomenemy = (WaveManager.currEnemyList.get(i));
                             Bounds boomenemyPos = boomenemy.getEnemy().getBoundsInParent();
                             Bounds enemyPos = targetEnemy.getEnemy().getBoundsInParent();
                             double distance = Projectile.getDistance(boomenemyPos.getCenterX(),
-                                    boomenemyPos.getCenterY(),
-                                    enemyPos.getCenterX(),
-                                    enemyPos.getCenterY());
+                            boomenemyPos.getCenterY(),
+                            enemyPos.getCenterX(),
+                            enemyPos.getCenterY());
                             if (distance <= 75) {
                                 enemiesInRange.add(boomenemy);
                             }
                         }
+                        Missile.shootMissile(uiPane, tower, targetEnemy);
 
-                        for (Enemy boomenemy : enemiesInRange) {
-                            Enemy.getSingleHit(boomenemy.getEnemy());
-                            if (Enemy.isDead(boomenemy.getEnemy())) {
-                                EnemyExplosion.createExplosion(uiPane, boomenemy);
-                                WaveManager.currEnemyList.remove(boomenemy);
-                                waveManager.waveList.get(waveManager.currWave).remove(boomenemy);
-                                uiPane.getChildren().remove(boomenemy.getEnemy());
-                                HUDVariables.setMoney(HUDVariables.getMoney() + 10);
-                            }
-                        }
+                        
                     }
 
                 }
@@ -257,7 +249,17 @@ public class LevelManager {
         if (waveTimeline != null)
             waveTimeline[0].stop();
     }
-
+    public static void missileAreaKill(){
+        for (Enemy boomenemy : enemiesInRange) {
+            Enemy.getSingleHit(boomenemy.getEnemy());
+            if (Enemy.isDead(boomenemy.getEnemy())) {
+                EnemyExplosion.createExplosion(uiPane, boomenemy);
+                WaveManager.currEnemyList.remove(boomenemy);
+                uiPane.getChildren().remove(boomenemy.getEnemy());
+                HUDVariables.setMoney(HUDVariables.getMoney() + 10);
+            }
+        }
+    }
 
     public static void createMedia(){
         
