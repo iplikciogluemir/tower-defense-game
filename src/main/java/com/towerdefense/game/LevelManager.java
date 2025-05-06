@@ -42,6 +42,10 @@ public class LevelManager {
     public static MediaPlayer LaserSound;
     public static Media TSTMedia;
     public static MediaPlayer TSTSound;
+    public static Media MSTMedia;
+    public static MediaPlayer MSTSound;
+    public static Media MSTMediaExp;
+    public static MediaPlayer MSTSoundExp;
 
     public static BorderPane getLevelPane(int levelIndex) {
 
@@ -109,8 +113,6 @@ public class LevelManager {
                         if (SSTSound.getStatus() == MediaPlayer.Status.PLAYING){
                             SSTSound.stop();
                         }
-
-                        
                         SSTSound.play();
                         Bullet.shootBullet(uiPane, tower, targetEnemy);
                     }
@@ -159,8 +161,8 @@ public class LevelManager {
                         Missile.shootMissile(uiPane, tower, targetEnemy);
 
                         ArrayList<Enemy> enemiesInRange = new ArrayList<>();
-                        for (int i = 0; i < waveManager.waveList.get(waveManager.currWave).size(); i++) {
-                            Enemy boomenemy = ((Enemy) waveManager.waveList.get(waveManager.currWave).get(i));
+                        for (int i = 0; i < WaveManager.currEnemyList.size(); i++) {
+                            Enemy boomenemy = (WaveManager.currEnemyList.get(i));
                             Bounds boomenemyPos = boomenemy.getEnemy().getBoundsInParent();
                             Bounds enemyPos = targetEnemy.getEnemy().getBoundsInParent();
                             double distance = Projectile.getDistance(boomenemyPos.getCenterX(),
@@ -273,6 +275,16 @@ public class LevelManager {
         TSTMedia = new Media(new File("src/main/resources/sounds/TripleShoot.wav").toURI().toString());
         TSTSound = new MediaPlayer(TSTMedia);
         TSTSound.setVolume(0.2);
+
+        // Missile Shot Tower
+        MSTMedia = new Media(new File("src/main/resources/sounds/MissileLaunch.wav").toURI().toString());
+        MSTSound = new MediaPlayer(MSTMedia);
+        MSTSound.setVolume(0.2);
+
+        // Missile Shot Tower Explosion
+        MSTMediaExp = new Media(new File("src/main/resources/sounds/Kaboom.wav").toURI().toString());
+        MSTSoundExp = new MediaPlayer(MSTMediaExp);
+        MSTSoundExp.setVolume(0.2);
     }
     public static boolean laserBeamExists() {
         for (Node node : uiPane.getChildren() ){

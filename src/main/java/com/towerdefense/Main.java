@@ -109,6 +109,7 @@ public class Main extends Application {
         DragTowers.getTowerMap().clear();
         
         if (levelIndex == 5) {
+            mainThemeSound.stop();
             Pane pane = GameUI.endScreen();
             scene.setRoot(pane);
             Label mainMenuLabel = (Label) pane.getChildren().get(0);
@@ -149,6 +150,7 @@ public class Main extends Application {
 
         mainMenu.setOnMouseClicked(e -> {
             gaveOverSound.stop();
+            
             startGame();
         });
     }
