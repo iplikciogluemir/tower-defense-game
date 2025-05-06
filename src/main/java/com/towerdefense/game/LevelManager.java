@@ -32,8 +32,14 @@ public class LevelManager {
     private static Timeline[] firstWave;
     private static Timeline[] waveTimeline;
     private static Timeline[] timeline;
+    private static Media SSTmedia;
+    private static MediaPlayer SSTSound;
 
     public static BorderPane getLevelPane(int levelIndex) {
+
+        SSTmedia = new Media(new File("src/main/resources/sounds/BulletShoot.wav").toURI().toString());
+        SSTSound = new MediaPlayer(SSTmedia);
+
 
         BorderPane uiPane = new BorderPane();
         uiPane.setCenter(MapCell.getMap(levelIndex));
@@ -86,8 +92,7 @@ public class LevelManager {
         timeline = new Timeline[1];
         timeline[0] = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
 
-            Media media = new Media(new File("src/main/resources/sounds/BulletShoot.wav").toURI().toString());
-            MediaPlayer shootSound = new MediaPlayer(media);
+            
 
             HashMap<Group, Integer> towerMap = DragTowers.getTowerMap();
             for (Group tower : towerMap.keySet()) {
@@ -96,9 +101,12 @@ public class LevelManager {
                     Enemy targetEnemy = targetEnemy(tower, waveManager, 200);
 
                     if (targetEnemy != null) {
+                        if (SSTSound.getStatus() == MediaPlayer.Status.PLAYING){
+                            SSTSound.stop();
+                        }
 
-                        shootSound.setVolume(0.2);
-                        shootSound.play();
+                        SSTSound.setVolume(0.2);
+                        SSTSound.play();
                         Bullet.shootBullet(uiPane, tower, targetEnemy);
                     }
                 } else if (DragTowers.price(tower) == 120) {
@@ -134,8 +142,7 @@ public class LevelManager {
                     Enemy targetEnemy = targetEnemy(tower, waveManager, 200);
 
                     if (targetEnemy != null) {
-                        shootSound.setVolume(0.2);
-                        shootSound.play();
+                        
                         Missile.shootMissile(uiPane, tower, targetEnemy);
 
                         ArrayList<Enemy> enemiesInRange = new ArrayList<>();
