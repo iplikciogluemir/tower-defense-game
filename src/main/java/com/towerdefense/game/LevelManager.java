@@ -140,7 +140,7 @@ public class LevelManager {
                     }
                     int enemycount = 0;
                     for (Entry<Double, Enemy> pair : sortedmap.entrySet()) {
-                        if (enemycount > 5) {
+                        if (enemycount > 2) {
                             break;
                         }
                         if (TSTSound.getStatus() == MediaPlayer.Status.PLAYING){

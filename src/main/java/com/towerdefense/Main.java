@@ -1,5 +1,7 @@
 package com.towerdefense;
 
+import java.io.File;
+
 import com.towerdefense.game.LevelManager;
 import com.towerdefense.ui.DragTowers;
 import com.towerdefense.ui.GameUI;
@@ -12,6 +14,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.input.KeyCode;
@@ -21,9 +25,35 @@ public class Main extends Application {
     private int levelIndex = 1;
     private Scene scene = new Scene(new Pane());
     private Timeline timeline;
+    
+    public static Media menuTheme;
+    public static MediaPlayer menuThemeSound;
+    public static Media mainTheme;
+    public static MediaPlayer mainThemeSound;
+    public static Media gaveOver;
+    public static MediaPlayer gaveOverSound;
 
     @Override
     public void start(Stage primaryStage) {
+
+        menuTheme = new Media(new File("src/main/resources/sounds/MenuTheme.wav").toURI().toString());
+        menuThemeSound = new MediaPlayer(menuTheme);
+        menuThemeSound.setVolume(0.07);
+        menuThemeSound.setCycleCount(MediaPlayer.INDEFINITE);
+
+        mainTheme = new Media(new File("src/main/resources/sounds/MainTheme.wav").toURI().toString());
+        mainThemeSound = new MediaPlayer(mainTheme);
+        mainThemeSound.setVolume(0.07);
+        mainThemeSound.setCycleCount(MediaPlayer.INDEFINITE);
+
+        gaveOver = new Media(new File("src/main/resources/sounds/GameOver.mp3").toURI().toString());
+        gaveOverSound = new MediaPlayer(gaveOver);
+        gaveOverSound.setVolume(0.07);
+        
+        
+
+
+
 
         startGame();
 
@@ -60,8 +90,12 @@ public class Main extends Application {
         Pane pane = GameUI.startScreen();
         scene.setRoot(pane);
         Button startButton = (Button) pane.getChildren().get(0);
+        menuThemeSound.play();
 
         startButton.setOnMouseClicked(e -> {
+            menuThemeSound.stop();
+            mainThemeSound.play();
+             
             levelIndex = 1;
             scene.setRoot(LevelManager.getLevelPane(levelIndex));
             HUDVariables.setMoney(1000);
@@ -73,6 +107,7 @@ public class Main extends Application {
     public void win() {
         LevelManager.clearAll();
         DragTowers.getTowerMap().clear();
+        
         if (levelIndex == 5) {
             Pane pane = GameUI.endScreen();
             scene.setRoot(pane);
@@ -91,6 +126,7 @@ public class Main extends Application {
             Button continueButton = (Button) continueLabel.getGraphic();
 
             continueButton.setOnMouseClicked(e -> {
+                mainThemeSound.play();
                 scene.setRoot(LevelManager.getLevelPane(levelIndex));
                 LevelManager.resetLevelCondition();
                 timeline.play();
@@ -99,6 +135,8 @@ public class Main extends Application {
     }
 
     public void lose() {
+        mainThemeSound.stop();
+        gaveOverSound.play();
         timeline.pause();
         LevelManager.clearAll();
         DragTowers.getTowerMap().clear();
@@ -110,6 +148,7 @@ public class Main extends Application {
         Button mainMenu = (Button) mainMenuLabel.getGraphic();
 
         mainMenu.setOnMouseClicked(e -> {
+            gaveOverSound.stop();
             startGame();
         });
     }
