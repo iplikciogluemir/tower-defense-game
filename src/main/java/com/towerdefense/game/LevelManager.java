@@ -22,9 +22,11 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.shape.Line;
 import javafx.util.Duration;
 
 public class LevelManager {
@@ -32,16 +34,19 @@ public class LevelManager {
     private static Timeline[] firstWave;
     private static Timeline[] waveTimeline;
     private static Timeline[] timeline;
-    private static Media SSTmedia;
-    private static MediaPlayer SSTSound;
+    public static BorderPane uiPane;
+    
+    public static Media SSTMedia;
+    public static MediaPlayer SSTSound;
+    public static Media LaserMedia;
+    public static MediaPlayer LaserSound;
+    public static Media TSTMedia;
+    public static MediaPlayer TSTSound;
 
     public static BorderPane getLevelPane(int levelIndex) {
 
-        SSTmedia = new Media(new File("src/main/resources/sounds/BulletShoot.wav").toURI().toString());
-        SSTSound = new MediaPlayer(SSTmedia);
-
-
-        BorderPane uiPane = new BorderPane();
+        createMedia();
+        uiPane = new BorderPane();
         uiPane.setCenter(MapCell.getMap(levelIndex));
         uiPane.setRight(TowerPanel.getTowerPanel(uiPane));
         HUDVariables.setTime((int) MapCell.currMap.getWaveDelay(0));
@@ -91,7 +96,7 @@ public class LevelManager {
 
         timeline = new Timeline[1];
         timeline[0] = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
-
+            
             
 
             HashMap<Group, Integer> towerMap = DragTowers.getTowerMap();
@@ -105,7 +110,7 @@ public class LevelManager {
                             SSTSound.stop();
                         }
 
-                        SSTSound.setVolume(0.2);
+                        
                         SSTSound.play();
                         Bullet.shootBullet(uiPane, tower, targetEnemy);
                     }
@@ -114,8 +119,12 @@ public class LevelManager {
                         Enemy enemyTest = ((Enemy) waveManager.waveList.get(waveManager.currWave).get(i));
 
                         double distance = calculateDistance(tower, enemyTest);
-
+                        
+                        
                         if (distance <= 200) {
+                            if (LaserSound.getStatus() != MediaPlayer.Status.PLAYING){
+                                LaserSound.play();
+                            }
                             Laser.shootLaser(uiPane, tower, enemyTest);
                         }
                     }
@@ -131,9 +140,13 @@ public class LevelManager {
                     }
                     int enemycount = 0;
                     for (Entry<Double, Enemy> pair : sortedmap.entrySet()) {
-                        if (enemycount > 2) {
+                        if (enemycount > 5) {
                             break;
                         }
+                        if (TSTSound.getStatus() == MediaPlayer.Status.PLAYING){
+                            TSTSound.stop();
+                        }
+                        TSTSound.play();
                         Bullet.shootBullet(uiPane, tower, pair.getValue());
                         ++enemycount;
                     }
@@ -226,6 +239,7 @@ public class LevelManager {
 
     public static void clearAll() {
         isLevelOver = false;
+        LaserSound.stop();
 
         if (WaveManager.currEnemyList != null)
             WaveManager.currEnemyList.clear();
@@ -241,4 +255,33 @@ public class LevelManager {
         if (waveTimeline != null)
             waveTimeline[0].stop();
     }
+
+
+    public static void createMedia(){
+        
+        // Single Shot Tower
+        SSTMedia = new Media(new File("src/main/resources/sounds/BulletShoot.wav").toURI().toString());
+        SSTSound = new MediaPlayer(SSTMedia);
+        SSTSound.setVolume(0.2);
+
+        // Laser Tower
+        LaserMedia = new Media(new File("src/main/resources/sounds/LaserBeam.wav").toURI().toString());
+        LaserSound = new MediaPlayer(LaserMedia);
+        LaserSound.setVolume(0.2);
+
+        // Triple Shot Tower
+        TSTMedia = new Media(new File("src/main/resources/sounds/TripleShoot.wav").toURI().toString());
+        TSTSound = new MediaPlayer(TSTMedia);
+        TSTSound.setVolume(0.2);
+    }
+    public static boolean laserBeamExists() {
+        for (Node node : uiPane.getChildren() ){
+            if (node instanceof Line){
+                    return true;
+                    
+            }
+        }
+        return false;
+    }
+
 }

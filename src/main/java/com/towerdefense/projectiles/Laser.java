@@ -2,6 +2,7 @@ package com.towerdefense.projectiles;
 
 import com.towerdefense.enemies.Enemy;
 import com.towerdefense.enemies.EnemyExplosion;
+import com.towerdefense.game.LevelManager;
 import com.towerdefense.game.WaveManager;
 import com.towerdefense.ui.HUDVariables;
 import javafx.animation.KeyFrame;
@@ -34,6 +35,9 @@ public class Laser extends Application {
 
             if (!pane.getChildren().contains(enemy)) {
                 pane.getChildren().remove(laser);
+                if (!LevelManager.laserBeamExists()){
+                    LevelManager.LaserSound.stop();
+                }
                 timeline[0].stop();
                 return;
             }
@@ -61,6 +65,9 @@ public class Laser extends Application {
                     timeline[0].stop();
                     WaveManager.currEnemyList.remove(enemy1);
                     pane.getChildren().removeAll(enemy, laser);
+                    if (!LevelManager.laserBeamExists()){
+                        LevelManager.LaserSound.stop();
+                    }
                     HUDVariables.setMoney(HUDVariables.getMoney() + 10);
                 }
             }
@@ -68,6 +75,9 @@ public class Laser extends Application {
             else {
                 timeline[0].stop();
                 pane.getChildren().remove(laser);
+                if (!LevelManager.laserBeamExists()){
+                    LevelManager.LaserSound.stop();
+                }
             }
         }));
 

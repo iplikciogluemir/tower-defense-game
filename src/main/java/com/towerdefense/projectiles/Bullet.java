@@ -22,12 +22,10 @@ import javafx.util.Duration;
 
 public class Bullet {
 
-    static Media media = new Media(new File("src/main/resources/sounds/BulletShoot.wav").toURI().toString());
-    static MediaPlayer shootSound = new MediaPlayer(media);
+   
 
     public static void shootBullet(Pane pane, Group tower, Enemy enemy1) {
-        shootSound.setVolume(0.2);
-        shootSound.play();
+        
         Group enemy = enemy1.getEnemy();
         Circle bullet = new Circle(5, Color.RED);
         Bounds towerPos = tower.getBoundsInParent();
