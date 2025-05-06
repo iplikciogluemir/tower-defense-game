@@ -173,6 +173,10 @@ public class LevelManager {
                                 enemiesInRange.add(boomenemy);
                             }
                         }
+                        if (MSTSound.getStatus() == MediaPlayer.Status.PLAYING){
+                            MSTSound.stop();
+                        }
+                        MSTSound.play();
                         Missile.shootMissile(uiPane, tower, targetEnemy);
 
                         
@@ -251,7 +255,12 @@ public class LevelManager {
     }
     public static void missileAreaKill(){
         for (Enemy boomenemy : enemiesInRange) {
-            Enemy.getSingleHit(boomenemy.getEnemy());
+            if (MSTSoundExp.getStatus() == MediaPlayer.Status.PLAYING){
+                MSTSoundExp.stop();
+            }
+            MSTSoundExp.play();
+
+            Enemy.getMissileHit(boomenemy.getEnemy());
             if (Enemy.isDead(boomenemy.getEnemy())) {
                 EnemyExplosion.createExplosion(uiPane, boomenemy);
                 WaveManager.currEnemyList.remove(boomenemy);
