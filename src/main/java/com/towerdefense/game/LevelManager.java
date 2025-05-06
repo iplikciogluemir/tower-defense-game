@@ -59,14 +59,14 @@ public class LevelManager {
 
         WaveManager waveManager = new WaveManager(uiPane);
         firstWave = new Timeline[1];
-        firstWave[0] = new Timeline(new KeyFrame(Duration.seconds((int) MapCell.currMap.getWaveDelay(0)), e -> {
+        
+        firstWave[0] = new Timeline(new KeyFrame(Duration.seconds((int) MapCell.currMap.getWaveDelay(0)+1.4), e -> {
             if (HUDVariables.getTime() == 0) {
-                waveManager.sendWave(0);
-                firstWave[0].stop();
+                waveManager.sendWave(0); 
             }
         }));
         firstWave[0].play();
-        firstWave[0].setCycleCount(Timeline.INDEFINITE);
+        
 
         final boolean[] readyToSend = { false };
 
