@@ -2,6 +2,7 @@ package com.towerdefense.projectiles;
 
 import com.towerdefense.enemies.Enemy;
 import com.towerdefense.enemies.EnemyExplosion;
+import com.towerdefense.game.LevelManager;
 import com.towerdefense.game.WaveManager;
 import com.towerdefense.ui.HUDVariables;
 
@@ -55,6 +56,7 @@ public class Missile extends Application {
             double distance = Math.hypot(moveX, moveY);
 
             if (distance < 5) {
+                LevelManager.missileAreaKill();
                 pane.getChildren().remove(missile);
 
                 if (Enemy.isDead(enemy)) {

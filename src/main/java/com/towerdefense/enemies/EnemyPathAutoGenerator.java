@@ -15,10 +15,6 @@ import javafx.scene.shape.Rectangle;
 
 public class EnemyPathAutoGenerator {
 
-    public static void EnemySender(Group enemy) throws IOException {
-
-    }
-
     public static Path getEnemyPath(BorderPane uiPane) {
 
         GameMapScanner map = MapCell.currMap;

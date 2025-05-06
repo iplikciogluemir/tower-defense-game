@@ -87,6 +87,15 @@ public class Enemy {
             }
         }
     }
+    public static void getMissileHit(Group group) {
+        for (Node node : group.getChildren()) {
+            if (node instanceof Rectangle) {
+                Rectangle modifiedRectangle = (Rectangle) node;
+                modifiedRectangle.setWidth(modifiedRectangle.getWidth() - 16);
+                break;
+            }
+        }
+    }
 
     public static boolean isDead(Group group) {
         Rectangle checkingRectangle = null;
