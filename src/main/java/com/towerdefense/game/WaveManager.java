@@ -11,6 +11,8 @@ import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import javafx.util.Duration;
 
 public class WaveManager {
@@ -60,17 +62,21 @@ public class WaveManager {
     }
 
     public void sendEnemy(Enemy enemy) {
-
-        // Calculate the How fast The how much time the enemy will spend
         this.seconds = standartSeconds / enemy.getSpeed();
 
         Group enemyGroup = enemy.getEnemy();
-        PathTransition pathTransition = new PathTransition();
+
+        Path path = EnemyPathAutoGenerator.getEnemyPath(uiPane);
+
+        MoveTo firstMove = (MoveTo) path.getElements().get(0);
+        enemyGroup.setTranslateX(firstMove.getX());
+        enemyGroup.setTranslateY(firstMove.getY());
+
         uiPane.getChildren().add(enemyGroup);
+        PathTransition pathTransition = new PathTransition();
         pathTransition.setDuration(Duration.seconds(this.seconds));
-        pathTransition.setPath(EnemyPathAutoGenerator.getEnemyPath(uiPane));
+        pathTransition.setPath(path);
         pathTransition.setNode(enemyGroup);
-        // pathTransition.setCycleCount(PathTransition.INDEFINITE);
         pathTransition.setInterpolator(Interpolator.LINEAR);
         pathTransition.play();
 
@@ -81,7 +87,5 @@ public class WaveManager {
             uiPane.getChildren().remove(enemyGroup);
             waveList.get(currWave).remove(enemy);
         });
-
     }
-
 }
