@@ -2,8 +2,8 @@ package com.towerdefense;
 
 import java.io.File;
 
+import com.towerdefense.game.DragTowers;
 import com.towerdefense.game.LevelManager;
-import com.towerdefense.ui.DragTowers;
 import com.towerdefense.ui.GameColors;
 import com.towerdefense.ui.GameUI;
 import com.towerdefense.ui.HUDVariables;

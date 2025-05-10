@@ -1,10 +1,12 @@
 package com.towerdefense.game;
 
 import java.io.File;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.PriorityQueue;
 import java.util.TreeMap;
 
 import com.towerdefense.enemies.Enemy;
@@ -14,7 +16,6 @@ import com.towerdefense.projectiles.Bullet;
 import com.towerdefense.projectiles.Laser;
 import com.towerdefense.projectiles.Missile;
 import com.towerdefense.projectiles.Projectile;
-import com.towerdefense.ui.DragTowers;
 import com.towerdefense.ui.GameColors;
 import com.towerdefense.ui.HUDVariables;
 import com.towerdefense.ui.TowerPanel;
@@ -101,95 +102,102 @@ public class LevelManager {
 
         timeline = new Timeline[1];
         timeline[0] = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+            attack(waveManager);
 
-            HashMap<Group, Integer> towerMap = DragTowers.getTowerMap();
-            for (Group tower : towerMap.keySet()) {
-                if (DragTowers.price(tower) == 50) {
-
-                    Enemy targetEnemy = targetEnemy(tower, waveManager, 200);
-
-                    if (targetEnemy != null) {
-                        if (SSTSound.getStatus() == MediaPlayer.Status.PLAYING) {
-                            SSTSound.stop();
-                        }
-                        SSTSound.play();
-                        Bullet.shootBullet(uiPane, tower, targetEnemy);
-                    }
-                } else if (DragTowers.price(tower) == 120) {
-                    for (int i = 0; i < waveManager.waveList.get(waveManager.currWave).size(); i++) {
-                        Enemy enemyTest = ((Enemy) waveManager.waveList.get(waveManager.currWave).get(i));
-
-                        double distance = calculateDistance(tower, enemyTest);
-
-                        if (distance <= 200) {
-                            if (LaserSound.getStatus() != MediaPlayer.Status.PLAYING) {
-                                LaserSound.play();
-                            }
-                            Laser.shootLaser(uiPane, tower, enemyTest);
-                        }
-                    }
-                } else if (DragTowers.price(tower) == 150) {
-                    Map<Double, Enemy> sortedmap = new TreeMap<>();
-                    for (int i = 0; i < waveManager.waveList.get(waveManager.currWave).size(); ++i) {
-                        Enemy enemyTest = ((Enemy) waveManager.waveList.get(waveManager.currWave).get(i));
-
-                        double distance = calculateDistance(tower, enemyTest);
-                        if (distance <= 200) {
-                            sortedmap.put(distance, enemyTest);
-                        }
-                    }
-                    int enemycount = 0;
-                    for (Entry<Double, Enemy> pair : sortedmap.entrySet()) {
-                        if (enemycount > 2) {
-                            break;
-                        }
-                        if (TSTSound.getStatus() == MediaPlayer.Status.PLAYING) {
-                            TSTSound.stop();
-                        }
-                        TSTSound.play();
-                        Bullet.shootBullet(uiPane, tower, pair.getValue());
-                        ++enemycount;
-                    }
-                } else {
-
-                    Enemy targetEnemy = targetEnemy(tower, waveManager, 200);
-
-                    if (targetEnemy != null) {
-
-                        enemiesInRange = new ArrayList<>();
-                        for (int i = 0; i < WaveManager.currEnemyList.size(); i++) {
-                            Enemy boomenemy = (WaveManager.currEnemyList.get(i));
-                            Bounds boomenemyPos = boomenemy.getEnemy().getBoundsInParent();
-                            Bounds enemyPos = targetEnemy.getEnemy().getBoundsInParent();
-                            double distance = Projectile.getDistance(boomenemyPos.getCenterX(),
-                                    boomenemyPos.getCenterY(),
-                                    enemyPos.getCenterX(),
-                                    enemyPos.getCenterY());
-                            if (distance <= 75) {
-                                enemiesInRange.add(boomenemy);
-                            }
-                        }
-                        if (MSTSound.getStatus() == MediaPlayer.Status.PLAYING) {
-                            MSTSound.stop();
-                        }
-                        MSTSound.play();
-                        Missile.shootMissile(uiPane, tower, targetEnemy);
-
-                    }
-
-                }
-
-                if (waveManager.currWave == MapCell.currMap.getWaveCount() - 1
-                        && waveManager.waveList.get(waveManager.currWave).isEmpty()) {
-                    isLevelOver = true;
-                    timeline[0].stop();
-                }
-            }
         }));
         timeline[0].setCycleCount(Timeline.INDEFINITE);
         timeline[0].play();
 
         return uiPane;
+    }
+
+    public static void attack(WaveManager waveManager) {
+        HashMap<Group, Integer> towerMap = DragTowers.getTowerMap();
+        for (Group tower : towerMap.keySet()) {
+            if (DragTowers.price(tower) == 50) {
+
+                Enemy targetEnemy = targetEnemy(tower, waveManager, 200);
+
+                if (targetEnemy != null) {
+                    if (SSTSound.getStatus() == MediaPlayer.Status.PLAYING) {
+                        SSTSound.stop();
+                    }
+                    SSTSound.play();
+                    Bullet.shootBullet(uiPane, tower, targetEnemy);
+                }
+            } else if (DragTowers.price(tower) == 120) {
+                for (int i = 0; i < waveManager.waveList.get(waveManager.currWave).size(); i++) {
+                    Enemy enemyTest = ((Enemy) waveManager.waveList.get(waveManager.currWave).get(i));
+
+                    double distance = calculateDistance(tower, enemyTest);
+
+                    if (distance <= 200) {
+                        if (LaserSound.getStatus() != MediaPlayer.Status.PLAYING) {
+                            LaserSound.play();
+                        }
+                        Laser.shootLaser(uiPane, tower, enemyTest);
+                    }
+                }
+            } else if (DragTowers.price(tower) == 150) {
+                PriorityQueue<Map.Entry<Double, Enemy>> pq = new PriorityQueue<>(
+                        (a, b) -> Double.compare(a.getKey(), b.getKey()));
+
+                for (int i = 0; i < waveManager.waveList.get(waveManager.currWave).size(); ++i) {
+                    Enemy enemyTest = waveManager.waveList.get(waveManager.currWave).get(i);
+                    double distance = calculateDistance(tower, enemyTest);
+
+                    if (distance <= 200) {
+                        pq.offer(new AbstractMap.SimpleEntry<>(distance, enemyTest));
+                    }
+                }
+
+                int enemycount = 0;
+                while (!pq.isEmpty() && enemycount < 3) {
+                    Enemy target = pq.poll().getValue();
+                    if (TSTSound.getStatus() == MediaPlayer.Status.PLAYING) {
+                        TSTSound.stop();
+                    }
+                    TSTSound.play();
+                    Bullet.shootBullet(uiPane, tower, target);
+                    ++enemycount;
+                }
+
+            } else {
+
+                Enemy targetEnemy = targetEnemy(tower, waveManager, 200);
+
+                if (targetEnemy != null) {
+
+                    enemiesInRange = new ArrayList<>();
+                    for (int i = 0; i < WaveManager.currEnemyList.size(); i++) {
+                        Enemy boomenemy = (WaveManager.currEnemyList.get(i));
+                        Bounds boomenemyPos = boomenemy.getEnemy().getBoundsInParent();
+                        Bounds enemyPos = targetEnemy.getEnemy().getBoundsInParent();
+                        double distance = Projectile.getDistance(boomenemyPos.getCenterX(),
+                                boomenemyPos.getCenterY(),
+                                enemyPos.getCenterX(),
+                                enemyPos.getCenterY());
+                        if (distance <= 75) {
+                            enemiesInRange.add(boomenemy);
+                        }
+                    }
+                    if (MSTSound.getStatus() == MediaPlayer.Status.PLAYING) {
+                        MSTSound.stop();
+                    }
+                    MSTSound.play();
+                    Missile.shootMissile(uiPane, tower, targetEnemy);
+
+                }
+
+            }
+
+            if (waveManager.currWave == MapCell.currMap.getWaveCount() - 1
+                    && waveManager.waveList.get(waveManager.currWave).isEmpty()) {
+                isLevelOver = true;
+                timeline[0].stop();
+            }
+        }
+
     }
 
     public static boolean isWaveOver() {

@@ -5,17 +5,7 @@ import com.towerdefense.ui.GameColors;
 import javafx.scene.Group;
 import javafx.scene.shape.Rectangle;
 
-public class SingleShotTower extends Tower {
-
-    public SingleShotTower(int x, int y, int cost, int range, int damage, int fireRate) {
-        super(x, y, cost, range, damage, fireRate);
-    }
-
-    @Override
-    public void attack() {
-        // implement the attack method :)
-    }
-
+public class SingleShotTower {
     public static Group getSingleShotTower() {
         Rectangle r1 = new Rectangle(0, 10, 40, 40);
         r1.setStyle("-fx-fill: " + GameColors.getSingleShotTowerColor1());

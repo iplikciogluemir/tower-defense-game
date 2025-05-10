@@ -15,8 +15,8 @@ import javafx.util.Duration;
 
 public class EnemyExplosion {
     private static final int NUM_PARTICLES = 20;
-    private static final double MAX_DISTANCE = 50;
-    private static final double CIRCLE_RADIUS = 3;
+    private static final double MAX_DISTANCE = 60;
+    private static final double CIRCLE_RADIUS = 3.5;
     private static final double DURATION = 0.5;
 
     public static void createExplosion(Pane root, Enemy enemy) {
