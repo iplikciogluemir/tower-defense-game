@@ -144,33 +144,33 @@ public class GameColors {
         textColor = isDarkMode ? "#e0e0e0" : "#582b0d";
 
         // Enemy
-        enemyHeadColor = isDarkMode ? "#1f8b6f" : "#885b21";
-        enemyBodyColor = isDarkMode ? "#2d5be3" : "#b32223";
-        healthBarColor = isDarkMode ? "2d5be3" : "#b32223";
+        enemyHeadColor = isDarkMode ? "#4a4d6c" : "#885b21";
+        enemyBodyColor = isDarkMode ? "#5d00a8" : "#b32223";
+        healthBarColor = isDarkMode ? "#5d00a8" : "#b32223";
 
         // Enemy Explosion
-        explosionParticleCircleColor = isDarkMode ? "2d5be3" : "#b32223";
+        explosionParticleCircleColor = isDarkMode ? "#5d00a8" : "#b32223";
 
         // Bullet - Laser - Missile
-        bulletColor = isDarkMode ? "#00e0dc" : "#FF0000";
-        laserColor = isDarkMode ? "#00e0dc" : "#FF0000";
-        missileBulletColor = isDarkMode ? "#00e0dc" : "#FF0000";
+        bulletColor = isDarkMode ? "#5d00a8" : "#FF0000";
+        laserColor = isDarkMode ? "#5d00a8" : "#FF0000";
+        missileBulletColor = isDarkMode ? "#5d00a8" : "#FF0000";
 
         // DragTowers
-        dragCircleColor = isDarkMode ? "#00e0dc" : "#FF0000";
+        dragCircleColor = isDarkMode ? "#b8860b" : "#FF0000";
 
         // Towers (Laser - Missile SingleShot - TripleShot)
         laserTowerColor1 = isDarkMode ? "#ffcc00" : "#cbb296";
-        laserTowerColor2 = isDarkMode ? "#704f9a" : "#8b633a";
+        laserTowerColor2 = isDarkMode ? "#5d00a8" : "#8b633a";
 
         missileLauncherTowerColor1 = isDarkMode ? "#ffcc00" : "#cbb296";
-        missileLauncherTowerColor2 = isDarkMode ? "#704f9a" : "#8b633a";
+        missileLauncherTowerColor2 = isDarkMode ? "#5d00a8" : "#8b633a";
 
         singleShotTowerColor1 = isDarkMode ? "#ffcc00" : "#cbb296";
-        singleShotTowerColor2 = isDarkMode ? "#704f9a" : "#8b633a";
+        singleShotTowerColor2 = isDarkMode ? "#5d00a8" : "#8b633a";
 
         tripleShotTowerColor1 = isDarkMode ? "#ffcc00" : "#cbb296";
-        tripleShotTowerColor2 = isDarkMode ? "#704f9a" : "#8b633a";
+        tripleShotTowerColor2 = isDarkMode ? "#5d00a8" : "#8b633a";
 
     }
 }
