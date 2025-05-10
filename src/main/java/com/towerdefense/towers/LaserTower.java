@@ -5,17 +5,7 @@ import com.towerdefense.ui.GameColors;
 import javafx.scene.Group;
 import javafx.scene.shape.Rectangle;
 
-public class LaserTower extends Tower {
-
-    public LaserTower(int x, int y, int cost, int range, int damage, int fireRate) {
-        super(x, y, cost, range, damage, fireRate);
-    }
-
-    @Override
-    public void attack() {
-        // implement the attack method :)
-    }
-
+public class LaserTower {
     public static Group getLaserTower() {
 
         Rectangle r1 = new Rectangle(8, 0, 6, 6);

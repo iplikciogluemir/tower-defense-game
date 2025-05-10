@@ -5,17 +5,7 @@ import com.towerdefense.ui.GameColors;
 import javafx.scene.Group;
 import javafx.scene.shape.Rectangle;
 
-public class TripleShotTower extends Tower {
-
-    public TripleShotTower(int x, int y, int cost, int range, int damage, int fireRate) {
-        super(x, y, cost, range, damage, fireRate);
-    }
-
-    @Override
-    public void attack() {
-        // implement the attack method :)
-    }
-
+public class TripleShotTower {
     public static Group getTripleShotTower() {
         Rectangle r1 = new Rectangle(0, 0, 6, 7);
         r1.setStyle("-fx-fill: " + GameColors.getTripleShotTowerColor1());
