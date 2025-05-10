@@ -2,6 +2,8 @@ package com.towerdefense.enemies;
 
 import java.util.Random;
 
+import com.towerdefense.ui.GameColors;
+
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
@@ -23,7 +25,7 @@ public class EnemyExplosion {
         double enemyY = enemy.getEnemy().getBoundsInParent().getCenterY();
 
         for (int i = 0; i < NUM_PARTICLES; ++i) {
-            Circle particle = new Circle(CIRCLE_RADIUS, Color.web("#b32223"));
+            Circle particle = new Circle(CIRCLE_RADIUS, Color.web(GameColors.getExplosionParticleCircleColor()));
             particle.setCenterX(enemyX);
             particle.setCenterY(enemyY);
 

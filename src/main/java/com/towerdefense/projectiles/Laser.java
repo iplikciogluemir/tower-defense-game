@@ -4,6 +4,7 @@ import com.towerdefense.enemies.Enemy;
 import com.towerdefense.enemies.EnemyExplosion;
 import com.towerdefense.game.LevelManager;
 import com.towerdefense.game.WaveManager;
+import com.towerdefense.ui.GameColors;
 import com.towerdefense.ui.HUDVariables;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -24,7 +25,7 @@ public class Laser extends Application {
     public static void shootLaser(Pane pane, Group tower, Enemy enemy1) {
         Group enemy = enemy1.getEnemy();
         Line laser = new Line();
-        laser.setStroke(Color.RED);
+        laser.setStroke(Color.web(GameColors.getLaserColor()));
         laser.setStrokeWidth(3);
 
         pane.getChildren().add(laser);
@@ -35,7 +36,7 @@ public class Laser extends Application {
 
             if (!pane.getChildren().contains(enemy)) {
                 pane.getChildren().remove(laser);
-                if (!LevelManager.laserBeamExists()){
+                if (!LevelManager.laserBeamExists()) {
                     LevelManager.LaserSound.stop();
                 }
                 timeline[0].stop();
@@ -65,7 +66,7 @@ public class Laser extends Application {
                     timeline[0].stop();
                     WaveManager.currEnemyList.remove(enemy1);
                     pane.getChildren().removeAll(enemy, laser);
-                    if (!LevelManager.laserBeamExists()){
+                    if (!LevelManager.laserBeamExists()) {
                         LevelManager.LaserSound.stop();
                     }
                     HUDVariables.setMoney(HUDVariables.getMoney() + 10);
@@ -75,7 +76,7 @@ public class Laser extends Application {
             else {
                 timeline[0].stop();
                 pane.getChildren().remove(laser);
-                if (!LevelManager.laserBeamExists()){
+                if (!LevelManager.laserBeamExists()) {
                     LevelManager.LaserSound.stop();
                 }
             }

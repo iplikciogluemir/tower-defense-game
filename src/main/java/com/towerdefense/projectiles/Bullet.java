@@ -5,6 +5,7 @@ import java.io.File;
 import com.towerdefense.enemies.Enemy;
 import com.towerdefense.enemies.EnemyExplosion;
 import com.towerdefense.game.WaveManager;
+import com.towerdefense.ui.GameColors;
 import com.towerdefense.ui.HUDVariables;
 
 import javafx.animation.Timeline;
@@ -22,12 +23,11 @@ import javafx.util.Duration;
 
 public class Bullet {
 
-   
-
     public static void shootBullet(Pane pane, Group tower, Enemy enemy1) {
-        
+
         Group enemy = enemy1.getEnemy();
-        Circle bullet = new Circle(5, Color.RED);
+        Circle bullet = new Circle(5);
+        bullet.setFill(Color.web(GameColors.getBulletColor()));
         Bounds towerPos = tower.getBoundsInParent();
         // Bounds enemyPos = enemy.getBoundsInParent();
         bullet.setCenterX(towerPos.getCenterX());

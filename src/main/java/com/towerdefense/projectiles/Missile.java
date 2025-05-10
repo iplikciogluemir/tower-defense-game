@@ -4,6 +4,7 @@ import com.towerdefense.enemies.Enemy;
 import com.towerdefense.enemies.EnemyExplosion;
 import com.towerdefense.game.LevelManager;
 import com.towerdefense.game.WaveManager;
+import com.towerdefense.ui.GameColors;
 import com.towerdefense.ui.HUDVariables;
 
 import javafx.animation.Timeline;
@@ -25,7 +26,8 @@ public class Missile extends Application {
 
     public static void shootMissile(Pane pane, Group tower, Enemy enemy1) {
         Group enemy = enemy1.getEnemy();
-        Circle missile = new Circle(10, Color.RED);
+        Circle missile = new Circle(10);
+        missile.setFill(Color.web(GameColors.getMissileBulletColor()));
         Bounds towerPos = tower.getBoundsInParent();
         // Bounds enemyPos = enemy.getBoundsInParent();
         missile.setCenterX(towerPos.getCenterX());

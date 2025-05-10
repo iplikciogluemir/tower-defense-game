@@ -55,7 +55,8 @@ public class DragTowers {
 
                     Group clonedDraggableGroup = clone(towerGroup);
                     Circle towerCircle = new Circle(200);
-                    towerCircle.setFill(Color.rgb(255, 0, 0, 0.4));
+                    towerCircle.setFill(Color.web(GameColors.getDragCircleColor()));
+                    towerCircle.setOpacity(0.4);
                     pane.getChildren().addAll(clonedDraggableGroup, towerCircle);
 
                     clonedDraggableGroup.setPickOnBounds(true);

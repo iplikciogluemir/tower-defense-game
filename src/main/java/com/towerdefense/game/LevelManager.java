@@ -15,6 +15,7 @@ import com.towerdefense.projectiles.Laser;
 import com.towerdefense.projectiles.Missile;
 import com.towerdefense.projectiles.Projectile;
 import com.towerdefense.ui.DragTowers;
+import com.towerdefense.ui.GameColors;
 import com.towerdefense.ui.HUDVariables;
 import com.towerdefense.ui.TowerPanel;
 
@@ -36,7 +37,7 @@ public class LevelManager {
     private static Timeline[] waveTimeline;
     private static Timeline[] timeline;
     public static BorderPane uiPane;
-    
+
     public static Media SSTMedia;
     public static MediaPlayer SSTSound;
     public static Media LaserMedia;
@@ -55,18 +56,17 @@ public class LevelManager {
         uiPane.setCenter(MapCell.getMap(levelIndex));
         uiPane.setRight(TowerPanel.getTowerPanel(uiPane));
         HUDVariables.setTime((int) MapCell.currMap.getWaveDelay(0));
-        uiPane.setStyle("-fx-background-color: #faf1da;");
+        uiPane.setStyle("-fx-background-color: " + GameColors.getBackgroundColor() + ";");
 
         WaveManager waveManager = new WaveManager(uiPane);
         firstWave = new Timeline[1];
-        
-        firstWave[0] = new Timeline(new KeyFrame(Duration.seconds((int) MapCell.currMap.getWaveDelay(0)+1.4), e -> {
+
+        firstWave[0] = new Timeline(new KeyFrame(Duration.seconds((int) MapCell.currMap.getWaveDelay(0) + 1.4), e -> {
             if (HUDVariables.getTime() == 0) {
-                waveManager.sendWave(0); 
+                waveManager.sendWave(0);
             }
         }));
         firstWave[0].play();
-        
 
         final boolean[] readyToSend = { false };
 
@@ -101,8 +101,6 @@ public class LevelManager {
 
         timeline = new Timeline[1];
         timeline[0] = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
-            
-            
 
             HashMap<Group, Integer> towerMap = DragTowers.getTowerMap();
             for (Group tower : towerMap.keySet()) {
@@ -111,7 +109,7 @@ public class LevelManager {
                     Enemy targetEnemy = targetEnemy(tower, waveManager, 200);
 
                     if (targetEnemy != null) {
-                        if (SSTSound.getStatus() == MediaPlayer.Status.PLAYING){
+                        if (SSTSound.getStatus() == MediaPlayer.Status.PLAYING) {
                             SSTSound.stop();
                         }
                         SSTSound.play();
@@ -122,10 +120,9 @@ public class LevelManager {
                         Enemy enemyTest = ((Enemy) waveManager.waveList.get(waveManager.currWave).get(i));
 
                         double distance = calculateDistance(tower, enemyTest);
-                        
-                        
+
                         if (distance <= 200) {
-                            if (LaserSound.getStatus() != MediaPlayer.Status.PLAYING){
+                            if (LaserSound.getStatus() != MediaPlayer.Status.PLAYING) {
                                 LaserSound.play();
                             }
                             Laser.shootLaser(uiPane, tower, enemyTest);
@@ -146,7 +143,7 @@ public class LevelManager {
                         if (enemycount > 2) {
                             break;
                         }
-                        if (TSTSound.getStatus() == MediaPlayer.Status.PLAYING){
+                        if (TSTSound.getStatus() == MediaPlayer.Status.PLAYING) {
                             TSTSound.stop();
                         }
                         TSTSound.play();
@@ -158,28 +155,26 @@ public class LevelManager {
                     Enemy targetEnemy = targetEnemy(tower, waveManager, 200);
 
                     if (targetEnemy != null) {
-                        
-                        
+
                         enemiesInRange = new ArrayList<>();
                         for (int i = 0; i < WaveManager.currEnemyList.size(); i++) {
                             Enemy boomenemy = (WaveManager.currEnemyList.get(i));
                             Bounds boomenemyPos = boomenemy.getEnemy().getBoundsInParent();
                             Bounds enemyPos = targetEnemy.getEnemy().getBoundsInParent();
                             double distance = Projectile.getDistance(boomenemyPos.getCenterX(),
-                            boomenemyPos.getCenterY(),
-                            enemyPos.getCenterX(),
-                            enemyPos.getCenterY());
+                                    boomenemyPos.getCenterY(),
+                                    enemyPos.getCenterX(),
+                                    enemyPos.getCenterY());
                             if (distance <= 75) {
                                 enemiesInRange.add(boomenemy);
                             }
                         }
-                        if (MSTSound.getStatus() == MediaPlayer.Status.PLAYING){
+                        if (MSTSound.getStatus() == MediaPlayer.Status.PLAYING) {
                             MSTSound.stop();
                         }
                         MSTSound.play();
                         Missile.shootMissile(uiPane, tower, targetEnemy);
 
-                        
                     }
 
                 }
@@ -253,9 +248,10 @@ public class LevelManager {
         if (waveTimeline != null)
             waveTimeline[0].stop();
     }
-    public static void missileAreaKill(){
+
+    public static void missileAreaKill() {
         for (Enemy boomenemy : enemiesInRange) {
-            if (MSTSoundExp.getStatus() == MediaPlayer.Status.PLAYING){
+            if (MSTSoundExp.getStatus() == MediaPlayer.Status.PLAYING) {
                 MSTSoundExp.stop();
             }
             MSTSoundExp.play();
@@ -270,8 +266,8 @@ public class LevelManager {
         }
     }
 
-    public static void createMedia(){
-        
+    public static void createMedia() {
+
         // Single Shot Tower
         SSTMedia = new Media(new File("src/main/resources/sounds/BulletShoot.wav").toURI().toString());
         SSTSound = new MediaPlayer(SSTMedia);
@@ -297,11 +293,12 @@ public class LevelManager {
         MSTSoundExp = new MediaPlayer(MSTMediaExp);
         MSTSoundExp.setVolume(0.2);
     }
+
     public static boolean laserBeamExists() {
-        for (Node node : uiPane.getChildren() ){
-            if (node instanceof Line){
-                    return true;
-                    
+        for (Node node : uiPane.getChildren()) {
+            if (node instanceof Line) {
+                return true;
+
             }
         }
         return false;
