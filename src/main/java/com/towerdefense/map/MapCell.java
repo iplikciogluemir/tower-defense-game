@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+import com.towerdefense.ui.GameColors;
 
 public class MapCell {
     public static final int sideLength = 60;
@@ -58,18 +59,17 @@ public class MapCell {
                 randomColor = random.nextInt(2);
 
                 if (isEnemyPath(map, row, column)) {
-                    rectangle.setFill(Color.web("#f2e0c8"));
+                    rectangle.setFill(Color.web(GameColors.getEnemyPathColor()));
                 } else {
                     switch (randomColor) {
                         case 0:
-                            rectangle.setFill(Color.web("#fac443"));
+                            rectangle.setFill(Color.web(GameColors.getGridColor1()));
                             break;
                         case 1:
-                            rectangle.setFill(Color.web("#fbd058"));
+                            rectangle.setFill(Color.web(GameColors.getGridColor2()));
                             break;
                     }
                 }
-
                 rectangle.setOpacity(0);
                 rectangle.setScaleX(0);
                 rectangle.setScaleY(0);

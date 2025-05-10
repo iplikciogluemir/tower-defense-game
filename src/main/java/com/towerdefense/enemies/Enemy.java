@@ -1,5 +1,7 @@
 package com.towerdefense.enemies;
 
+import com.towerdefense.ui.GameColors;
+
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
@@ -46,18 +48,19 @@ public class Enemy {
     }
 
     private Group getEnemyShape() {
+
         Polygon body = new Polygon();
         body.getPoints().addAll(
                 7.0, 7.0,
                 0.0, 30.0,
                 14.0, 30.0);
-        body.setStyle("-fx-fill: #b32223");
+        body.setStyle("-fx-fill: " + GameColors.getEnemyBodyColor());
 
         Circle head = new Circle(7, 7, 7);
-        head.setStyle("-fx-fill: #885b21");
+        head.setStyle("-fx-fill: " + GameColors.getEnemyHeadColor());
 
         Rectangle healthBar = new Rectangle(24, 5);
-        healthBar.setFill(Color.web("#b32223"));
+        healthBar.setFill(Color.web(GameColors.getHealthBarColor()));
         healthBar.setLayoutX(7 - (healthBar.getWidth() / 2));
         healthBar.setLayoutY(-10);
 
@@ -87,6 +90,7 @@ public class Enemy {
             }
         }
     }
+
     public static void getMissileHit(Group group) {
         for (Node node : group.getChildren()) {
             if (node instanceof Rectangle) {

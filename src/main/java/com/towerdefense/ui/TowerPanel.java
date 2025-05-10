@@ -2,6 +2,8 @@ package com.towerdefense.ui;
 
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
+
+import com.towerdefense.map.GameMapScanner;
 import com.towerdefense.towers.LaserTower;
 import com.towerdefense.towers.MissileLauncherTower;
 import com.towerdefense.towers.SingleShotTower;
@@ -21,11 +23,11 @@ public class TowerPanel {
                 VBox vbx = new VBox(10);
                 final double prefWidth = 200;
 
-                String css = "-fx-background-color: #f2d79d;" +
-                                "-fx-border-color: #eed399;" +
+                String css = "-fx-background-color: " + GameColors.getButtonBackgroundColor() + ";" +
+                                "-fx-border-color: " + GameColors.getButtonBorderColor() + ";" +
                                 "-fx-border-width: 2;" +
                                 "-fx-padding:5;" +
-                                "-fx-text-fill: #582b0d;" + "-fx-border-radius: 7px;" +
+                                "-fx-text-fill: " + GameColors.getTextColor() + ";" + "-fx-border-radius: 7px;" +
                                 "-fx-background-radius: 7px;" +
                                 "-fx-pref-width:" + prefWidth + ";" +
                                 "-fx-alignment:center";
@@ -33,20 +35,20 @@ public class TowerPanel {
                 HUDVariables.setLives(5);
                 Text livesText = new Text("Lives: " + HUDVariables.getLives());
                 livesText.setFont(Font.font(24));
-                livesText.setFill(Color.web("#672b00"));
+                livesText.setFill(Color.web(GameColors.getTextColor()));
                 HUDVariables.setLivesText(livesText);
 
                 Text moneyText = new Text("Money: " + HUDVariables.getMoney() + "$");
                 moneyText.setFont(Font.font(24));
-                moneyText.setFill(Color.web("#672b00"));
+                moneyText.setFill(Color.web(GameColors.getTextColor()));
                 HUDVariables.setMoneyText(moneyText);
 
                 Text countText = new Text("Next Wave: " + HUDVariables.counterViewer());
                 HUDVariables.setCountText(countText);
                 countText.setFont(Font.font(24));
-                countText.setFill(Color.web("#672b00"));
+                countText.setFill(Color.web(GameColors.getTextColor()));
 
-                vbx.setStyle("-fx-background-color: #faf1da");
+                vbx.setStyle("-fx-background-color: " + GameColors.getBackgroundColor());
                 Label singleShotTower = new Label("Single Shot Tower - 50$", SingleShotTower.getSingleShotTower());
                 singleShotTower.setContentDisplay(ContentDisplay.TOP);
                 singleShotTower.setStyle(css);
