@@ -89,14 +89,19 @@ public class Main extends Application {
         scene.setRoot(vbox);
         menuThemeSound.play();
 
+        if (GameColors.isDarkMode()) {
+            GameUI.getDarkModToggleButton().setSelected(true);
+            GameUI.getDarkModToggleButton().setText("Light Mode");
+        }
+
         GameUI.getDarkModToggleButton().setOnAction(e -> {
             if (GameUI.getDarkModToggleButton().isSelected()) {
-                GameUI.getDarkModToggleButton().setText("Dark Mode");
+                GameUI.getDarkModToggleButton().setText("Light Mode");
                 GameColors.setDarkMode(true);
                 vbox.setStyle("-fx-background-color: " + GameColors.getBackgroundColor());
                 buttonThemeUpdater();
             } else {
-                GameUI.getDarkModToggleButton().setText("Light Mode");
+                GameUI.getDarkModToggleButton().setText("Dark Mode");
                 GameColors.setDarkMode(false);
                 vbox.setStyle("-fx-background-color: " + GameColors.getBackgroundColor());
                 buttonThemeUpdater();

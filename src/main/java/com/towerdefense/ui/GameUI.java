@@ -64,7 +64,7 @@ public class GameUI {
                 "-fx-font-weight: bold;" +
                 " -fx-font-size: 16px;");
 
-        darkModeToggleButton = new ToggleButton("Light Mode");
+        darkModeToggleButton = new ToggleButton("Dark Mode");
         darkModeToggleButton.setStyle("-fx-border-radius: 7px;" +
                 "-fx-background-radius: 7px;" +
                 "-fx-border-width: 2px;" +
