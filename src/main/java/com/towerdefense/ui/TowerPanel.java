@@ -4,7 +4,9 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 
 import com.towerdefense.game.DragTowers;
+import com.towerdefense.game.WaveManager;
 import com.towerdefense.map.GameMapScanner;
+import com.towerdefense.map.MapCell;
 import com.towerdefense.towers.LaserTower;
 import com.towerdefense.towers.MissileLauncherTower;
 import com.towerdefense.towers.SingleShotTower;
@@ -49,6 +51,12 @@ public class TowerPanel {
         countText.setFont(Font.font(24));
         countText.setFill(Color.web(GameColors.getTextColor()));
 
+        Text remainingText = new Text("Remaining Waves: " + MapCell.currMap.getWaveCount()  );
+        remainingText.setFont(Font.font(24));
+        remainingText.setFill(Color.web(GameColors.getTextColor()));
+        HUDVariables.setRemainingText(remainingText);
+        
+
         vbx.setStyle("-fx-background-color: " + GameColors.getBackgroundColor());
         Label singleShotTower = new Label("Single Shot Tower - 50$", SingleShotTower.getSingleShotTower());
         singleShotTower.setContentDisplay(ContentDisplay.TOP);
@@ -67,7 +75,7 @@ public class TowerPanel {
         missileLauncherTower.setContentDisplay(ContentDisplay.TOP);
         missileLauncherTower.setStyle(css);
 
-        vbx.getChildren().addAll(livesText, moneyText, countText, singleShotTower, laserTower, tripleShotTower,
+        vbx.getChildren().addAll(livesText, moneyText, countText, remainingText, singleShotTower, laserTower, tripleShotTower,
                 missileLauncherTower);
         vbx.setAlignment(Pos.CENTER);
         vbx.setPadding(new Insets(0, 20, 0, 20));

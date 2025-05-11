@@ -22,7 +22,7 @@ public class WaveManager {
     double standartSeconds;
     public ArrayList<ArrayList<Enemy>> waveList;
     BorderPane uiPane;
-    public int currWave;
+    public static int currWave;
     public static ArrayList<Enemy> currEnemyList;
 
     public WaveManager(BorderPane uiPane) {
@@ -32,7 +32,7 @@ public class WaveManager {
         this.standartSeconds = tiles / 2.0;
         this.waveList = new ArrayList<>();
         this.uiPane = uiPane;
-        this.currWave = 0;
+        currWave = 0;
 
         for (int i = 0; i < MapCell.currMap.getWaveCount(); i++) {
             ArrayList<Enemy> enemyList = new ArrayList<>();
@@ -46,7 +46,8 @@ public class WaveManager {
     }
 
     public void sendWave(int waveIndex) {
-        this.currWave = waveIndex;
+        currWave = waveIndex;
+        HUDVariables.updateRemainingWaves();
 
         Timeline timeline = new Timeline();
         currEnemyList = waveList.get(waveIndex);
