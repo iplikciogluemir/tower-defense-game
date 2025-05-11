@@ -33,8 +33,8 @@ public class Main extends Application {
     public static MediaPlayer menuThemeSound;
     public static Media mainTheme;
     public static MediaPlayer mainThemeSound;
-    public static Media gaveOver;
-    public static MediaPlayer gaveOverSound;
+    public static Media gameOver;
+    public static MediaPlayer gameOverSound;
 
     @Override
     public void start(Stage primaryStage) {
@@ -49,9 +49,9 @@ public class Main extends Application {
         mainThemeSound.setVolume(0.07);
         mainThemeSound.setCycleCount(MediaPlayer.INDEFINITE);
 
-        gaveOver = new Media(new File("src/main/resources/sounds/GameOver.mp3").toURI().toString());
-        gaveOverSound = new MediaPlayer(gaveOver);
-        gaveOverSound.setVolume(0.07);
+        gameOver = new Media(new File("src/main/resources/sounds/GameOver.mp3").toURI().toString());
+        gameOverSound = new MediaPlayer(gameOver);
+        gameOverSound.setVolume(0.07);
 
         startGame();
 
@@ -114,7 +114,7 @@ public class Main extends Application {
 
             levelIndex = 1;
             scene.setRoot(LevelManager.getLevelPane(levelIndex));
-            HUDVariables.setMoney(1000);
+            HUDVariables.setMoney(100);
             LevelManager.resetLevelCondition();
             timeline.play();
         });
@@ -148,7 +148,7 @@ public class Main extends Application {
 
     public void lose() {
         mainThemeSound.stop();
-        gaveOverSound.play();
+        gameOverSound.play();
         timeline.pause();
         LevelManager.clearAll();
         DragTowers.getTowerMap().clear();
@@ -157,7 +157,7 @@ public class Main extends Application {
         scene.setRoot(pane);
 
         GameUI.getBackToMenuButton().setOnMouseClicked(e -> {
-            gaveOverSound.stop();
+            gameOverSound.stop();
             startGame();
         });
     }
@@ -186,14 +186,16 @@ public class Main extends Application {
                 "-fx-font-weight: bold;" +
                 " -fx-font-size: 12px;");
     }
-    public static void muteMusic(){
+
+    public static void muteMusic() {
         menuThemeSound.setMute(true);
         mainThemeSound.setMute(true);
-        gaveOverSound.setMute(true);
+        gameOverSound.setMute(true);
     }
-    public static void unMuteMusic(){
+
+    public static void unMuteMusic() {
         menuThemeSound.setMute(false);
         mainThemeSound.setMute(false);
-        gaveOverSound.setMute(false);
+        gameOverSound.setMute(false);
     }
 }
