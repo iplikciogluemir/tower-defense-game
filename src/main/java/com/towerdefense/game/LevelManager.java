@@ -76,21 +76,21 @@ public class LevelManager {
                 new KeyFrame(Duration.seconds(1), e -> {
 
                     // if last wave
-                    if (waveManager.currWave == MapCell.currMap.getWaveCount() - 1) {
+                    if (WaveManager.currWave == MapCell.currMap.getWaveCount() - 1) {
                         waveTimeline[0].stop();
                         firstWave[0].stop();
                     }
                     if (readyToSend[0] && HUDVariables.getTime() == 0) {
 
-                        waveManager.sendWave(waveManager.currWave + 1);
+                        waveManager.sendWave(WaveManager.currWave + 1);
                         readyToSend[0] = false;
                     }
 
-                    if (waveManager.waveList.get(waveManager.currWave).isEmpty() &&
+                    if (waveManager.waveList.get(WaveManager.currWave).isEmpty() &&
                             waveManager.currWave != MapCell.currMap.getWaveCount() - 1 &&
                             HUDVariables.getTime() == 0) {
 
-                        HUDVariables.setTime((int) Math.round(MapCell.currMap.getWaveDelay(waveManager.currWave + 1)));
+                        HUDVariables.setTime((int) Math.round(MapCell.currMap.getWaveDelay(WaveManager.currWave + 1)));
                         HUDVariables.getTimeline().play();
                         readyToSend[0] = true;
 
@@ -126,8 +126,8 @@ public class LevelManager {
                     Bullet.shootBullet(uiPane, tower, targetEnemy);
                 }
             } else if (DragTowers.price(tower) == 120) {
-                for (int i = 0; i < waveManager.waveList.get(waveManager.currWave).size(); i++) {
-                    Enemy enemyTest = ((Enemy) waveManager.waveList.get(waveManager.currWave).get(i));
+                for (int i = 0; i < waveManager.waveList.get(WaveManager.currWave).size(); i++) {
+                    Enemy enemyTest = ((Enemy) waveManager.waveList.get(WaveManager.currWave).get(i));
 
                     double distance = calculateDistance(tower, enemyTest);
 
@@ -142,8 +142,8 @@ public class LevelManager {
                 PriorityQueue<Map.Entry<Double, Enemy>> pq = new PriorityQueue<>(
                         (a, b) -> Double.compare(a.getKey(), b.getKey()));
 
-                for (int i = 0; i < waveManager.waveList.get(waveManager.currWave).size(); ++i) {
-                    Enemy enemyTest = waveManager.waveList.get(waveManager.currWave).get(i);
+                for (int i = 0; i < waveManager.waveList.get(WaveManager.currWave).size(); ++i) {
+                    Enemy enemyTest = waveManager.waveList.get(WaveManager.currWave).get(i);
                     double distance = calculateDistance(tower, enemyTest);
 
                     if (distance <= 200) {
@@ -191,8 +191,8 @@ public class LevelManager {
 
             }
 
-            if (waveManager.currWave == MapCell.currMap.getWaveCount() - 1
-                    && waveManager.waveList.get(waveManager.currWave).isEmpty()) {
+            if (WaveManager.currWave == MapCell.currMap.getWaveCount() - 1
+                    && waveManager.waveList.get(WaveManager.currWave).isEmpty()) {
                 isLevelOver = true;
                 timeline[0].stop();
             }
@@ -226,8 +226,8 @@ public class LevelManager {
         Enemy targetEnemy = null;
         double shortestDistance = range;
 
-        for (int i = 0; i < waveManager.waveList.get(waveManager.currWave).size(); i++) {
-            Enemy enemyTest = ((Enemy) waveManager.waveList.get(waveManager.currWave).get(i));
+        for (int i = 0; i < waveManager.waveList.get(WaveManager.currWave).size(); i++) {
+            Enemy enemyTest = ((Enemy) waveManager.waveList.get(WaveManager.currWave).get(i));
             double distance = calculateDistance(tower, enemyTest);
 
             if (distance <= shortestDistance) {

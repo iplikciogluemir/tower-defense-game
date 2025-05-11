@@ -1,6 +1,10 @@
 package com.towerdefense.ui;
 
 import javafx.animation.Timeline;
+
+import com.towerdefense.game.WaveManager;
+import com.towerdefense.map.MapCell;
+
 import javafx.animation.KeyFrame;
 import javafx.util.Duration;
 import javafx.scene.text.Text;
@@ -15,6 +19,7 @@ public class HUDVariables {
     private static Text countText;
     private static Text moneyText;
     private static Text livesText;
+    private static Text remainingText;
 
     // LIVES METHODS
     public static void setLivesText(Text livesText) {
@@ -89,5 +94,12 @@ public class HUDVariables {
 
     public static int getTime() {
         return HUDVariables.seconds;
+    }
+    // Remaining Waves Method
+    public static void updateRemainingWaves() { 
+        remainingText.setText("Remaining Waves: " + (MapCell.currMap.getWaveCount() - WaveManager.currWave - 1));
+    }
+    public static void setRemainingText(Text remainingText) {
+        HUDVariables.remainingText = remainingText;
     }
 }
