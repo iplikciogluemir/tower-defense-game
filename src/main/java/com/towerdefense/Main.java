@@ -186,4 +186,14 @@ public class Main extends Application {
                 "-fx-font-weight: bold;" +
                 " -fx-font-size: 12px;");
     }
+    public static void muteMusic(){
+        menuThemeSound.setMute(true);
+        mainThemeSound.setMute(true);
+        gaveOverSound.setMute(true);
+    }
+    public static void unMuteMusic(){
+        menuThemeSound.setMute(false);
+        mainThemeSound.setMute(false);
+        gaveOverSound.setMute(false);
+    }
 }

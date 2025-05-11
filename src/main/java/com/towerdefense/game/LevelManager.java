@@ -336,5 +336,21 @@ public class LevelManager {
         }
         return false;
     }
+    public static void muteEffects(){
+        SSTSound.setMute(true);
+        LaserSound.setMute(true);
+        TSTSound.setMute(true);
+        DSSound.setMute(true);
+        MSTSound.setMute(true);
+        MSTSoundExp.setMute(true);
+    }
+    public static void unMuteEffects(){
+        SSTSound.setMute(false);
+        LaserSound.setMute(false);
+        TSTSound.setMute(false);
+        DSSound.setMute(false);
+        MSTSound.setMute(false);
+        MSTSoundExp.setMute(false);
+    }
 
 }
