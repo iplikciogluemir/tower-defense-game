@@ -285,6 +285,7 @@ public class LevelManager {
         LaserMedia = new Media(new File("src/main/resources/sounds/LaserBeam.wav").toURI().toString());
         LaserSound = new MediaPlayer(LaserMedia);
         LaserSound.setVolume(0.2);
+        LaserSound.setStartTime(Duration.seconds(1.5));
 
         // Triple Shot Tower
         TSTMedia = new Media(new File("src/main/resources/sounds/TripleShoot.wav").toURI().toString());
