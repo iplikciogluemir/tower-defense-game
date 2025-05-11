@@ -49,6 +49,8 @@ public class LevelManager {
     public static MediaPlayer MSTSound;
     public static Media MSTMediaExp;
     public static MediaPlayer MSTSoundExp;
+    public static Media DSMedia;
+    public static MediaPlayer DSSound;
 
     public static BorderPane getLevelPane(int levelIndex) {
 
@@ -154,13 +156,30 @@ public class LevelManager {
                 int enemycount = 0;
                 while (!pq.isEmpty() && enemycount < 3) {
                     Enemy target = pq.poll().getValue();
+                    
+                    Bullet.shootBullet(uiPane, tower, target);
+                    ++enemycount;
+                }
+                if (enemycount == 3){
                     if (TSTSound.getStatus() == MediaPlayer.Status.PLAYING) {
                         TSTSound.stop();
                     }
                     TSTSound.play();
-                    Bullet.shootBullet(uiPane, tower, target);
-                    ++enemycount;
                 }
+                else if (enemycount == 2 ) {
+                    if (DSSound.getStatus() == MediaPlayer.Status.PLAYING) {
+                        DSSound.stop();
+                    }
+                    DSSound.play();
+                }
+                else if (enemycount == 1){
+                    if (SSTSound.getStatus() == MediaPlayer.Status.PLAYING) {
+                        SSTSound.stop();
+                    }
+                    SSTSound.play();
+                }
+
+
 
             } else {
 
@@ -291,6 +310,11 @@ public class LevelManager {
         TSTMedia = new Media(new File("src/main/resources/sounds/TripleShoot.wav").toURI().toString());
         TSTSound = new MediaPlayer(TSTMedia);
         TSTSound.setVolume(0.2);
+
+         // Double Shot Sound for TST
+        DSMedia = new Media(new File("src/main/resources/sounds/DoubleShoot.mp3").toURI().toString());
+        DSSound = new MediaPlayer(DSMedia);
+        DSSound.setVolume(0.2);
 
         // Missile Shot Tower
         MSTMedia = new Media(new File("src/main/resources/sounds/MissileLaunch.wav").toURI().toString());
