@@ -108,6 +108,20 @@ public class Main extends Application {
             }
         });
 
+        if (menuThemeSound.isMute()) {
+            GameUI.getMuteToggleButton().setSelected(true);
+            GameUI.getMuteToggleButton().setText("Unmute");
+        }
+        GameUI.getMuteToggleButton().setOnAction(e -> {
+            if (GameUI.getMuteToggleButton().isSelected()) {
+                muteMusic();
+                GameUI.getMuteToggleButton().setText("Unmute");
+            } else {
+                unMuteMusic();
+                GameUI.getMuteToggleButton().setText("Mute");
+            }
+        });
+
         GameUI.getStartButton().setOnMouseClicked(e -> {
             menuThemeSound.stop();
             mainThemeSound.play();
@@ -176,6 +190,16 @@ public class Main extends Application {
                 " -fx-font-size: 16px;");
 
         GameUI.getDarkModToggleButton().setStyle("-fx-border-radius: 7px;" +
+                "-fx-background-radius: 7px;" +
+                "-fx-border-width: 2px;" +
+                "-fx-border-color: " + GameColors.getButtonBorderColor() + ";" +
+                "-fx-pref-width: 100px;" +
+                "-fx-pref-height: 30px ;" +
+                "-fx-background-color: " + GameColors.getButtonBackgroundColor() + ";" +
+                "-fx-text-fill: " + GameColors.getTextColor() + ";" +
+                "-fx-font-weight: bold;" +
+                " -fx-font-size: 12px;");
+        GameUI.getMuteToggleButton().setStyle("-fx-border-radius: 7px;" +
                 "-fx-background-radius: 7px;" +
                 "-fx-border-width: 2px;" +
                 "-fx-border-color: " + GameColors.getButtonBorderColor() + ";" +

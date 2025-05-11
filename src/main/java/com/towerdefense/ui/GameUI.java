@@ -17,6 +17,7 @@ public class GameUI {
     private static Button backToMenuLose;
     private static Button backToMenuEnd;
     private static ToggleButton darkModeToggleButton;
+    private static ToggleButton muteToggleButton;
 
     public static StackPane winScreen() {
         StackPane pane = new StackPane();
@@ -76,7 +77,19 @@ public class GameUI {
                 "-fx-font-weight: bold;" +
                 " -fx-font-size: 12px;");
 
-        startVbox.getChildren().addAll(startButton, darkModeToggleButton);
+        muteToggleButton = new ToggleButton("Mute");
+        muteToggleButton.setStyle("-fx-border-radius: 7px;" +
+                "-fx-background-radius: 7px;" +
+                "-fx-border-width: 2px;" +
+                "-fx-border-color: " + GameColors.getButtonBorderColor() + ";" +
+                "-fx-pref-width: 100px;" +
+                "-fx-pref-height: 30px ;" +
+                "-fx-background-color: " + GameColors.getButtonBackgroundColor() + ";" +
+                "-fx-text-fill: " + GameColors.getTextColor() + ";" +
+                "-fx-font-weight: bold;" +
+                " -fx-font-size: 12px;");
+
+        startVbox.getChildren().addAll(startButton, darkModeToggleButton, muteToggleButton);
         return startVbox;
     }
 
@@ -86,6 +99,10 @@ public class GameUI {
 
     public static ToggleButton getDarkModToggleButton() {
         return darkModeToggleButton;
+    }
+
+    public static ToggleButton getMuteToggleButton() {
+        return muteToggleButton;
     }
 
     public static StackPane loseScreen() {
