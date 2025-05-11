@@ -128,6 +128,12 @@ public class Main extends Application {
 
             levelIndex = 1;
             scene.setRoot(LevelManager.getLevelPane(levelIndex));
+
+            if (GameUI.getMuteToggleButton().isSelected())
+                LevelManager.muteEffects();
+            else
+                LevelManager.unMuteEffects();
+
             HUDVariables.setMoney(100);
             LevelManager.resetLevelCondition();
             timeline.play();
@@ -154,6 +160,12 @@ public class Main extends Application {
             GameUI.getWinButton().setOnMouseClicked(e -> {
                 mainThemeSound.play();
                 scene.setRoot(LevelManager.getLevelPane(levelIndex));
+
+                if (GameUI.getMuteToggleButton().isSelected())
+                    LevelManager.muteEffects();
+                else
+                    LevelManager.unMuteEffects();
+
                 LevelManager.resetLevelCondition();
                 timeline.play();
             });
