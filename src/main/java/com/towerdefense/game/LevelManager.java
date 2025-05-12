@@ -9,8 +9,11 @@ import java.util.Map.Entry;
 import java.util.PriorityQueue;
 import java.util.TreeMap;
 
+import com.towerdefense.Main;
 import com.towerdefense.enemies.Enemy;
 import com.towerdefense.enemies.EnemyExplosion;
+import com.towerdefense.enemies.EnemyPathAutoGenerator;
+import com.towerdefense.map.LevelGenerator;
 import com.towerdefense.map.MapCell;
 import com.towerdefense.projectiles.Bullet;
 import com.towerdefense.projectiles.Laser;
@@ -62,6 +65,7 @@ public class LevelManager {
         uiPane.setStyle("-fx-background-color: " + GameColors.getBackgroundColor() + ";");
 
         WaveManager waveManager = new WaveManager(uiPane);
+        EnemyPathAutoGenerator.linecount = 0;
         firstWave = new Timeline[1];
 
         firstWave[0] = new Timeline(new KeyFrame(Duration.seconds((int) MapCell.currMap.getWaveDelay(0) + 1.4), e -> {
@@ -156,30 +160,26 @@ public class LevelManager {
                 int enemycount = 0;
                 while (!pq.isEmpty() && enemycount < 3) {
                     Enemy target = pq.poll().getValue();
-                    
+
                     Bullet.shootBullet(uiPane, tower, target);
                     ++enemycount;
                 }
-                if (enemycount == 3){
+                if (enemycount == 3) {
                     if (TSTSound.getStatus() == MediaPlayer.Status.PLAYING) {
                         TSTSound.stop();
                     }
                     TSTSound.play();
-                }
-                else if (enemycount == 2 ) {
+                } else if (enemycount == 2) {
                     if (DSSound.getStatus() == MediaPlayer.Status.PLAYING) {
                         DSSound.stop();
                     }
                     DSSound.play();
-                }
-                else if (enemycount == 1){
+                } else if (enemycount == 1) {
                     if (SSTSound.getStatus() == MediaPlayer.Status.PLAYING) {
                         SSTSound.stop();
                     }
                     SSTSound.play();
                 }
-
-
 
             } else {
 
@@ -311,7 +311,7 @@ public class LevelManager {
         TSTSound = new MediaPlayer(TSTMedia);
         TSTSound.setVolume(0.2);
 
-         // Double Shot Sound for TST
+        // Double Shot Sound for TST
         DSMedia = new Media(new File("src/main/resources/sounds/DoubleShoot.mp3").toURI().toString());
         DSSound = new MediaPlayer(DSMedia);
         DSSound.setVolume(0.2);
@@ -336,7 +336,8 @@ public class LevelManager {
         }
         return false;
     }
-    public static void muteEffects(){
+
+    public static void muteEffects() {
         SSTSound.setMute(true);
         LaserSound.setMute(true);
         TSTSound.setMute(true);
@@ -344,13 +345,24 @@ public class LevelManager {
         MSTSound.setMute(true);
         MSTSoundExp.setMute(true);
     }
-    public static void unMuteEffects(){
+
+    public static void unMuteEffects() {
         SSTSound.setMute(false);
         LaserSound.setMute(false);
         TSTSound.setMute(false);
         DSSound.setMute(false);
         MSTSound.setMute(false);
         MSTSoundExp.setMute(false);
+    }
+
+    public static BorderPane getRandomLevel() {
+        LevelGenerator generator = new LevelGenerator();
+        int currlvl = Main.getLevelIndex();
+        String filePath = "src/main/resources/maps/level" + currlvl + ".txt";
+        generator.generateLevel(filePath);
+
+        BorderPane levelPane = getLevelPane(currlvl); // Use -1 to indicate random level
+        return levelPane;
     }
 
 }

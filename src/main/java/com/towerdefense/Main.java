@@ -25,7 +25,9 @@ import javafx.scene.input.KeyCode;
 
 public class Main extends Application {
 
-    private int levelIndex;
+
+    private static int levelIndex = 1;
+
     private Scene scene = new Scene(new Pane());
     private Timeline timeline;
     private boolean isInfinite;
@@ -36,6 +38,10 @@ public class Main extends Application {
     public static MediaPlayer mainThemeSound;
     public static Media gameOver;
     public static MediaPlayer gameOverSound;
+
+    public static int getLevelIndex() {
+        return levelIndex;
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -142,7 +148,7 @@ public class Main extends Application {
             menuThemeSound.stop();
             mainThemeSound.play();
 
-            levelIndex = 1;
+            levelIndex = 5;
             scene.setRoot(LevelManager.getLevelPane(levelIndex));
 
             if (GameUI.getMuteToggleButton().isSelected())
@@ -176,12 +182,16 @@ public class Main extends Application {
 
             GameUI.getWinButton().setOnMouseClicked(e -> {
                 mainThemeSound.play();
-                scene.setRoot(LevelManager.getLevelPane(levelIndex));
+           if (levelIndex > 5)
+               scene.setRoot(LevelManager.getRandomLevel());
+           else
+               scene.setRoot(LevelManager.getLevelPane(levelIndex));
 
-                if (GameUI.getMuteToggleButton().isSelected())
-                    LevelManager.muteEffects();
-                else
-                    LevelManager.unMuteEffects();
+            if (GameUI.getMuteToggleButton().isSelected())
+                LevelManager.muteEffects();
+            else
+                LevelManager.unMuteEffects();
+
 
                 LevelManager.resetLevelCondition();
                 timeline.play();
@@ -192,6 +202,7 @@ public class Main extends Application {
                 startGame();
             });
         }
+
     }
 
     public void lose() {
