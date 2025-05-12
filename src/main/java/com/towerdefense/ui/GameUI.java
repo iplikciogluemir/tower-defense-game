@@ -1,7 +1,5 @@
 package com.towerdefense.ui;
 
-import javax.swing.plaf.basic.BasicTreeUI.TreeToggleAction;
-
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
@@ -14,15 +12,16 @@ public class GameUI {
 
     private static Button startButton;
     private static Button winButton;
-    private static Button backToMenuLose;
-    private static Button backToMenuEnd;
+    private static Button backToMenuButton;
     private static ToggleButton darkModeToggleButton;
     private static ToggleButton muteToggleButton;
+    private static ToggleButton infiniteToggleButton;
 
-    public static StackPane winScreen() {
-        StackPane pane = new StackPane();
+    public static VBox winScreen() {
+        VBox winBox = new VBox(20);
+        winBox.setAlignment(Pos.CENTER);
 
-        pane.setStyle("-fx-background-color:" + GameColors.getBackgroundColor());
+        winBox.setStyle("-fx-background-color:" + GameColors.getBackgroundColor());
 
         winButton = new Button("Continue to Next Level");
         winButton.setStyle("-fx-border-radius: 7px;" +
@@ -38,10 +37,12 @@ public class GameUI {
 
         Label label = new Label("You Won!", winButton);
         label.setStyle("-fx-text-fill:" + GameColors.getTextColor() + ";" + "-fx-font-size: 26px;");
-        pane.getChildren().addAll(label);
+
+        backToMenuInitializer();
+        winBox.getChildren().addAll(label, backToMenuButton);
 
         label.setContentDisplay(ContentDisplay.BOTTOM);
-        return pane;
+        return winBox;
     }
 
     public static Button getWinButton() {
@@ -54,6 +55,18 @@ public class GameUI {
         startVbox.setStyle("-fx-background-color:" + GameColors.getBackgroundColor());
 
         startButton = new Button("Start Game");
+        darkModeToggleButton = new ToggleButton("Dark Mode");
+        muteToggleButton = new ToggleButton("Mute");
+        infiniteToggleButton = new ToggleButton("Infinite Mode : OFF");
+
+        setStartButtonsStyle();
+
+        startVbox.getChildren().addAll(startButton, darkModeToggleButton, muteToggleButton, infiniteToggleButton);
+        return startVbox;
+    }
+
+    public static void setStartButtonsStyle() {
+
         startButton.setStyle("-fx-border-radius: 7px;" +
                 "-fx-background-radius: 7px;" +
                 "-fx-border-width: 2px;" +
@@ -65,7 +78,6 @@ public class GameUI {
                 "-fx-font-weight: bold;" +
                 " -fx-font-size: 16px;");
 
-        darkModeToggleButton = new ToggleButton("Dark Mode");
         darkModeToggleButton.setStyle("-fx-border-radius: 7px;" +
                 "-fx-background-radius: 7px;" +
                 "-fx-border-width: 2px;" +
@@ -77,7 +89,6 @@ public class GameUI {
                 "-fx-font-weight: bold;" +
                 " -fx-font-size: 12px;");
 
-        muteToggleButton = new ToggleButton("Mute");
         muteToggleButton.setStyle("-fx-border-radius: 7px;" +
                 "-fx-background-radius: 7px;" +
                 "-fx-border-width: 2px;" +
@@ -89,8 +100,17 @@ public class GameUI {
                 "-fx-font-weight: bold;" +
                 " -fx-font-size: 12px;");
 
-        startVbox.getChildren().addAll(startButton, darkModeToggleButton, muteToggleButton);
-        return startVbox;
+        infiniteToggleButton.setStyle("-fx-border-radius: 7px;" +
+                "-fx-background-radius: 7px;" +
+                "-fx-border-width: 2px;" +
+                "-fx-border-color: " + GameColors.getButtonBorderColor() + ";" +
+                "-fx-pref-width: 150px;" +
+                "-fx-pref-height: 30px ;" +
+                "-fx-background-color: " + GameColors.getButtonBackgroundColor() + ";" +
+                "-fx-text-fill: " + GameColors.getTextColor() + ";" +
+                "-fx-font-weight: bold;" +
+                " -fx-font-size: 12px;");
+
     }
 
     public static Button getStartButton() {
@@ -105,24 +125,32 @@ public class GameUI {
         return muteToggleButton;
     }
 
+    public static ToggleButton getInfiniToggleButton() {
+        return infiniteToggleButton;
+    }
+
     public static StackPane loseScreen() {
         StackPane pane = new StackPane();
 
         pane.setStyle("-fx-background-color:" + GameColors.getBackgroundColor());
+        backToMenuInitializer();
 
-        backToMenuLose = new Button("Back to Main Menu");
-        backToMenuLose.setStyle("-fx-border-radius: 7px;" +
-                "-fx-background-radius: 7px;" +
-                "-fx-border-width: 2px;" +
-                "-fx-border-color: " + GameColors.getButtonBorderColor() + ";" +
-                "-fx-pref-width: 260px;" +
-                "-fx-pref-height: 60px ;" +
-                "-fx-background-color: " + GameColors.getButtonBackgroundColor() + ";" +
-                "-fx-text-fill: " + GameColors.getTextColor() + ";" +
-                ";-fx-font-weight: bold ;" +
-                " -fx-font-size: 16px;");
+        Label label = new Label("Game Over!", backToMenuButton);
+        label.setStyle("-fx-text-fill: " + GameColors.getTextColor() + ";" + "-fx-font-size: 26px;");
+        pane.getChildren().addAll(label);
 
-        Label label = new Label("Game Over!", backToMenuLose);
+        label.setContentDisplay(ContentDisplay.BOTTOM);
+        return pane;
+    }
+
+    public static StackPane endScreen() {
+        StackPane pane = new StackPane();
+
+        pane.setStyle("-fx-background-color:" + GameColors.getBackgroundColor());
+
+        backToMenuInitializer();
+
+        Label label = new Label("You won!", backToMenuButton);
         label.setStyle("-fx-text-fill: " + GameColors.getTextColor() + ";" + "-fx-font-size: 26px;");
         pane.getChildren().addAll(label);
 
@@ -131,16 +159,13 @@ public class GameUI {
     }
 
     public static Button getBackToMenuButton() {
-        return backToMenuLose;
+        return backToMenuButton;
     }
 
-    public static StackPane endScreen() {
-        StackPane pane = new StackPane();
+    public static void backToMenuInitializer() {
 
-        pane.setStyle("-fx-background-color:" + GameColors.getBackgroundColor());
-
-        backToMenuEnd = new Button("Back to Main Menu");
-        backToMenuEnd.setStyle("-fx-border-radius: 7px;" +
+        backToMenuButton = new Button("Back to Main Menu");
+        backToMenuButton.setStyle("-fx-border-radius: 7px;" +
                 "-fx-background-radius: 7px;" +
                 "-fx-border-width: 2px;" +
                 "-fx-border-color: " + GameColors.getButtonBorderColor() + ";" +
@@ -150,16 +175,5 @@ public class GameUI {
                 "-fx-text-fill: " + GameColors.getTextColor() + ";" +
                 ";-fx-font-weight: bold ;" +
                 " -fx-font-size: 16px;");
-
-        Label label = new Label("You won!", backToMenuEnd);
-        label.setStyle("-fx-text-fill: " + GameColors.getTextColor() + ";" + "-fx-font-size: 26px;");
-        pane.getChildren().addAll(label);
-
-        label.setContentDisplay(ContentDisplay.BOTTOM);
-        return pane;
-    }
-
-    public static Button getBackToMenuEndButton() {
-        return backToMenuEnd;
     }
 }

@@ -25,9 +25,10 @@ import javafx.scene.input.KeyCode;
 
 public class Main extends Application {
 
-    private int levelIndex = 1;
+    private int levelIndex;
     private Scene scene = new Scene(new Pane());
     private Timeline timeline;
+    private boolean isInfinite;
 
     public static Media menuTheme;
     public static MediaPlayer menuThemeSound;
@@ -99,12 +100,12 @@ public class Main extends Application {
                 GameUI.getDarkModToggleButton().setText("Light Mode");
                 GameColors.setDarkMode(true);
                 vbox.setStyle("-fx-background-color: " + GameColors.getBackgroundColor());
-                buttonThemeUpdater();
+                GameUI.setStartButtonsStyle();
             } else {
                 GameUI.getDarkModToggleButton().setText("Dark Mode");
                 GameColors.setDarkMode(false);
                 vbox.setStyle("-fx-background-color: " + GameColors.getBackgroundColor());
-                buttonThemeUpdater();
+                GameUI.setStartButtonsStyle();
             }
         });
 
@@ -122,6 +123,21 @@ public class Main extends Application {
             }
         });
 
+        if (isInfinite) {
+            GameUI.getInfiniToggleButton().setSelected(true);
+            GameUI.getInfiniToggleButton().setText("Infinite Mode : ON");
+        }
+
+        GameUI.getInfiniToggleButton().setOnAction(e -> {
+            if (GameUI.getInfiniToggleButton().isSelected()) {
+                isInfinite = true;
+                GameUI.getInfiniToggleButton().setText("Infinite Mode : ON");
+            } else {
+                isInfinite = false;
+                GameUI.getInfiniToggleButton().setText("Infinite Mode : OFF");
+            }
+        });
+
         GameUI.getStartButton().setOnMouseClicked(e -> {
             menuThemeSound.stop();
             mainThemeSound.play();
@@ -134,7 +150,7 @@ public class Main extends Application {
             else
                 LevelManager.unMuteEffects();
 
-            HUDVariables.setMoney(100);
+            HUDVariables.setMoney(1000);
             LevelManager.resetLevelCondition();
             timeline.play();
         });
@@ -144,18 +160,19 @@ public class Main extends Application {
         LevelManager.clearAll();
         DragTowers.getTowerMap().clear();
 
-        if (levelIndex == 5) {
+        if (levelIndex == 5 && !isInfinite) {
             mainThemeSound.stop();
             Pane pane = GameUI.endScreen();
             scene.setRoot(pane);
 
-            GameUI.getBackToMenuEndButton().setOnMouseClicked(e -> {
+            GameUI.getBackToMenuButton().setOnMouseClicked(e -> {
                 startGame();
+                mainThemeSound.stop();
             });
         } else {
-            Pane pane = GameUI.winScreen();
+            VBox vbox = GameUI.winScreen();
             levelIndex++;
-            scene.setRoot(pane);
+            scene.setRoot(vbox);
 
             GameUI.getWinButton().setOnMouseClicked(e -> {
                 mainThemeSound.play();
@@ -168,6 +185,11 @@ public class Main extends Application {
 
                 LevelManager.resetLevelCondition();
                 timeline.play();
+            });
+
+            GameUI.getBackToMenuButton().setOnAction(e -> {
+                mainThemeSound.stop();
+                startGame();
             });
         }
     }
@@ -186,41 +208,6 @@ public class Main extends Application {
             gameOverSound.stop();
             startGame();
         });
-    }
-
-    public void buttonThemeUpdater() {
-
-        GameUI.getStartButton().setStyle("-fx-border-radius: 7px;" +
-                "-fx-background-radius: 7px;" +
-                "-fx-border-width: 2px;" +
-                "-fx-border-color: " + GameColors.getButtonBorderColor() + ";" +
-                "-fx-pref-width: 200px;" +
-                "-fx-pref-height: 100px ;" +
-                "-fx-background-color: " + GameColors.getButtonBackgroundColor() + ";" +
-                "-fx-text-fill: " + GameColors.getTextColor() + ";" +
-                "-fx-font-weight: bold;" +
-                " -fx-font-size: 16px;");
-
-        GameUI.getDarkModToggleButton().setStyle("-fx-border-radius: 7px;" +
-                "-fx-background-radius: 7px;" +
-                "-fx-border-width: 2px;" +
-                "-fx-border-color: " + GameColors.getButtonBorderColor() + ";" +
-                "-fx-pref-width: 100px;" +
-                "-fx-pref-height: 30px ;" +
-                "-fx-background-color: " + GameColors.getButtonBackgroundColor() + ";" +
-                "-fx-text-fill: " + GameColors.getTextColor() + ";" +
-                "-fx-font-weight: bold;" +
-                " -fx-font-size: 12px;");
-        GameUI.getMuteToggleButton().setStyle("-fx-border-radius: 7px;" +
-                "-fx-background-radius: 7px;" +
-                "-fx-border-width: 2px;" +
-                "-fx-border-color: " + GameColors.getButtonBorderColor() + ";" +
-                "-fx-pref-width: 100px;" +
-                "-fx-pref-height: 30px ;" +
-                "-fx-background-color: " + GameColors.getButtonBackgroundColor() + ";" +
-                "-fx-text-fill: " + GameColors.getTextColor() + ";" +
-                "-fx-font-weight: bold;" +
-                " -fx-font-size: 12px;");
     }
 
     public static void muteMusic() {
