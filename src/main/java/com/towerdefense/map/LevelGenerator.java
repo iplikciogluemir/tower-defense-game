@@ -59,7 +59,7 @@ public class LevelGenerator {
 
         ArrayList<Point2D> visitedarr = new ArrayList<>();
         while (current.getX() < width - 1) {
-            Point2D next = getNextPoint2D(current, visitedarr);
+            Point2D next = getNextPoint(current, visitedarr);
             if (next != null) {
                 path.add(next);
                 current = next;
@@ -67,7 +67,7 @@ public class LevelGenerator {
         }
     }
 
-    private Point2D getNextPoint2D(Point2D current, ArrayList<Point2D> visited) {
+    private Point2D getNextPoint(Point2D current, ArrayList<Point2D> visited) {
         ArrayList<Point2D> moves = new ArrayList<>();
 
         if (current.getX() < width - 1) {
