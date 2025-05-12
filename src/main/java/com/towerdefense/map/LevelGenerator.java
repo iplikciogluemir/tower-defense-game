@@ -1,11 +1,9 @@
 package com.towerdefense.map;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Random;
-
 import javafx.geometry.Point2D;
 
 public class LevelGenerator {

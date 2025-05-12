@@ -1,11 +1,8 @@
 package com.towerdefense.projectiles;
 
 import com.towerdefense.enemies.Enemy;
-import com.towerdefense.enemies.EnemyExplosion;
 import com.towerdefense.game.LevelManager;
-import com.towerdefense.game.WaveManager;
 import com.towerdefense.ui.GameColors;
-import com.towerdefense.ui.HUDVariables;
 
 import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;

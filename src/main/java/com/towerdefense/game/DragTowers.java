@@ -4,7 +4,6 @@ import java.util.HashMap;
 import com.towerdefense.map.MapCell;
 import com.towerdefense.ui.GameColors;
 import com.towerdefense.ui.HUDVariables;
-
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;

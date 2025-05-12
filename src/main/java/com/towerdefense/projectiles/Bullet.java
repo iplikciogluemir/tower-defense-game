@@ -1,24 +1,17 @@
 package com.towerdefense.projectiles;
 
-import java.io.File;
-
 import com.towerdefense.enemies.Enemy;
 import com.towerdefense.enemies.EnemyExplosion;
 import com.towerdefense.game.WaveManager;
 import com.towerdefense.ui.GameColors;
 import com.towerdefense.ui.HUDVariables;
-
 import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;
-import javafx.application.Application;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.layout.Pane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Bullet {

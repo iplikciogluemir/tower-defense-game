@@ -5,14 +5,10 @@ import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.PriorityQueue;
-import java.util.TreeMap;
-
 import com.towerdefense.Main;
 import com.towerdefense.enemies.Enemy;
 import com.towerdefense.enemies.EnemyExplosion;
-import com.towerdefense.enemies.EnemyPathAutoGenerator;
 import com.towerdefense.map.LevelGenerator;
 import com.towerdefense.map.MapCell;
 import com.towerdefense.projectiles.Bullet;
