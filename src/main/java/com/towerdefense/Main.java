@@ -25,7 +25,7 @@ import javafx.scene.input.KeyCode;
 
 public class Main extends Application {
 
-    private int levelIndex = 1;
+    private static int levelIndex = 1;
     private Scene scene = new Scene(new Pane());
     private Timeline timeline;
 
@@ -35,6 +35,10 @@ public class Main extends Application {
     public static MediaPlayer mainThemeSound;
     public static Media gameOver;
     public static MediaPlayer gameOverSound;
+
+    public static int getLevelIndex() {
+        return levelIndex;
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -126,7 +130,7 @@ public class Main extends Application {
             menuThemeSound.stop();
             mainThemeSound.play();
 
-            levelIndex = 1;
+            levelIndex = 5;
             scene.setRoot(LevelManager.getLevelPane(levelIndex));
 
             if (GameUI.getMuteToggleButton().isSelected())
@@ -134,7 +138,7 @@ public class Main extends Application {
             else
                 LevelManager.unMuteEffects();
 
-            HUDVariables.setMoney(100);
+            HUDVariables.setMoney(1000);
             LevelManager.resetLevelCondition();
             timeline.play();
         });
@@ -144,32 +148,25 @@ public class Main extends Application {
         LevelManager.clearAll();
         DragTowers.getTowerMap().clear();
 
-        if (levelIndex == 5) {
-            mainThemeSound.stop();
-            Pane pane = GameUI.endScreen();
-            scene.setRoot(pane);
+        levelIndex++;
+        Pane pane = GameUI.winScreen();
+        scene.setRoot(pane);
 
-            GameUI.getBackToMenuEndButton().setOnMouseClicked(e -> {
-                startGame();
-            });
-        } else {
-            Pane pane = GameUI.winScreen();
-            levelIndex++;
-            scene.setRoot(pane);
-
-            GameUI.getWinButton().setOnMouseClicked(e -> {
-                mainThemeSound.play();
+        GameUI.getWinButton().setOnMouseClicked(e -> {
+            mainThemeSound.play();
+            if (levelIndex > 5)
+                scene.setRoot(LevelManager.getRandomLevel());
+            else
                 scene.setRoot(LevelManager.getLevelPane(levelIndex));
 
-                if (GameUI.getMuteToggleButton().isSelected())
-                    LevelManager.muteEffects();
-                else
-                    LevelManager.unMuteEffects();
+            if (GameUI.getMuteToggleButton().isSelected())
+                LevelManager.muteEffects();
+            else
+                LevelManager.unMuteEffects();
 
-                LevelManager.resetLevelCondition();
-                timeline.play();
-            });
-        }
+            LevelManager.resetLevelCondition();
+            timeline.play();
+        });
     }
 
     public void lose() {

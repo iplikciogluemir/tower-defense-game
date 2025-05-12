@@ -24,6 +24,7 @@ public class WaveManager {
     BorderPane uiPane;
     public static int currWave;
     public static ArrayList<Enemy> currEnemyList;
+    private Path path;
 
     public WaveManager(BorderPane uiPane) {
 
@@ -46,6 +47,7 @@ public class WaveManager {
     }
 
     public void sendWave(int waveIndex) {
+        path = EnemyPathAutoGenerator.getEnemyPath(uiPane);
         currWave = waveIndex;
         HUDVariables.updateRemainingWaves();
 
@@ -67,8 +69,6 @@ public class WaveManager {
         this.seconds = standartSeconds / enemy.getSpeed();
 
         Group enemyGroup = enemy.getEnemy();
-
-        Path path = EnemyPathAutoGenerator.getEnemyPath(uiPane);
 
         MoveTo firstMove = (MoveTo) path.getElements().get(0);
         enemyGroup.setTranslateX(firstMove.getX());
