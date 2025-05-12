@@ -29,7 +29,7 @@ public class WaveManager {
 
         this.waveCount = MapCell.currMap.getWaveCount();
         this.tiles = MapCell.currMap.getPath().size() / 2 - 1;
-        this.standartSeconds = tiles / 2.0;
+        this.standartSeconds = tiles / 1.75;
         this.waveList = new ArrayList<>();
         this.uiPane = uiPane;
         currWave = 0;
@@ -54,9 +54,10 @@ public class WaveManager {
         for (int i = 0; i < currEnemyList.size(); i++) {
             final int eventFix = i;
             Enemy enemy = currEnemyList.get(eventFix);
-            KeyFrame keyFrame = new KeyFrame(Duration.seconds(i * MapCell.currMap.getEnemyInterval(waveIndex)), e -> {
-                sendEnemy(enemy);
-            });
+            KeyFrame keyFrame = new KeyFrame(Duration.seconds(i * MapCell.currMap.getEnemyInterval(waveIndex) * 1.25),
+                    e -> {
+                        sendEnemy(enemy);
+                    });
             timeline.getKeyFrames().add(keyFrame);
         }
         timeline.play();

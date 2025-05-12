@@ -7,7 +7,7 @@ import java.util.List;
 import javafx.geometry.Point2D;
 import java.util.Random;
 
-public class MapGenerator {
+public class LevelGenerator {
     static int maxHeight = 15;
     static int minHeight = 10;
     static int maxWidth = 15;
