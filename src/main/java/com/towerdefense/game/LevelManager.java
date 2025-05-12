@@ -65,7 +65,6 @@ public class LevelManager {
         uiPane.setStyle("-fx-background-color: " + GameColors.getBackgroundColor() + ";");
 
         WaveManager waveManager = new WaveManager(uiPane);
-        EnemyPathAutoGenerator.linecount = 0;
         firstWave = new Timeline[1];
 
         firstWave[0] = new Timeline(new KeyFrame(Duration.seconds((int) MapCell.currMap.getWaveDelay(0) + 1.4), e -> {

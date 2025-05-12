@@ -9,7 +9,7 @@ import java.util.Random;
 import javafx.geometry.Point2D;
 
 public class LevelGenerator {
-    private static final int MIN_WIDTH = 10;
+    private static int MIN_WIDTH = 10;
     private static final int MIN_HEIGHT = 10;
     private static final int MAX_WIDTH = 15;
     private static final int MAX_HEIGHT = 15;
@@ -25,8 +25,9 @@ public class LevelGenerator {
     }
 
     public void generateLevel(String filePath) {
-        width = random.nextInt(MAX_WIDTH - MIN_WIDTH + 1) + MIN_WIDTH;
         height = random.nextInt(MAX_HEIGHT - MIN_HEIGHT + 1) + MIN_HEIGHT;
+        MIN_WIDTH = height;
+        width = random.nextInt(MAX_WIDTH - MIN_WIDTH + 1) + MIN_WIDTH;
 
         generatePath();
 
@@ -100,7 +101,10 @@ public class LevelGenerator {
         }
 
         Point2D nextMove = possibleMoves.get(random.nextInt(possibleMoves.size()));
-        visited.add(nextMove);
+        // visited.add(nextMove);
+        for (Point2D move : moves) {
+            visited.add(move);
+        }
         return nextMove;
     }
 

@@ -25,7 +25,6 @@ import javafx.scene.input.KeyCode;
 
 public class Main extends Application {
 
-
     private static int levelIndex = 1;
 
     private Scene scene = new Scene(new Pane());
@@ -131,16 +130,16 @@ public class Main extends Application {
 
         if (isInfinite) {
             GameUI.getInfiniToggleButton().setSelected(true);
-            GameUI.getInfiniToggleButton().setText("Infinite Mode : ON");
+            GameUI.getInfiniToggleButton().setText("Endless Mode : ON");
         }
 
         GameUI.getInfiniToggleButton().setOnAction(e -> {
             if (GameUI.getInfiniToggleButton().isSelected()) {
                 isInfinite = true;
-                GameUI.getInfiniToggleButton().setText("Infinite Mode : ON");
+                GameUI.getInfiniToggleButton().setText("Endless Mode : ON");
             } else {
                 isInfinite = false;
-                GameUI.getInfiniToggleButton().setText("Infinite Mode : OFF");
+                GameUI.getInfiniToggleButton().setText("Endless Mode : OFF");
             }
         });
 
@@ -148,7 +147,7 @@ public class Main extends Application {
             menuThemeSound.stop();
             mainThemeSound.play();
 
-            levelIndex = 5;
+            levelIndex = 1;
             scene.setRoot(LevelManager.getLevelPane(levelIndex));
 
             if (GameUI.getMuteToggleButton().isSelected())
@@ -156,7 +155,7 @@ public class Main extends Application {
             else
                 LevelManager.unMuteEffects();
 
-            HUDVariables.setMoney(1000);
+            HUDVariables.setMoney(100);
             LevelManager.resetLevelCondition();
             timeline.play();
         });
@@ -182,16 +181,15 @@ public class Main extends Application {
 
             GameUI.getWinButton().setOnMouseClicked(e -> {
                 mainThemeSound.play();
-           if (levelIndex > 5)
-               scene.setRoot(LevelManager.getRandomLevel());
-           else
-               scene.setRoot(LevelManager.getLevelPane(levelIndex));
+                if (levelIndex > 5)
+                    scene.setRoot(LevelManager.getRandomLevel());
+                else
+                    scene.setRoot(LevelManager.getLevelPane(levelIndex));
 
-            if (GameUI.getMuteToggleButton().isSelected())
-                LevelManager.muteEffects();
-            else
-                LevelManager.unMuteEffects();
-
+                if (GameUI.getMuteToggleButton().isSelected())
+                    LevelManager.muteEffects();
+                else
+                    LevelManager.unMuteEffects();
 
                 LevelManager.resetLevelCondition();
                 timeline.play();

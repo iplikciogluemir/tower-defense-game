@@ -57,7 +57,7 @@ public class GameUI {
         startButton = new Button("Start Game");
         darkModeToggleButton = new ToggleButton("Dark Mode");
         muteToggleButton = new ToggleButton("Mute");
-        infiniteToggleButton = new ToggleButton("Infinite Mode : OFF");
+        infiniteToggleButton = new ToggleButton("Endless Mode : OFF");
 
         setStartButtonsStyle();
 
