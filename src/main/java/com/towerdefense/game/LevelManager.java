@@ -352,10 +352,10 @@ public class LevelManager {
 
     public static BorderPane getRandomLevel() {
         LevelGenerator generator = new LevelGenerator();
-        String filePath = "src/main/resources/maps/level404.txt";
+        String filePath = "src/main/resources/maps/level6.txt";
         generator.generateLevel(filePath);
 
-        BorderPane levelPane = getLevelPane(404);
+        BorderPane levelPane = getLevelPane(6);
         return levelPane;
     }
 

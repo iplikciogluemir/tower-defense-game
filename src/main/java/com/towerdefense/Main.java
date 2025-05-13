@@ -177,7 +177,7 @@ public class Main extends Application {
                 HUDVariables.setMoney(500);
             }
             if (levelIndex > 5) {
-                levelIndex = 404;
+                levelIndex = 6;
             }
             scene.setRoot(vbox);
 
