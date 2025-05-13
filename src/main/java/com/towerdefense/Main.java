@@ -143,7 +143,7 @@ public class Main extends Application {
             menuThemeSound.stop();
             mainThemeSound.play();
 
-            levelIndex = 1;
+            levelIndex = 5;
             scene.setRoot(LevelManager.getLevelPane(levelIndex));
 
             if (GameUI.getMuteToggleButton().isSelected())
@@ -173,6 +173,12 @@ public class Main extends Application {
         } else {
             VBox vbox = GameUI.winScreen();
             levelIndex++;
+            if (HUDVariables.getMoney() > 500) {
+                HUDVariables.setMoney(500);
+            }
+            if (levelIndex > 5) {
+                levelIndex = 404;
+            }
             scene.setRoot(vbox);
 
             GameUI.getWinButton().setOnMouseClicked(e -> {
