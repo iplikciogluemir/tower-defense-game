@@ -58,7 +58,7 @@ public class LevelGenerator {
 
         ArrayList<Point2D> visitedarr = new ArrayList<>();
         int currentAttempts = 0;
-        int maximumAttemps = 5000;
+        int maximumAttemps = 1000;
         while ((current.getX() < width - 1) && currentAttempts < maximumAttemps) {
             Point2D next = getNextPoint(current, visitedarr);
             if (next != null) {
@@ -68,10 +68,8 @@ public class LevelGenerator {
             currentAttempts++;
         }
         if (current.getX() < width - 1) {
-            while (current.getX() < width - 1) {
-                path.clear();
-                generatePath();
-            }
+            path.clear();
+            generatePath();
         }
     }
 
