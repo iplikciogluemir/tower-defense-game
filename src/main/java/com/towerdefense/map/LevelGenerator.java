@@ -58,7 +58,7 @@ public class LevelGenerator {
 
         ArrayList<Point2D> visitedarr = new ArrayList<>();
         int currentAttempts = 0;
-        int maximumAttemps = 1000;
+        int maximumAttemps = 5000;
         while ((current.getX() < width - 1) && currentAttempts < maximumAttemps) {
             Point2D next = getNextPoint(current, visitedarr);
             if (next != null) {
@@ -69,8 +69,8 @@ public class LevelGenerator {
         }
         if (current.getX() < width - 1) {
             while (current.getX() < width - 1) {
-                current = new Point2D(current.getX() + 1, current.getY());
-                path.add(current);
+                path.clear();
+                generatePath();
             }
         }
     }
@@ -123,7 +123,7 @@ public class LevelGenerator {
         for (int i = 0; i < numWaves; i++) {
             int enemyCount = (i + 1) * 5 + random.nextInt(5);
             double spawnInterval = 0.3 + (random.nextDouble() * 0.7);
-            int waveDelay = 5 + random.nextInt(3);
+            int waveDelay = 2 + random.nextInt(3);
 
             waveData.add(String.format(Locale.US, "%d, %.1f, %d", enemyCount, spawnInterval, waveDelay));
         }
