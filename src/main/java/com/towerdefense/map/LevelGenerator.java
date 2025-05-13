@@ -3,6 +3,7 @@ package com.towerdefense.map;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Random;
 import javafx.geometry.Point2D;
 
@@ -56,11 +57,20 @@ public class LevelGenerator {
         path.add(current);
 
         ArrayList<Point2D> visitedarr = new ArrayList<>();
-        while (current.getX() < width - 1) {
+        int currentAttempts = 0;
+        int maximumAttemps = 1000;
+        while ((current.getX() < width - 1) && currentAttempts < maximumAttemps) {
             Point2D next = getNextPoint(current, visitedarr);
             if (next != null) {
                 path.add(next);
                 current = next;
+            }
+            currentAttempts++;
+        }
+        if (current.getX() < width - 1) {
+            while (current.getX() < width - 1) {
+                current = new Point2D(current.getX() + 1, current.getY());
+                path.add(current);
             }
         }
     }
@@ -115,7 +125,7 @@ public class LevelGenerator {
             double spawnInterval = 0.3 + (random.nextDouble() * 0.7);
             int waveDelay = 5 + random.nextInt(3);
 
-            waveData.add(String.format("%d, %.1f, %d", enemyCount, spawnInterval, waveDelay));
+            waveData.add(String.format(Locale.US, "%d, %.1f, %d", enemyCount, spawnInterval, waveDelay));
         }
 
         return waveData;
