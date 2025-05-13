@@ -143,7 +143,7 @@ public class Main extends Application {
             menuThemeSound.stop();
             mainThemeSound.play();
 
-            levelIndex = 5;
+            levelIndex = 1;
             scene.setRoot(LevelManager.getLevelPane(levelIndex));
 
             if (GameUI.getMuteToggleButton().isSelected())
